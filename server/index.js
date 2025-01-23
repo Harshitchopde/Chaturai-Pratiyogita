@@ -1,12 +1,21 @@
 import express from "express"
 import "dotenv/config"
-
-const app = express();
-
-app.use(express.json());
-
+import cors from "cors"
+import { dbConnect} from "./config/database.js"
+import cookieParser from "cookie-parser";
 const PORT = process.env.PORT || 4000;
+const app = express();
+app.use(express.json());
+// cors
+app.use(cors({
+    origin:"http://localhost:3000",
+    credentials:true,
+}));
+// cookieParser --> cookie-parser
+app.use(cookieParser())
 
+// all connection
+dbConnect();
 app.get("/",(req,res)=>{
     return res.json({
         message:"Up and Running",
