@@ -20,7 +20,7 @@ const userSchema = new Schema({
         required:true,
         trim:true,
     },
-    constactNumber:{
+    contactNumber:{
         type:String
     },
     accountType:{
