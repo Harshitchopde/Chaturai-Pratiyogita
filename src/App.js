@@ -1,9 +1,23 @@
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import { NavBar } from './components/common/NavBar';
+import { Home } from './pages/Home';
+import { Login } from './pages/Login';
+import { SignUp } from './pages/SignUp';
+import { VerifyEmail } from './pages/VerifyEmail';
 
 function App() {
   return (
-    <div className="App bg-slate-600 text-xl">
-      Main
+    <div className="App flex flex-col text-xl">
+      <NavBar/>
+      <Routes>
+        <Route path='/'>
+            <Route index element={<Home/>}/>
+            <Route path='login' element={<Login/>}/>
+            <Route path='signUp' element={<SignUp/>}/>
+            <Route path='verify-email' element={<VerifyEmail/>}/>
+        </Route>
+      </Routes>
     </div>
   );
 }

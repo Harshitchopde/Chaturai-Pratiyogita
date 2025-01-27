@@ -194,7 +194,8 @@ export const login = async(req,res)=>{
         return res.cookie("access_token",token,options).status(200).json({
             success:true,
             message:"Login SuccessFull",
-            user:existingUser
+            user:existingUser,
+            token
         })
         
     } catch (error) {
