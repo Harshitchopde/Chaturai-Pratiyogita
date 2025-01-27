@@ -14,6 +14,13 @@ export const sendOtp = async (req,res)=>{
     try {
         //email
         const {email} = req.body;
+        // console.log("Email ",req.body)
+        if(!email){
+            return res.status(400).json({
+                success:false,
+                message:"Email not Found!"
+            })
+        }
         // is present 
         const ispresent = await User.findOne({email});
         if(ispresent){

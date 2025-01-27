@@ -11,6 +11,7 @@ const {
 } = authEndPoints
 // sendOtp
 export function sendOtp(email,navigate){
+    console.log("SEND OTP start ->",email)
     return async(dispatch)=>{
         const toastId = toast.loading("Loading...");
         dispatch(setLoading(true));
