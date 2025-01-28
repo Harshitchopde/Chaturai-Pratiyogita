@@ -5,19 +5,26 @@ const questionSchema = new Schema({
         type:String,
         required:true,
     },
-    options:{
-        type:[String],
-    },
+    options:[
+        {
+            text:{type:String ,required:true},
+            isCorrect:{type:Boolean,required:true, default:false},
+        },
+    ],
     correctAnswer:{
         type:String,
         required:true,
+    },
+    points:{
+        type:Number,
+        default:1
     },
     questionType:{
         type:String,
         enum:["MCQ","truefalse","multiMCQ"],
         default:"MCQ"
     },
-    answerDesc: {
+    explanation: {
         type:String,
     }
 })
