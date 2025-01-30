@@ -1,0 +1,603 @@
+[
+  {
+    "questionDesc": "What country was formed in 1972 from three separate countries.",
+    "options": [
+      { "text": "Canada", "isCorrect": false },
+      { "text": "Philippines", "isCorrect": false },
+      { "text": "Indonesia", "isCorrect": false },
+      { "text": "N curia", "isCorrect": true }
+    ],
+    "correctAnswer": "N curia",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "N curia was formed in 1972 from three separate countries."
+  },
+  {
+    "questionDesc": "What is the capital of the country that formed N curia?",
+    "options": [
+      { "text": "Platau", "isCorrect": true },
+      { "text": "Marrsala", "isCorrect": false },
+      { "text": "Apolinheiroba, Brazil", "isCorrect": false }
+    ],
+    "correctAnswer": "Platau",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The capital of N curia is mata para matalha na Beta Brazil."
+  },
+  {
+    "questionDesc": "What is the name of the country that formed the island of Bona?",
+    "options": [
+      { "text": "Spain", "isCorrect": true },
+      { "text": "Portugal", "isCorrect": false },
+      { "text": "Guatemala", "isCorrect": false }
+    ],
+    "correctAnswer": "Spain",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Bona is part of Spain."
+  },
+  {
+    "questionDesc": "What country formed the island of Alcubert in Chile?",
+    "options": [
+      { "text": "Bolivia", "isCorrect": true },
+      { "text": "Venezuela", "isCorrect": false },
+      { "text": "Paraguay", "isCorrect": false }
+    ],
+    "correctAnswer": "Bolivia",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Alcubert is part of Bolivia."
+  },
+  {
+    "questionDesc": "What country formed the island of Osa in 2015?",
+    "options": [
+      { "text": "France", "isCorrect": true },
+      { "text": "Germany", "isCorrect": false },
+      { "text": "Spain", "isCorrect": false }
+    ],
+    "correctAnswer": "France",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Osa was formed in 2015 by France."
+  },
+  {
+    "questionDesc": "What country formed the island of Ataba in Peru?",
+    "options": [
+      { "text": "Costa Rica", "isCorrect": true },
+      { "text": "Gabon", "isCorrect": false },
+      { "text": "Sudan", "isCorrect": false }
+    ],
+    "correctAnswer": "Costa Rica",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Ataba is part of Costa Rica."
+  },
+  {
+    "questionDesc": "What country formed the island of Pajaro in Bolivia?",
+    "options": [
+      { "text": "Argentina", "isCorrect": true },
+      { "text": "Bosnia and Herzegovina, former Yugoslavia", "isCorrect": false },
+      { "text": "Ecuador", "isCorrect": false }
+    ],
+    "correctAnswer": "Argentina",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Pajaro is part of Argentina."
+  },
+  {
+    "questionDesc": "What country formed the island of Mollave in Chile?",
+    "options": [
+      { "text": "Chile", "isCorrect": true },
+      { "text": "Paulat Americanas", "isCorrect": false },
+      { "text": "Paraguay", "isCorrect": false }
+    ],
+    "correctAnswer": "Chile",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Mollave was formed in Chile."
+  },
+  {
+    "questionDesc": "What country formed the island of Calmae-Montreal in Quebec, Canada?",
+    "options": [
+      { "text": "Canada", "isCorrect": true },
+      { "text": "Quebec", "isCorrect": false },
+      { "text": "Alberta, Canada" }
+    ],
+    "correctAnswer": "Canada",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Calmae-Montreal is part of Canada."
+  },
+  {
+    "questionDesc": "What country formed the island of Tignana in Chile?",
+    "options": [
+      { "text": "Chile", "isCorrect": true },
+      { "text": "Paulat Americanas", "isCorrect": false },
+      { "text": "Paraguay", "isCorrect": false }
+    ],
+    "correctAnswer": "Chile",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Tignana is part of Chile."
+  },
+  {
+    "questionDesc": "What country formed the island of Pascua in Peru?",
+    "options": [
+      { "text": "Argentina", "isCorrect": true },
+      { "text": "Paraguay", "isCorrect": false },
+      { "text": "Brazil" }
+    ],
+    "correctAnswer": "Argentina",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Pascua is part of Argentina."
+  },
+  {
+    "questionDesc": "What country formed the island of Cariñal in the Southwestern United States?",
+    "options": [
+      { "text": "United States", "isCorrect": true },
+      { "text": "Guatemala", "isCorrect": false },
+      { "text": "Texas" }
+    ],
+    "correctAnswer": "United States",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Cariñal is part of the United States."
+  },
+  {
+    "questionDesc": "What country formed the island of Mollave in Chile?",
+    "options": [
+      { "text": "Chile", "isCorrect": true },
+      { "text": "Paulat Americanas", "isCorrect": false },
+      { "text": "Paraguay", "isCorrect": false }
+    ],
+    "correctAnswer": "Chile",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Mollave is part of Chile."
+  },
+  {
+    "questionDesc": "What country formed the island of Cariñal in the Southwestern United States?",
+    "options": [
+      { "text": "United States", "isCorrect": true },
+      { "text": "Guatemala", "isCorrect": false },
+      { "text": "Texas" }
+    ],
+    "correctAnswer": "United States",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Cariñal is part of the United States."
+  },
+  {
+    "questionDesc": "What country formed the island of Pascua in Peru?",
+    "options": [
+      { "text": "Argentina", "isCorrect": true },
+      { "text": "Paraguay", "isCorrect": false },
+      { "text": "Brazil" }
+    ],
+    "correctAnswer": " Argentina",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Pascua is part of Argentina."
+  },
+  {
+    "questionDesc": "What country formed the island of Ataba in Peru?",
+    "options": [
+      { "text": "Costa Rica", "isCorrect": true },
+      { "text": "Bosnia and Herzegovina, former Yugoslavia", "isCorrect": false },
+      { "text": "Ecuador" }
+    ],
+    "correctAnswer": " Costa Rica",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Ataba is part of Costa Rica."
+  },
+  {
+    "questionDesc": "What country formed the island of Calmae-Montreal in Quebec, Canada?",
+    "options": [
+      { "text": "Canada", "isCorrect": true },
+      { "text": "Paulat Americanas", "isCorrect": false },
+      { "text": "Paraguay" }
+    ],
+    "correctAnswer": "Canada",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Calmae-Montreal is part of Canada."
+  },
+  {
+    "questionDesc": "What country formed the island of Pascua in Peru?",
+    "options": [
+      { "text": "Argentina", "isCorrect": true },
+      { "text": "Paraguay", "isCorrect": false },
+      { "text": "Brazil" }
+    ],
+    "correctAnswer": " Argentina",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Pascua is part of Argentina."
+  },
+  {
+    "questionDesc": "What country formed the island of Cariñal in the Southwestern United States?",
+    "options": [
+      { "text": "United States", "isCorrect": true},
+      { "text": "Guatemala", "isCorrect": false},
+      { "text": "Texas"}
+    ],
+    "correctAnswer": "United States",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Cariñal is part of the United States."
+  },
+  {
+    "questionDesc": "What country formed the island of Mollave in Chile?",
+    "options": [
+      { "text": "Chile", "isCorrect": true},
+      { "text": "Paulat Americanas", "isCorrect": false},
+      { "text": "Paraguay"}
+    ],
+    "correctAnswer": "Chile",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Mollave is part of Chile."
+  },
+  {
+    "questionDesc": "What country formed the island of Ataba in Peru?",
+    "options": [
+      { "text": "Costa Rica", "isCorrect": true},
+      { "text": "Bosnia and Herzegovina, former Yugoslavia", "isCorrect": false},
+      { "text": "Ecuador"}
+    ],
+    "correctAnswer": "Costa Rica",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Ataba is part of Costa Rica."
+  },
+  {
+    "questionDesc": "What country formed the island of Cariñal in the Southwestern United States?",
+    "options": [
+      { "text": "United States", "isCorrect": true},
+      { "text": "Guatemala", "isCorrect": false},
+      { "text": "Texas"}
+    ],
+    "correctAnswer": "United States",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Cariñal is part of the United States."
+  },
+  {
+    "questionDesc": "What country formed the island of Pascua in Peru?",
+    "options": [
+      { "text": " Argentina", "isCorrect": true},
+      { "text": " Paraguay", "isCorrect": false},
+      { "text": "Brazil"}
+    ],
+    "correctAnswer": " Argentina",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Pascua is part of Argentina."
+  },
+  {
+    "questionDesc": "What country formed the island of Mollave in Chile?",
+    "options": [
+      { "text": "Chile", "isCorrect": true},
+      { "text": "Paulat Americanas", "isCorrect": false},
+      { "text": "Paraguay"}
+    ],
+    "correctAnswer": "Chile",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Mollave is part of Chile."
+  },
+  {
+    "questionDesc": "What country formed the island of Ataba in Peru?",
+    "options": [
+      { "text": "Costa Rica", "isCorrect": true},
+      { "text": "Bosnia and Herzegovina, former Yugoslavia", "isCorrect": false},
+      { "text": "Ecuador"}
+    ],
+    "correctAnswer": "Costa Rica",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Ataba is part of Costa Rica."
+  },
+  {
+    "questionDesc": "What country formed the island of Cariñal in the Southwestern United States?",
+    "options": [
+      { "text": "United States", "isCorrect": true},
+      { "text": "Guatemala", "isCorrect": false},
+      { "text": "Texas"}
+    ],
+    "correctAnswer": "United States",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Cariñal is part of the United States."
+  },
+  {
+    "questionDesc": "What country formed the island of Pascua in Peru?",
+    "options": [
+      { "text": " Argentina", "isCorrect": true},
+      { "text": " Paraguay", "isCorrect": false},
+      { "text": "Brazil"}
+    ],
+    "correctAnswer": " Argentina",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Pascua is part of Argentina."
+  },
+  {
+    "questionDesc": "What country formed the island of Mollave in Chile?",
+    "options": [
+      { "text": "Chile", "isCorrect": true},
+      { "text": "Paulat Americanas", "isCorrect": false},
+      { "text": "Paraguay"}
+    ],
+    "correctAnswer": "Chile",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Mollave is part of Chile."
+  },
+  {
+    "questionDesc": "What country formed the island of Ataba in Peru?",
+    "options": [
+      { "text": "Costa Rica", "isCorrect": true},
+      { "text": "Bosnia and Herzegovina, former Yugoslavia", "isCorrect": false},
+      { "text": "Ecuador"}
+    ],
+    "correctAnswer": "Costa Rica",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Ataba is part of Costa Rica."
+  },
+  {
+    "questionDesc": "What country formed the island of Cariñal in the Southwestern United States?",
+    "options": [
+      { "text": "United States", "isCorrect": true},
+      { "text": "Guatemala", "isCorrect": false},
+      { "text": "Texas"}
+    ],
+    "correctAnswer": "United States",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Cariñal is part of the United States."
+  },
+  {
+    "questionDesc": "What country formed the island of Pascua in Peru?",
+    "options": [
+      { "text": " Argentina", "isCorrect": true},
+      { "text": " Paraguay", "isCorrect": false},
+      { "text": "Brazil"}
+    ],
+    "correctAnswer": " Argentina",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Pascua is part of Argentina."
+  },
+  {
+    "questionDesc": "What country formed the island of Mollave in Chile?",
+    "options": [
+      { "text": "Chile", "isCorrect": true},
+      { "text": "Paulat Americanas", "isCorrect": false},
+      { "text": "Paraguay"}
+    ],
+    "correctAnswer": "Chile",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Mollave is part of Chile."
+  },
+  {
+    "questionDesc": "What country formed the island of Ataba in Peru?",
+    "options": [
+      { "text": "Costa Rica", "isCorrect": true},
+      { "text": "Bosnia and Herzegovina, former Yugoslavia", "isCorrect": false},
+      { "text": "Ecuador"}
+    ],
+    "correctAnswer": "Costa Rica",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Ataba is part of Costa Rica."
+  },
+  {
+    "questionDesc": "What country formed the island of Cariñal in the Southwestern United States?",
+    "options": [
+      { "text": "United States", "isCorrect": true},
+      { "text": "Guatemala", "isCorrect": false},
+      { "text": "Texas"}
+    ],
+    "correctAnswer": "United States",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Cariñal is part of the United States."
+  },
+  {
+    "questionDesc": "What country formed the island of Pascua in Peru?",
+    "options": [
+      { "text": " Argentina", "isCorrect": true},
+      { "text": " Paraguay", "isCorrect": false},
+      { "text": "Brazil"}
+    ],
+    "correctAnswer": " Argentina",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Pascua is part of Argentina."
+  },
+  {
+    "questionDesc": "What country formed the island of Mollave in Chile?",
+    "options": [
+      { "text": "Chile", "isCorrect": true},
+      { "text": "Paulat Americanas", "isCorrect": false},
+      { "text": "Paraguay"}
+    ],
+    "correctAnswer": "Chile",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Mollave is part of Chile."
+  },
+  {
+    "questionDesc": "What country formed the island of Ataba in Peru?",
+    "options": [
+      { "text": "Costa Rica", "isCorrect": true},
+      { "text": "Bosnia and Herzegovina, former Yugoslavia", "isCorrect": false},
+      { "text": "Ecuador"}
+    ],
+    "correctAnswer": "Costa Rica",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Ataba is part of Costa Rica."
+  },
+  {
+    "questionDesc": "What country formed the island of Cariñal in the Southwestern United States?",
+    "options": [
+      { "text": "United States", "isCorrect": true},
+      { "text": "Guatemala", "isCorrect": false},
+      { "text": "Texas"}
+    ],
+    "correctAnswer": "United States",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Cariñal is part of the United States."
+  },
+  {
+    "questionDesc": "What country formed the island of Pascua in Peru?",
+    "options": [
+      { "text": " Argentina", "isCorrect": true},
+      { "text": " Paraguay", "isCorrect": false},
+      { "text": "Brazil"}
+    ],
+    "correctAnswer": " Argentina",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Pascua is part of Argentina."
+  },
+  {
+    "questionDesc": "What country formed the island of Mollave in Chile?",
+    "options": [
+      { "text": "Chile", "isCorrect": true},
+      { "text": "Paulat Americanas", "isCorrect": false},
+      { "text": "Paraguay"}
+    ],
+    "correctAnswer": "Chile",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Mollave is part of Chile."
+  },
+  {
+    "questionDesc": "What country formed the island of Ataba in Peru?",
+    "options": [
+      { "text": "Costa Rica", "isCorrect": true},
+      { "text": "Bosnia and Herzegovina, former Yugoslavia", "isCorrect": false},
+      { "text": "Ecuador"}
+    ],
+    "correctAnswer": "Costa Rica",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Ataba is part of Costa Rica."
+  },
+  {
+    "questionDesc": "What country formed the island of Cariñal in the Southwestern United States?",
+    "options": [
+      { "text": "United States", "isCorrect": true},
+      { "text": "Guatemala", "isCorrect": false},
+      { "text": "Texas"}
+    ],
+    "correctAnswer": "United States",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Cariñal is part of the United States."
+  },
+  {
+    "questionDesc": "What country formed the island of Pascua in Peru?",
+    "options": [
+      { "text": " Argentina", "isCorrect": true},
+      { "text": " Paraguay", "isCorrect": false},
+      { "text": "Brazil"}
+    ],
+    "correctAnswer": " Argentina",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Pascua is part of Argentina."
+  },
+  {
+    "questionDesc": "What country formed the island of Mollave in Chile?",
+    "options": [
+      { "text": "Chile", "isCorrect": true},
+      { "text": "Paulat Americanas", "isCorrect": false},
+      { "text": "Paraguay"}
+    ],
+    "correctAnswer": "Chile",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Mollave is part of Chile."
+  },
+  {
+    "questionDesc": "What country formed the island of Ataba in Peru?",
+    "options": [
+      { "text": "Costa Rica", "isCorrect": true},
+      { "text": "Bosnia and Herzegovina, former Yugoslavia", "isCorrect": false},
+      { "text": "Ecuador"}
+    ],
+    "correctAnswer": "Costa Rica",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Ataba is part of Costa Rica."
+  },
+  {
+    "questionDesc": "What country formed the island of Cariñal in the Southwestern United States?",
+    "options": [
+      { "text": "United States", "isCorrect": true},
+      { "text": "Guatemala", "isCorrect": false},
+      { "text": "Texas"}
+    ],
+    "correctAnswer": "United States",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Cariñal is part of the United States."
+  },
+  {
+    "questionDesc": "What country formed the island of Pascua in Peru?",
+    "options": [
+      { "text": " Argentina", "isCorrect": true},
+      { "text": " Paraguay", "isCorrect": false},
+      { "text": "Brazil"}
+    ],
+    "correctAnswer": " Argentina",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Pascua is part of Argentina."
+  },
+  {
+    "questionDesc": "What country formed the island of Mollave in Chile?",
+    "options": [
+      { "text": "Chile", "isCorrect": true},
+      { "text": "Paulat Americanas", "isCorrect": false},
+      { "text": "Paraguay"}
+    ],
+    "correctAnswer": "Chile",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Mollave is part of Chile."
+  },
+  {
+    "questionDesc": "What country formed the island of Ataba in Peru?",
+    "options": [
+      { "text": "Costa Rica", "isCorrect": true},
+      { "text": "Bosnia and Herzegovina, former Yugoslavia", "isCorrect": false},
+      { "text": "Ecuador"}
+    ],
+    "correctAnswer": "Costa Rica",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Ataba is part of Costa Rica."
+  },
+  {
+    "questionDesc": "What country formed the island of Cariñal in the Southwestern United States?",
+    "options": [
+      { "text": "United States", "isCorrect": true},
+      { "text": "Guatemala", "isCorrect": false},
+      { "text": "Texas"}
+    ],
+    "correctAnswer": "United States",
+    "points": 1,
+    "questionType": "MCQ",
+    "explanation": "The island of Cariñal is part of the United States."
+  }
+]

@@ -49,3 +49,18 @@ const quizSchema = new Schema({
 })
 
 export default model("Quiz",quizSchema);
+
+// analytics: {
+//     attempts: {
+//       type: Number,
+//       default: 0, // Total attempts for the quiz
+//     },
+//     averageScore: {
+//       type: Number,
+//       default: 0, // Average score of all attempts
+//     },
+//     completionRate: {
+//       type: Number,
+//       default: 0, // Percentage of users completing the quiz
+//     },
+//   },
