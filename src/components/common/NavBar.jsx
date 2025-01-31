@@ -26,7 +26,7 @@ export const NavBar = () => {
          <div className="flex gap-2">
             {
                 user && (
-                    <Link to={"/profile"}>
+                    <Link to={"/dashboard/profile"}>
                         <FaUserCircle className=''/>
                     </Link>
                 )

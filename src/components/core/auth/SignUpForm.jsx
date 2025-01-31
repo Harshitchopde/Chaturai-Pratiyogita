@@ -41,6 +41,7 @@ const SignUpForm = () => {
         }
         dispatch(setSignUpData(signUpData));
         dispatch(sendOtp(formData.email,navigate));
+      
         setFormData({
             firstName:"",
             lastName:"",

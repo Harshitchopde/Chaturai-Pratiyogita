@@ -13,6 +13,16 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+.form-style{
+  @apply 
+  rounded-lg 
+  bg-slate-50
+  p-3
+  leading-[24px]
+  shadow-[0_1px_0_0] shadow-white/50 placeholder:text-gray-400 focus-within:outline-none;
+
+
+}
 
 .App-header {
   background-color: #282c34;

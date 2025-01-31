@@ -10,8 +10,14 @@ const quizSchema = new Schema({
         type:String,
         trim:true,
     },
+    instructor: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        requried: true,
+
+    },
     timeDuration:{
-        type:String,
+        type:Number,
         required:true,
     },
     tags:{
@@ -28,7 +34,7 @@ const quizSchema = new Schema({
     },
     numberOfQuestions:{
         type:Number,
-        required:true,
+        
     },
     questions:[
         {

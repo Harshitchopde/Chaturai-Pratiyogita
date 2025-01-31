@@ -1,0 +1,163 @@
+import React, { useState } from 'react'
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux'
+import TagInput from './TagInput';
+import { setStep } from '../../../../../slices/quizSlicer';
+import IconBtn from '../../../../common/IconBtn';
+import { MdNavigateNext } from 'react-icons/md';
+
+const CreateQuiz = () => {
+    const { step, quiz,editQuiz } = useSelector(state=> state.quiz);
+    // react-from
+    const {
+        register,
+        getValues,
+        setValue,
+        handleSubmit,
+        formState:{errors},
+    } = useForm()
+    const {token} = useSelector(state=> state.auth);
+    const [loading,setLoading] = useState(false);
+    const dispatch = useDispatch();
+    //  edit check | from update
+    const checkUpdated = ()=>{
+        const currValues = getValues();
+        console.log("Curr ",currValues);
+        console.log("prev ",quiz)
+        if(quiz.quizName !== currValues.quizName ||
+            quiz.quizDesc !== currValues.quizDesc ||
+            quiz.numberOfQuestions !== currValues.numberOfQuestions ||
+            quiz.timeDuration !== currValues.timeDuration ||
+            quiz.tags.toString() !== currValues.tags.toString() ||
+            quiz.topic !== currValues.topic ||
+            quiz.difficulty !== currValues.difficulty
+        ){
+            return true;
+        }else return false;
+    }
+    // onSubmitHandle
+    const onSubmitHandle = async(data)=>{
+       console.log("Data : ",data);
+       if(editQuiz){
+        if(checkUpdated()){
+            const currValues = getValues();
+            const formData = new FormData();
+            formData.append()
+        }
+       } 
+    }
+  return (
+    <div>
+        <form onSubmit={handleSubmit(onSubmitHandle)}
+        className='space-y-8  mb-[50px] rounded-md  border-[1px] bg-slate-200 p-6 border-slate-700'>
+            {/* quizName !*/}
+            <div className=" flex flex-col space-y-2">
+                <label htmlFor="quizName" className=' text-sm '>
+                    Quiz Name <sup className=' text-pink-800'>*</sup>
+                </label>
+                <input id="quizName"
+                placeholder='Enter the Quiz Name'
+                className=' form-style w-full'
+                {...register("quizName",{required:true})}
+                />
+                {errors.quizName && (
+                    <span className=' text-sm text-red-500 tracking-wide '>Quiz Name required*</span>
+                )}
+            </div>
+            {/* quizDesc! */}
+            <div className=" flex flex-col space-y-2">
+                <label htmlFor="quizDesc" className=' text-sm '>
+                    Quiz Description <sup className=' text-pink-800'>*</sup>
+                </label>
+                <input id="quizDesc"
+                placeholder='Enter the Quiz Description'
+                className=' form-style w-full'
+                {...register("quizDesc",{required:true})}
+                />
+                {errors.quizDesc && (
+                    <span className=' text-sm text-red-500 tracking-wide '>Quiz Desc required*</span>
+                )}
+            </div>  
+            {/* numberOfQuestions */}
+            <div className=" flex flex-col space-y-2">
+                <label htmlFor="numberOfQuestions" className=' text-sm '>
+                    Number of Questions
+                </label>
+                <input id='numberOfQuestions'
+                type='number'
+                  placeholder='Number of Questions in quiz'
+                  className=' form-style w-full'
+                  {...register("numberOfQuestions",{
+                    min:1,
+                    max:200
+                  })}
+                  />
+                  {
+                    errors.numberOfQuestions && (
+                        <span className='text-sm text-red-500'>error hai</span>
+                    )
+                  }
+            </div>
+            {/* timeDuration! */}
+            <div className=" flex flex-col space-y-2">
+                <label htmlFor="timeDuration" className='text-sm'>Time Duration of test<sup className=' text-pink-800'>*</sup></label>
+                <input id='timeDuration'
+                type='number'
+                className=' form-style w-full'
+                placeholder='Maximum time to finish in minute'
+                {...register("timeDuration",{required:true, min:1,})}/>
+                {
+                    errors.timeDuration && (
+                        <span className='text-sm text-red-500'>Time Duration required*</span>
+                    )
+                }
+            </div>
+            {/* tags -> chip inputs */}
+            <TagInput name={"tags"} label={"Tags input"} placeholder={"Enter the name and press enter key"}
+            register={register} getValues={getValues} setValue={setValue} errors={errors}/>
+            {/* topic */}
+            <div className=" flex flex-col space-y-2">
+                <label htmlFor="topic" className=' text-sm '>
+                    Topic it relate <sup className=' text-pink-800'></sup>
+                </label>
+                <input id="topic"
+                placeholder='eg :- DSA in Java'
+                className=' form-style w-full'
+                {...register("topic",{required:true})}
+                />
+                {/* {errors.topic && (
+                    <span className=' text-sm text-red-500 tracking-wide '>Quiz Desc required*</span>
+                )} */}
+            </div>  
+            {/* difficulty  */}
+            <div className=" flex flex-col space-y-2">
+                <label htmlFor="difficulty" className=' text-sm'>
+                    Difficulty
+                </label>
+                <select className=' text-sm p-1' {...register("difficulty")}>
+                    <option value="Any">Any</option>
+                    <option value="Easy">Easy</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Hard">Hard</option>
+                </select>
+            </div>
+            <div className=" flex justify-end gap-x-2">
+                {
+                    editQuiz && (
+                        <button onClick={()=>dispatch(setStep(2))}
+                         dispatch={loading}
+                         className={` flex cursor-pointer items-center gap-x-2 rounded-md font-semibold text-white bg-slate-500 py-[8px] px-[20px]`}>
+                            Continue Without Saving
+                         </button>
+                    )
+                }
+                <IconBtn className={" bg-red-800 text-white"} disabled={loading} text={!editQuiz?"Next":"Save & Continue"}>
+                    <MdNavigateNext/>
+                </IconBtn>
+            </div>
+        </form>
+    </div>
+  )
+}
+
+export default CreateQuiz
