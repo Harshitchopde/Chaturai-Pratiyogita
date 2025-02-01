@@ -11,10 +11,15 @@ const questionSchema = new Schema({
             isCorrect:{type:Boolean,required:true, default:false},
         },
     ],
+    quizId:{
+        type:Schema.Types.ObjectId,
+        ref:"Quiz"
+    },
     correctAnswer:{
-        type:String,
+        type:Number,
         required:true,
     },
+
     points:{
         type:Number,
         default:1

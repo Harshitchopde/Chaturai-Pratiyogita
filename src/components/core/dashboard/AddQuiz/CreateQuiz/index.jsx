@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux'
 import TagInput from './TagInput';
-import { setStep } from '../../../../../slices/quizSlicer';
+import { setQuiz, setStep } from '../../../../../slices/quizSlicer';
 import IconBtn from '../../../../common/IconBtn';
 import { MdNavigateNext } from 'react-icons/md';
+import toast from 'react-hot-toast';
 
 const CreateQuiz = () => {
-    const { step, quiz,editQuiz } = useSelector(state=> state.quiz);
+    const { step, quiz } = useSelector(state=> state.quiz);
+    const editQuiz = true;
     // react-from
     const {
         register,
@@ -42,7 +44,43 @@ const CreateQuiz = () => {
         if(checkUpdated()){
             const currValues = getValues();
             const formData = new FormData();
-            formData.append()
+            formData.append("quizId",quiz._id);
+            if(quiz.quizName !== currValues.quizName){
+                formData.append("quizName",currValues.quizName);
+            }
+            if(quiz.quizDesc !== currValues.quizDesc){
+                formData.append("quizDesc",currValues.quizDesc);
+            }
+            if(quiz.numberOfQuestions !== currValues.numberOfQuestions){
+                formData.append("numberOfQuestions",currValues.numberOfQuestions);
+            }
+            if(quiz.timeDuration !== currValues.timeDuration){
+                formData.append("timeDuration",currValues.timeDuration);
+            }
+            if(quiz.tags.toString() !== currValues.tags.toString()){
+                formData.append("tags",JSON.stringify(currValues.tags));
+            }
+            if(quiz.topic !== currValues.topic){
+                formData.append("topic",currValues.topic);
+            }
+            if(quiz.difficulty !== currValues.difficulty){
+                formData.append("difficulty",currValues.difficulty);
+            }
+
+            setLoading(true);
+            // const result = await 
+            const result = null;
+            // editQuiz call 
+            setLoading(false);
+
+            if(result){
+                toast.success("Successfully Updated!")
+                dispatch(setStep(2));
+                dispatch(setQuiz(result));
+            }else{
+                toast.error("No Changes is made")
+            }
+
         }
        } 
     }

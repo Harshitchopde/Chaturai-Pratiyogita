@@ -9,6 +9,7 @@ const quizSchema = new Schema({
     quizDesc:{
         type:String,
         trim:true,
+        required:true
     },
     instructor: {
         type: Schema.Types.ObjectId,
@@ -36,6 +37,10 @@ const quizSchema = new Schema({
         type:Number,
         
     },
+    studentEnrolled:[{
+        type:Schema.Types.ObjectId,
+        ref:"User"
+    }],
     questions:[
         {
             type:Schema.Types.ObjectId,
