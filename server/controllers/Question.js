@@ -118,7 +118,7 @@ export const deleteQuestion  = async(req,res)=>{
         return res.status(200).json({
             success:true,
             message:"SuccessFully Delete Question",
-            updatedQuiz
+            
         })
         
     } catch (error) {
