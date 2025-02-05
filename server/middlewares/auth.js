@@ -5,7 +5,9 @@ export async function verifyAuth(req,res,next){
         // take token 
         const token = req.cookies.access_token || 
                         req.header("Authorization")?.replace("Bearer ","");
-        console.log("Token ",token);
+        // console.log("token find ",req.cookies.access_token," and ",req.header("Authorization"))?.replace("Bearer ","");
+     
+        // console.log("Token ",token);
 
 
         // decode
@@ -17,7 +19,7 @@ export async function verifyAuth(req,res,next){
         } catch (error) {
             return res.status(400).json({
                 success:false,
-                message:"Decode failed" +error.message,
+                message:"Decode failed " +error.message,
             })
         }
         

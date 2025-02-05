@@ -6,10 +6,11 @@ import { setQuiz, setStep } from '../../../../../slices/quizSlicer';
 import IconBtn from '../../../../common/IconBtn';
 import { MdNavigateNext } from 'react-icons/md';
 import toast from 'react-hot-toast';
+import { createQuiz, updateQuiz } from '../../../../../services/operations/quiz.Apis';
 
 const CreateQuiz = () => {
-    const { step, quiz } = useSelector(state=> state.quiz);
-    const editQuiz = true;
+    const { step, quiz ,editQuiz} = useSelector(state=> state.quiz);
+   
     // react-from
     const {
         register,
@@ -69,7 +70,7 @@ const CreateQuiz = () => {
 
             setLoading(true);
             // const result = await 
-            const result = null;
+            const result = await updateQuiz(formData,token);
             // editQuiz call 
             setLoading(false);
 
@@ -83,6 +84,34 @@ const CreateQuiz = () => {
 
         }
        } 
+    //    quiz.quizName !== currValues.quizName ||
+    //     quiz.quizDesc !== currValues.quizDesc ||
+    //     quiz.numberOfQuestions !== currValues.numberOfQuestions ||
+    //     quiz.timeDuration !== currValues.timeDuration ||
+    //     quiz.tags.toString() !== currValues.tags.toString() ||
+    //     quiz.topic !== currValues.topic ||
+    //     quiz.difficulty !== currValues.difficulty
+   
+       // add details
+       const formNewData = new  FormData();
+       formNewData.append("quizName", data.quizName);
+       formNewData.append("quizDesc", data.quizDesc);
+       formNewData.append("numberOfQuestions" , data.numberOfQuestions);
+       formNewData.append("timeDuration" , data.timeDuration);
+       formNewData.append("tags" , JSON.stringify(data.tags));
+       formNewData.append("topic" , data.topic);
+       formNewData.append("difficulty" , data.difficulty);
+       setLoading(true);
+       console.log("Data split : ",data.quizName,data.quizDesc)
+       console.log("Form data ",formNewData.get("tags"))
+    //    const result = null;
+       const result = await createQuiz(formNewData,token);
+       console.log("Create quiz result -> ",result);
+       if(result){
+         dispatch(setStep(2));
+         dispatch(setQuiz(result));
+       }
+       setLoading(false);
     }
   return (
     <div>

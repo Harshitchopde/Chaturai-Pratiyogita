@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import CreateQuiz from './CreateQuiz';
-import AddQuestion from './AddQuestion';
+import AddQuestion from './QuestionBuilder';
 import Publish from './Publish';
 import { FaCheck } from 'react-icons/fa';
 const steps = [
@@ -26,12 +26,12 @@ const RenderSteps = () => {
         {/* handle step 1 - 2 - 3 */}
         <div className=" flex  relative justify-center mt-14 mb-7 ">
             {
-                steps.map((ele)=>(
+                steps.map((ele,i)=>(
                     <>
-                    <div className="flex flex-col items-center">
+                    <div key={i} className="flex flex-col items-center">
                         <button className={` flex grid cursor-default place-items-center rounded-full border  w-[34px] aspect-square 
-                            ${step=== ele.id ? " text-white  border-green-300 bg-green-500":" text-white border-slate-600 bg-slate-400"}
-                            ${step > ele.id && " text-white border-green-300 bg-green-500"}`}>
+                            ${step>= ele.id ? " text-white  border-green-300 bg-green-500":" text-white border-slate-600 bg-slate-400"}
+                            `}>
                             {
                                 step > ele.id ?(<FaCheck className=' font-bold text-white'/>):(
                                     ele.id
@@ -52,6 +52,7 @@ const RenderSteps = () => {
         {/* selected render */}
         {
             step===1 && (<CreateQuiz/>)
+            // step===1 && (<DemoQue/>)
         }
         {
             step===2 && (<AddQuestion/>)

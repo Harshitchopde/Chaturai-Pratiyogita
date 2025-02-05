@@ -14,13 +14,14 @@ const {
 // CREATE_QUIZ_API,
 export const createQuiz = async(data,token)=>{
     const toastId = toast.loading("Loading...")
-    let result = [];
+    let result = null;
+    console.log("Data client ",data.get("quizName"))
     try {
-        const response = await apiConnector("POST",CREATE_QUIZ_API,{
-            "Content-Type":"multipart/form-data",
+        const response = await apiConnector("POST",CREATE_QUIZ_API,data,{
             Authorization:`Bearer ${token}`,
+            "Content-Type":"multipart/form-data"
         })
-        console.log("CREATE QUIZ RESPONSE... ",response);
+        console.log("CREATE QUIZ RESPONSE... ",response.data);
         if(!response?.data?.success){
             throw new Error(response.data.message);
         }

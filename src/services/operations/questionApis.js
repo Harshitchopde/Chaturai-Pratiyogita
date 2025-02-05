@@ -14,10 +14,11 @@ const {
 // CREATE_QUESTION_API,
 export const createQuestion = async(data,token)=>{
     const toastId = toast.loading("Loading...");
-    const result = [];
+    let result =null;
     try {
         const response = await apiConnector("POST",CREATE_QUESTION_API,data,{
-             Authorization:`Bearer ${token}`
+             Authorization:`Bearer ${token}`,
+             "Content-Type":"multipart/form-data"
         })
         console.log("CREATE QUESTION RESPONSE... ",response);
         if(!response?.data?.success){
@@ -35,7 +36,7 @@ export const createQuestion = async(data,token)=>{
 // UPDATE_QUESTION_API,
 export const updateQuestion = async(data,token)=>{
     const toastId = toast.loading("Loading...");
-    const result = [];
+    let result = null;
     try {
         const response = await apiConnector("POST",DELETE_QUESTION_API,data,{
              Authorization:`Bearer ${token}`

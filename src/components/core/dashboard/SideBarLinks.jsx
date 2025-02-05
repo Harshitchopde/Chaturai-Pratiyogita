@@ -8,7 +8,7 @@ const SideBarLinks = ({link,iconName}) => {
   const location = useLocation();
 
   const matchRoute = (route)=>{
-    console.log("route match ",route,location.pathname,location);
+    // console.log("route match ",route,location.pathname,location);
     return matchPath({path:route},location.pathname);
   }
   return (

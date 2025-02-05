@@ -1,9 +1,11 @@
 import Quiz from "../models/Quiz.js";
 import User from "../models/User.js";
 import Question from "../models/Question.js";
+
 export const createQuiz = async(req,res)=>{
     console.log("CREATE QUIZ")
     try {
+       
         console.log("Data ",req.body)
         // get data of quiz
         const {quizName,
@@ -60,7 +62,7 @@ export const createQuiz = async(req,res)=>{
         })
 
         console.log("Data : ",quiz);
-        return res.status(400).json({
+        return res.status(200).json({
             success:true,
             message:"SuccessFull Creation",
             data:quiz

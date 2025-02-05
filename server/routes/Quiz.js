@@ -2,17 +2,17 @@ import { Router } from "express";
 import { isInstructor, verifyAuth } from "../middlewares/auth.js";
 import { createQuiz, deleteQuiz, getAllQuiz, getQuizDetails, updateQuiz } from "../controllers/Quiz.js";
 import { createQuestion, deleteQuestion, getAllQuestions, getQuestionDetails, updateQuestion } from "../controllers/Question.js";
-
-
+import multer from "multer";
+const upload = multer();
 const router = Router();
 // ********************************************************************************************************
 //                                      Quiz ( Only Instructor)
 // ********************************************************************************************************
 
 // createQuiz
-router.post("/createQuiz",verifyAuth,isInstructor,createQuiz);
+router.post("/createQuiz",upload.none(), verifyAuth,isInstructor,createQuiz);
 // updateQuiz
-router.post("/updateQuiz",verifyAuth,isInstructor,updateQuiz);
+router.post("/updateQuiz",upload.none(),verifyAuth,isInstructor,updateQuiz);
 // deleteQuiz
 router.post("/deleteQuiz",verifyAuth,isInstructor,deleteQuiz);
 
@@ -28,9 +28,9 @@ router.get("/getAllQuiz",getAllQuiz);
 // ********************************************************************************************************
 
 // createQuestion
-router.post("/createQuestion",verifyAuth,isInstructor,createQuestion)
+router.post("/createQuestion",upload.none(),verifyAuth,isInstructor,createQuestion)
 // updateQuestion
-router.post("/updateQuestion",verifyAuth,isInstructor,updateQuestion)
+router.post("/updateQuestion",upload.none(),verifyAuth,isInstructor,updateQuestion)
 // deleteQuestion
 router.post("/deleteQuestion",verifyAuth,isInstructor,deleteQuestion)
 // ********************************************************************************************************

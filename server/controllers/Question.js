@@ -2,6 +2,7 @@ import Question from "../models/Question.js";
 import Quiz from "../models/Quiz.js";
 
 export const createQuestion  = async(req,res)=>{
+    console.log("req body" ,req.body)
     try {
         const {quizId,questionDesc,options:_options,
             correctAnswer,points,explanation
@@ -19,14 +20,14 @@ export const createQuestion  = async(req,res)=>{
             questionType = "MCQ"
         }
         // validate
-        if(!questionDesc || !option || !correctAnswer){
+        if(!questionDesc || !option){
             return res.status(400).json({
                 success:false,
                 message:"Some Field are missing!"
             })
         }
         // create Question
-        const question = await Question.create({
+        const question = new Question({
             quizId,
             options:option,
             points,
@@ -35,7 +36,11 @@ export const createQuestion  = async(req,res)=>{
             correctAnswer,
             explanation
         });
-
+        // find correct options 
+        const correctId = question.options.find(option=>option.isCorrect);
+        question.correctAnswer = correctId._id;
+        console.log("options ",correctId)
+        await question.save();
         // add question to quiz 
         const updatedQuiz =  await Quiz.findByIdAndUpdate(quizId,{
             $push:{
