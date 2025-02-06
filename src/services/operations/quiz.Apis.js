@@ -37,9 +37,9 @@ export const createQuiz = async(data,token)=>{
 // UPDATE_QUIZ_API,
 export const updateQuiz = async(data,token)=>{
     const toastId = toast.loading("Loading...")
-    let result = [];
+    let result = null;
     try {
-        const response = await apiConnector("POST",UPDATE_QUIZ_API,{
+        const response = await apiConnector("POST",UPDATE_QUIZ_API,data,{
             "Content-Type":"multipart/form-data",
             Authorization:`Bearer ${token}`,
         })

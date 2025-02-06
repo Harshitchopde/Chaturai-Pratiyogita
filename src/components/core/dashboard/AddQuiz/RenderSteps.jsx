@@ -19,7 +19,7 @@ const steps = [
     },
 ]
 const RenderSteps = () => {
-    const { step,quiz,editQuiz } =useSelector((state)=> state.quiz); 
+    const {step, quiz,editQuiz } =useSelector((state)=> state.quiz); 
    
   return (
     <div>
@@ -42,7 +42,7 @@ const RenderSteps = () => {
                     </div>
                     {
                         ele.id!== steps.length && (
-                            <div className={` h-[calc(34px/2)  w-[33%] border-dashed   border-t-2 border-b-2 ${ele.id<step? "border-green-500":"border-gray-400"}`}></div>
+                            <div key={i+10} className={` h-[calc(34px/2)  w-[33%] border-dashed   border-t-2 border-b-2 ${ele.id<step? "border-green-500":"border-gray-400"}`}></div>
                         )
                     }
                     </>

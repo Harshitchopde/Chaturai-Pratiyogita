@@ -7,7 +7,7 @@ export async function verifyAuth(req,res,next){
                         req.header("Authorization")?.replace("Bearer ","");
         // console.log("token find ",req.cookies.access_token," and ",req.header("Authorization"))?.replace("Bearer ","");
      
-        // console.log("Token ",token);
+        console.log("Token ",token);
 
 
         // decode

@@ -88,9 +88,11 @@ export const updateQuiz = async(req,res)=>{
                 message:"Quiz Not found!"
             })
         }
+
+        console.log("Update",updated)
         for(const key in updated){
             // not make sense below line
-            if(updated.hasOwnProperty(key)){
+            if(updated[key]){
                 if(key==="tags"){
                     quiz[key] = JSON.parse(updated[key]);
                 }else{
