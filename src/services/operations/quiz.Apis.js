@@ -76,11 +76,12 @@ export const deleteQuiz = async(data,token)=>{
 }
 // GET_QUIZ_DETAILS_API,
 export const getQuizDetails = async (quizId,token)=>{
-    let result = [];
+    let result = null;
     const toastId = toast.loading("Loading...");
     try {
-        const response = await apiConnector("GET",{
-            quizId
+        const response = await apiConnector("POST",GET_QUIZ_DETAILS_API,{
+            quizId,
+            hello:"dfasd"
         },{
             Authorization:`Bearer ${token}`,
         })
@@ -99,10 +100,10 @@ export const getQuizDetails = async (quizId,token)=>{
 }
 // GET_ALL_QUIZ_API
 export const getAllQuiz = async (token)=>{
-    let result = [];
+    let result = null;
     const toastId = toast.loading("Loading...");
     try {
-        const response = await apiConnector("GET",{
+        const response = await apiConnector("GET",GET_ALL_QUIZ_API,null,{
             Authorization:`Bearer ${token}`,
         })
         console.log("GET ALL QUIZ RESPONCE... ",response);

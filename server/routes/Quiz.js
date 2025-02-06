@@ -19,7 +19,7 @@ router.post("/deleteQuiz",verifyAuth,isInstructor,deleteQuiz);
 // ********************************************************************************************************
 
 // getQuizDetails ->Specific quiz
-router.get("/getQuizDetails",getQuizDetails);
+router.post("/getQuizDetails",getQuizDetails);
 // getAllQuiz
 router.get("/getAllQuiz",getAllQuiz);
 
@@ -36,7 +36,7 @@ router.post("/deleteQuestion",verifyAuth,isInstructor,deleteQuestion)
 // ********************************************************************************************************
 
 // getQuestionDetails -> Specific Question
-router.get("/getQuestionDetails",getQuestionDetails)
+router.get("/getQuestionDetails", getQuestionDetails)
 // getAllQuestions
 router.get("/getAllQuestions",getAllQuestions)
 // getQuizQuestions  -> all the questions in the particulte quiz (future )

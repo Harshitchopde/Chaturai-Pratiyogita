@@ -15,6 +15,7 @@ import AddQuiz from './components/core/dashboard/AddQuiz';
 import MyQuiz from './components/core/dashboard/MyQuiz';
 import Instructor from './components/core/dashboard/Instructors/Instructor';
 import Setting from './components/core/dashboard/Setting';
+import CardQuiz from './components/core/quiz/CardQuiz';
 
 
 function App() {
@@ -24,10 +25,14 @@ function App() {
       <NavBar/>
       <Routes>
         <Route path='/'>
-            <Route index element={<Quizzes/>}/>
+            <Route index element={<Home/>}/>
             <Route path='login' element={<Login/>}/>
             <Route path='signUp' element={<SignUp/>}/>
             <Route path='verify-email' element={<VerifyEmail/>}/>
+            <Route path='quizzes'>
+               <Route index  element={<Quizzes/>}/>
+               <Route path=':quizId' element={<CardQuiz/>}/>
+            </Route>
         </Route>
         <Route element={
           <PrivateRoute>

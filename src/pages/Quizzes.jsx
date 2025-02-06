@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import QuestionForm from '../components/core/quiz/QuestionForm'
 import dumy_data from "../data/dumy-quiz-data-1.json"
+import { getAllQuiz } from '../services/operations/quiz.Apis';
+import SingleCard from '../components/core/quiz/CardQuiz/SingleCard';
+
 const Quizzes = () => {
-  let timer = 2;
-  const [currentQuestion,setCurrentQuestion] = useState(dumy_data[0]);
-  const [quesNumber,setQuestionNumber] = useState(1);
+  const [quizzes,setQuizzes] = useState([]);
+  console.log("Quizzes : ",quizzes)
   useEffect(()=>{
-    setCurrentQuestion(dumy_data[quesNumber-1])
-  },[quesNumber])
-  const totalQuestion = dumy_data.length;
+    const getAllQuizResp = async ()=>{
+      const result = await getAllQuiz()
+      setQuizzes(result);
+    }
+    getAllQuizResp();
+  },[])
   return (
-    <div className='flex flex-col w-full h-[100vh] justify-center items-center'>
+    <div className='flex flex-wrap pt-10 gap-6 w-full h-[100vh] justify-center items-center'>
         {
-           <QuestionForm question={currentQuestion} setQuestionNumber={setQuestionNumber} total={totalQuestion} quesNumber={quesNumber} timer={timer}/> 
-        }
+          quizzes?.map((quiz,i)=>(
+             <SingleCard key={i} quiz={quiz}/>
+          ))
+        } 
     </div>
   )
 }

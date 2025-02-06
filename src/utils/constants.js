@@ -8,3 +8,9 @@ export const QUIZ_STATUS = {
     PUBLISHED:"Published",
     
 }
+export const QUIZ_DIFFICULTY = {
+    ANY:"Any",
+    EASY:"Easy",
+    MEDIUM:"Medium",
+    HARD:"Hard"
+}

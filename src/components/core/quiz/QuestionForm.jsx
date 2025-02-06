@@ -18,25 +18,9 @@ import { FaArrowLeft } from "react-icons/fa";
     "explanation": "Mars is often called the Red Planet because of its reddish appearance."
   },
   */
-const QuestionForm = ({question,setQuestionNumber,quesNumber,total,timer}) => {
+const QuestionForm = ({question,setQuestionNumber,quesNumber,total,timeLeft}) => {
 
-    const [timeLeft, setTimeLeft] = useState(timer*60);
-    useEffect(()=>{
-       
-        if(timeLeft<=0){
-            toast.success("Test is over now");
-            return;
-        }
-        if(timeLeft===60){
-            toast.success("Hurry Up 60 second left");
-           
-        }
-        const interval = setInterval(()=>{
-            setTimeLeft(prev=>prev-1)
-        },1000);
-        return ()=> clearInterval(interval);
-    },[timeLeft])
-    
+
     const handleNext = (e)=>{
        if(quesNumber===total){
             toast.success("Submit hogya")

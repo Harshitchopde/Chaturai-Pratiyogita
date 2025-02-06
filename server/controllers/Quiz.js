@@ -171,7 +171,7 @@ export const getQuizDetails = async(req,res)=>{
     try {
         // only one Quiz by id
         const {quizId} = req.body;
-
+        console.log("Quiz ID : ",req);
         const quizDetails  = await Quiz.findById(quizId)
                     .populate("questions")
                     .populate({
