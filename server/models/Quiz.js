@@ -47,6 +47,10 @@ const quizSchema = new Schema({
             ref:"Question",
         }
     ],
+    maxAttempt:{
+        type:Number,
+        default:1,
+    },
     status:{
         type:String,
         enum:["Draft","Published"],
