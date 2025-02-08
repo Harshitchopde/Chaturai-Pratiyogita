@@ -3,16 +3,6 @@ import { useSelector } from 'react-redux'
 import QuestionForm from '../QuestionForm';
 import toast from 'react-hot-toast';
 import { getSubmitedQuizResp, submitQuizResponce } from '../../../../services/operations/resultApis';
-/*
-  let timer = 2;
-  const [currentQuestion,setCurrentQuestion] = useState(dumy_data[0]);
-  const [quesNumber,setQuestionNumber] = useState(1);
-  useEffect(()=>{
-    setCurrentQuestion(dumy_data[quesNumber-1])
-  },[quesNumber])
-  const totalQuestion = dumy_data.length;
-
-*/
 const CardQuizRoom = ({submitted,setSubmitted}) => {
     const {quiz} = useSelector(state=> state.quiz);
     const { token} = useSelector(state=> state.auth);
@@ -33,17 +23,15 @@ const CardQuizRoom = ({submitted,setSubmitted}) => {
       }
       setYourResponse({...yourResponse,[questionId]:optionId});
     }
-    
+    console.log("Result set : ",result)
     useEffect(()=>{
       if(submitted===true){
         const fetchDetails = async ()=>{
           const res = await getSubmitedQuizResp(quiz?._id,token)
-          console.log("RESPONCE GET ",res);
+          // console.log("RESPONCE GET ",res);
           setResult(res);
         }
         fetchDetails();
-        console.log("Submitted ture")
-        
       }
     },[submitted,quiz?._id])
     const handleOptionSubmition = async()=>{

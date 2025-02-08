@@ -171,7 +171,8 @@ export const getQuizDetails = async(req,res)=>{
     try {
         // only one Quiz by id
         const {quizId} = req.body;
-        console.log("Quiz ID : ",req);
+        const userId = req.user.id
+    
         const quizDetails  = await Quiz.findById(quizId)
                     .populate("questions")
                     .populate({
@@ -187,11 +188,16 @@ export const getQuizDetails = async(req,res)=>{
                 message:"Quiz Details Not Found!"
             })
         }
+        let attempted = quizDetails.studentEnrolled.map((id)=>id.toString()).includes(userId);
+        // console.log("Studen enrlod ",quizDetails.studentEnrolled);
+        
+        const updatedQuiz = {...quizDetails.toObject(),attempted};
+        console.log("user ",updatedQuiz)
         return res.status(200).json({
             success:true,
             message:`Quiz Details of ${quizId}`,
             data:{
-                quiz:quizDetails
+                quiz:updatedQuiz
             }
         })
     } catch (error) {
@@ -205,14 +211,31 @@ export const getQuizDetails = async(req,res)=>{
 }
 export const getAllQuiz = async(req,res)=>{
     try {
+        // console.log("user : ",req.user)
+        const userId= req.user.id;
         const quizzesAll = await Quiz.find({
             status:"Published"
-        }).populate("instructor").exec();
+        }).populate("instructor")
+        .populate("studentEnrolled")
+        .exec();
+        const updatedQuiz = quizzesAll.map((quiz)=>({
+            ...quiz.toObject(),
+            attempted: quiz.studentEnrolled.some((user)=>{
+            //    console.log("QQ ",user)
+             console.log("QMT : ",user._id,userId)
+               if(user._id.toString()===userId){
+                console.log("user string ")
+                  return true;
+               }
+               return false;
 
+            })
+        }))
+        console.log("UpdatedQuiz : ",updatedQuiz)
         return res.status(200).json({
             success:true,
             message:"Get All Quizzes",
-            data:quizzesAll
+            data:updatedQuiz
         })
     } catch (error) {
         console.log("Error in getAllQuiz ",error);

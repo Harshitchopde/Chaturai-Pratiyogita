@@ -24,13 +24,13 @@ export const submitQuiz = async(req,res)=>{
                 message:"Quiz Not Exist!"
             })
         }
-        if(quiz.maxAttempt <=0){
+        if(quiz.studentEnrolled.includes(userId)){
             return res.status(400).json({
                 success:false,
-                message:"Max Attempt reach "
+                message:"User Already attempted!"
             })
         }
-        quiz["maxAttempt"]-=1;
+        quiz.studentEnrolled.push(userId);
         await quiz.save();
         console.log("Updated quiz ",quiz);
         const result  = await QuizResult.create({

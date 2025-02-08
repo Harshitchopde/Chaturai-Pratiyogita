@@ -5,8 +5,8 @@ import { FaUserCircle } from "react-icons/fa";
 export const NavBar = () => {
     const {token} = useSelector(state=> state.auth);
     const { user} = useSelector(state=> state.profile);
-    console.log("token ",token)
-    console.log("User ",user)
+    // console.log("token ",token)
+    // console.log("User ",user)
     const navigate = useNavigate();
   return (
     <div className='h-12  border-b-slate-600 border-b bg-white text-black justify-center flex'>

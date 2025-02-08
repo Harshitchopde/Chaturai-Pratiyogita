@@ -41,7 +41,7 @@ const QuestionForm = ({result,handleOptionSubmition, submitted,question,setQuest
     }
     // const [selected,setSelected] = useState("");
   return (
-    <div className=" flex flex-col w-10/12 mx-auto border px-8 gap-3 py-9 h-[450px] rounded-md ">
+    <div className=" flex select-none flex-col w-10/12 mx-auto border px-8 gap-3 py-9 h-[450px] rounded-md ">
         <div className="flex justify-between ">
             <div className=" text-2xl font-bold">Question {quesNumber}/{total}</div>
             <div className=" text-gray-500 text-[1rem]  ">{formateTimer(timeLeft)}</div>

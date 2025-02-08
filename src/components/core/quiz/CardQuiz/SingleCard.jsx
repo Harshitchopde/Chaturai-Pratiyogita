@@ -54,15 +54,15 @@ const SingleCard = ({quiz}) => {
 
         <div className=" absolute bottom-11 left-0 right-0  flex  justify-center  w-full">
             <Link to={quiz?._id}>
-        <button className='border-blue-950  hover:bg-blue-500  border bg-blue-600 max-w-max rounded-md px-4 py-1'>
-          {
-            quiz?.maxAttempt ===0 ?(
-             <div className="">Show Result</div> 
-            ):(
-              <div className="">Take Test</div>
-            )
-          }
-        </button>
+            <button className='border-blue-950  hover:bg-blue-500  border bg-blue-600 max-w-max rounded-md px-4 py-1'>
+              {
+                quiz?.attempted?(
+                <div className="">Show Result</div> 
+                ):(
+                  <div className="">Take Test</div>
+                )
+              }
+            </button>
             </Link>
         </div>
     </div>

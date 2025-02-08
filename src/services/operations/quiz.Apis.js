@@ -85,12 +85,12 @@ export const getQuizDetails = async (quizId,token)=>{
         },{
             Authorization:`Bearer ${token}`,
         })
-        console.log("GET QUIZ DETAILS RESPONCE... ",response);
+        // console.log("GET QUIZ DETAILS RESPONCE... ",response);
         if(!response?.data?.success){
             throw new Error(response.data.message);
         }
         result = response?.data?.data?.quiz;
-        toast.success("Get Quiz Details Successfully");
+        // toast.success("Get Quiz Details Successfully");
     } catch (error) {
         console.log("Error in gteQuizDetails ",error);
         toast.error(error.message);
@@ -106,12 +106,12 @@ export const getAllQuiz = async (token)=>{
         const response = await apiConnector("GET",GET_ALL_QUIZ_API,null,{
             Authorization:`Bearer ${token}`,
         })
-        console.log("GET ALL QUIZ RESPONCE... ",response);
+        // console.log("GET ALL QUIZ RESPONCE... ",response);
         if(!response?.data?.success){
             throw new Error(response.data.message);
         }
         result = response?.data?.data;
-        toast.success(response.data.message);
+        // toast.success(response.data.message);
     } catch (error) {
         console.log("Error in getAllQuiz ",error);
         toast.error(error.message);

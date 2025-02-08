@@ -19,7 +19,7 @@ const SideBar = () => {
     <div className='  hidden sm:visible sm:flex h-[calc(100vh-2.5rem)]  gap-2 flex-col pt-[50px] bg-blue-100 border-r border-black'>
       {
         sidebarLinks.map((link)=>{
-          console.log("user -> ",user,link)
+          // console.log("user -> ",user,link)
           if(link.type && user?.accountType!==link.type){
             return null;
           }else{

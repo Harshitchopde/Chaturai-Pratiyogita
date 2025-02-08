@@ -19,9 +19,9 @@ router.post("/deleteQuiz",verifyAuth,isInstructor,deleteQuiz);
 // ********************************************************************************************************
 
 // getQuizDetails ->Specific quiz
-router.post("/getQuizDetails",getQuizDetails);
+router.post("/getQuizDetails",verifyAuth,getQuizDetails);
 // getAllQuiz
-router.get("/getAllQuiz",getAllQuiz);
+router.get("/getAllQuiz",verifyAuth,getAllQuiz);
 
 // ********************************************************************************************************
 //                                      Question (Only Instrutor)

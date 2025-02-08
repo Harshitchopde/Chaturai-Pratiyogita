@@ -11,7 +11,7 @@ export const submitQuizResponce = async(response,token)=>{
         const res = await apiConnector("POST",SUBMIT_RESPONCE_API,response,{
              Authorization:`Bearer ${token}`
         })
-        console.log("SUBMIT QUIZ RESPONSE..... ",res);
+        // console.log("SUBMIT QUIZ RESPONSE..... ",res);
         if(!res?.data?.success){
             
             throw new Error(res?.data?.message);
@@ -36,12 +36,12 @@ export const getSubmitedQuizResp = async (quizId,token)=>{
             Authorization:`Bearer ${token}`
         })
 
-        console.log("GET Submited quiz REsponses .... ",res);
+        // console.log("GET Submited quiz REsponses .... ",res);
         if(!res?.data?.success){
             throw new Error("Error occure in getting")
         }
         result = res?.data?.data;
-        toast.success("SuccessFully get Responces");
+        // toast.success("SuccessFully get Responces");
     } catch (error) {
         console.error("Error occure in getSubmitedQuizResp ",error);
         toast.error("Error : ",error);

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import SingleCard from './SingleCard'
-import { useLocation, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllQuiz, getQuizDetails } from '../../../../services/operations/quiz.Apis';
+import { getQuizDetails } from '../../../../services/operations/quiz.Apis';
 import { setQuiz } from '../../../../slices/quizSlicer';
 import { QUIZ_DIFFICULTY } from '../../../../utils/constants';
 import toast from 'react-hot-toast';
-import TimerComponent from '../../../../demoRough/timer';
 import { formateTimer } from '../../../../utils/formateTime';
 import CardQuizRoom from './CardQuizRoom';
 
@@ -15,14 +13,15 @@ const CardQuiz = () => {
     const {quizId} =useParams();
     const {token} = useSelector(state=>state.auth);
     const {quiz} = useSelector(state=>state.quiz);
-    const isSbmit = quiz?.maxAttempt ==0 ?true :false;
-    console.log("IS ",isSbmit)
+    const isSbmit = quiz?.attempted?true :false;
+    // console.log("IS ",isSbmit)
+    const navigate = useNavigate();
     const [showAnswer,setShowAnswer] = useState(false);
     useEffect(()=>{
         setShowAnswer(isSbmit)
     },[isSbmit])
-    console.log("Quizx : ",showAnswer,quiz)
-    console.log("ShowAnd ",showAnswer)
+    // console.log("Quizx : ",quiz)
+    // console.log("ShowAnd ",showAnswer)
     const [loading,setLoading] = useState(false);
     const [startQuiz,setStartQuiz] = useState(false);
     const dispatch = useDispatch();
@@ -41,10 +40,16 @@ const CardQuiz = () => {
     },[])
     // handleStartQuiz
     const handleStartQuiz = ()=>{
+        if(token===null){
+            toast.error("Your are not authenticated!");
+            navigate("/login")
+            return;
+        }
         setLoading(true);
         if(showAnswer){
             setLoading(false);
             setStartQuiz(true);
+            return;
         }
         setTimer(5)
         const interval = setInterval(()=>{
