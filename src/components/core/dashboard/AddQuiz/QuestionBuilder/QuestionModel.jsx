@@ -6,6 +6,7 @@ import IconBtn from '../../../../common/IconBtn';
 import toast from 'react-hot-toast';
 import { createQuestion } from '../../../../../services/operations/questionApis';
 import { setQuiz } from '../../../../../slices/quizSlicer';
+import ReactJson from 'react-json-view';
 
 export const QuestionModel = ({
   modelData, 
@@ -16,11 +17,21 @@ export const QuestionModel = ({
 }) => {
   const {
     register,
-    getValues,
-    setValue,
+
     handleSubmit,
-    formState:{errors}
-  } = useForm();
+    setValue,
+    watch,
+    formState: { errors }
+  } = useForm({
+    defaultValues: {
+      questionDesc: modelData?.questionDesc || "",
+      explanation: modelData?.explanation || "",
+      points: modelData?.points || 1,
+      options: modelData?.options || [{ text: "", isCorrect: false }]
+    }
+  });
+
+
 
   const dispatch = useDispatch();
   const { quiz} = useSelector(state=>state.quiz);
@@ -63,7 +74,7 @@ export const QuestionModel = ({
    }
    // isFormUpdate
    const isFormUpdate = ()=>{
-    const currValues = getValues();
+    // const currValues = getValues();
     
    }
 
@@ -96,7 +107,7 @@ export const QuestionModel = ({
        return;
     }
     console.log("Optin : ",options)
-    const currValues = getValues();
+    // const currValues = getValues();
     const formData = new FormData();
     formData.append("quizId",modelData);
     formData.append("questionDesc",data.questionDesc)
@@ -132,94 +143,28 @@ export const QuestionModel = ({
       {/* Model Form  */}
       <form onSubmit={handleSubmit(handleSubmitBtn)}
        className=' w-11/12 px-3 mb-4 mx-auto flex flex-col space-y-3'>
-        {/* Question input */}
-        <div className=" relative flex flex-col space-y-1">
-          <label htmlFor="questionDesc" className=' text-sm '>Question Description <sup className=' text-red-500'>*</sup></label>
-          <input disabled={view || loading}
-           id='questionDesc'
-           placeholder='Enter the Question Description'
-           {...register("questionDesc",{required:true})}
-           className=' form-style '/>
-           {
-            errors.questionDesc && (
-              <span className=' absolute -bottom-5 right-0 text-red-400 text-sm' >Question Desc required*</span>
-            )
-           }
-        </div>
-         {/* Explaination input */}
-        <div className=" relative flex flex-col space-y-1">
-          <label htmlFor="explanation" className=' text-sm '>Explanation Description</label>
-          <input disabled={view || loading}
-           id='explanation'
-           placeholder='Enter the explanation '
-           {...register("explanation")}
-           className=' form-style '/>
-        
-        </div>
-        {/* Option +  */}
-      <div className=" flex justify-between ">
-      <button type='button' onClick={addOption} className=' max-w-max rounded-md px-2 py-1 text-sm border border-yellow-300 text-yellow-300'>
-          Add Options +
-        </button>
-       <div className="flex gap-x-4 items-center">
-        <label htmlFor="points" className='text-sm'>
-          Points
-        </label>
-        <input type='number' {...register("points",{
-          valueAsNumber: true,
-        })} className='w-10 rounded-md outline-none'/>
-       </div>
-      </div>
-        {
-          options.map((option,index)=>(
-            
-             <div className="flex items-center relative mb-7 bg-slate-600 p-1  rounded-md gap-3" key={index}>
-              <input type='text' placeholder={`Option ${index+1}`}
-              value={option.text}
-              {...register(`options.${index}.text`,{required:true})}
-              onChange={(e)=>handleOptionChange(index,"text",e.target.value)}
-              className=' outline-none border p-2 w-full rounded-md'/>
-              
-              {/* toggle switch */}
-              <button type='button' className={` w-14 h-7 flex items-center rounded-full p-1 
-              ${option.isCorrect?"bg-green-500":"bg-gray-300"}`}
-              {...register(`options.${index}.isCorrect`,{required:true,
+                 {/* JSON Editor */}
+                 <div className="relative flex flex-col space-y-1">
+            <label htmlFor="jsonEditor" className='text-sm'>Edit Question Data (JSON)</label>
+            <ReactJson
+              src={jsonData}
+              theme="monokai"
+              onEdit={(e) => handleJsonChange(e.updated_src)}
+              onAdd={(e) => handleJsonChange(e.updated_src)}
+              onDelete={(e) => handleJsonChange(e.updated_src)}
+              collapsed={false}
+            />
+          </div>
 
-              })}
-               onClick={()=>toggleCorrectAnswer(index)}>
-                <div className={` h-5 w-5 bg-white rounded-full shadow-md  transform transition-all duration-500
-                  ${option.isCorrect?"translate-x-5":"translate-x-0"}`}></div>
-               </button>
-              {/* Cancel */}
-              <button type='button' onClick={()=>removeOption(index)}
-               className=' p-2  text-white rounded-md'>
-                 ✖
-               </button>
-               {
-                errors.options?.[index]?.text  && (
-                  <span className=' absolute -bottom-4 text-red-400 text-sm'>Option  required*</span>
-                )
-              }
-              
-              
+          {/* Buttons */}
+          {!view && (
+            <div className="flex justify-end gap-2">
+              <button type='button' onClick={() => setModelData(null)} className='bg-gray-300 border text-white px-2 py-1 rounded-md '>
+                Cancel
+              </button>
+              <IconBtn type={"submit"} disabled={loading} text={loading ? "Loading..." : edit ? "Save & Next" : "Save"} />
             </div>
-           
-         
-           
-          ))
-        }
-        {
-            !view && (
-              <div className=" flex justify-end gap-2">
-                <button type='button' onClick={()=>setModelData(null)} className=' bg-gray-300 border text-white px-2 py-1 rounded-md '>
-                  Cancel
-                </button>
-                {/* Save */}
-                <IconBtn  type={"submit"} 
-                 disabled={loading} text={loading?"Loading...":edit?"Save & Next":"Save"}/>
-              </div>
-            )
-          }
+          )}
        
       </form>
        </div>
