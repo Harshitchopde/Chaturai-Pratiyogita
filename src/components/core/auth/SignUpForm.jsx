@@ -53,11 +53,11 @@ const SignUpForm = () => {
     }
 
   return (
-    <form className='mt-4 border p-5 rounded-md h-[400px] flex  flex-col gap-y-6 w-full' onSubmit={handleSubmit}>
+    <form className='mt-4 border p-5 rounded-md h-[400px] flex  flex-col gap-y-3 sm:gap-y-6 w-full' onSubmit={handleSubmit}>
         <Tab accountType={accountType} setAccountType={setAccountType}/>
         <div className="flex  gap-2  justify-between">
             <label>
-                <p>First Name<sup className='text-red-600'>*</sup></p>
+                <p className=' text-sm sm:text-xl'>First Name<sup className='text-red-600'>*</sup></p>
                 <input type="text"
                     required
                     name='firstName'
@@ -65,11 +65,11 @@ const SignUpForm = () => {
                     onChange={handleChange}
                     placeholder='First Name'
                     style={{boxShadow:"inset 0px -1px 0px rgba(255, 255, 255, 0.18)",outline:"none"}}
-                    className='pl-2 bg-slate-200 w-full rounded-md p-1 '
+                    className='pl-2 bg-slate-200 w-full text-sm sm:text-xl rounded-md p-1 '
                 />
             </label>
             <label>
-                <p>Last Name<sup className='text-red-600'>*</sup></p>
+                <p className=' text-sm sm:text-xl'>Last Name<sup className='text-red-600'>*</sup></p>
                 <input type="text"
                     required
                     name='lastName'
@@ -77,13 +77,13 @@ const SignUpForm = () => {
                     placeholder='Last Name'
                     onChange={handleChange}
                     style={{boxShadow:"inset 0px -1px 0px rgba(255, 255, 255, 0.18)",outline:"none"}}
-                    className='pl-2 bg-slate-200 w-full rounded-md p-1 '
+                    className='pl-2 text-sm sm:text-xl bg-slate-200 w-full rounded-md p-1 '
                 />
             </label>
         </div>
         <div className="">
             {/* email */}
-            <p>Email<sup className='text-red-600'/>*</p>
+            <p className=' text-sm sm:text-xl'>Email<sup className='text-red-600'>*</sup></p>
             <input type="email"
                 required
                 onChange={handleChange}
@@ -91,12 +91,12 @@ const SignUpForm = () => {
                 value={email}
                 placeholder='Enter Your Email'
                 style={{boxShadow:"inset 0px -1px 0px rgba(255, 255, 255, 0.18)",outline:"none"}}
-                className='pl-2 w-full bg-slate-200 rounded-md p-1 '
+                className='pl-2  text-sm sm:text-xl w-full bg-slate-200 rounded-md p-1 '
             />
         </div>
         <div className=" flex gap-2">
             <label>
-                <p>Password</p>
+                <p className=' text-sm sm:text-xl'>Password<sup className=' text-red-500'>*</sup></p>
                 <input 
                     type="password"
                     required
@@ -105,11 +105,11 @@ const SignUpForm = () => {
                     onChange={handleChange}
                     placeholder='Password'
                     style={{boxShadow:"inset 0px -1px 0px rgba(255, 255, 255, 0.18)",outline:"none"}}
-                    className='pl-2 w-full bg-slate-200 rounded-md p-1 '
+                    className='pl-2 text-sm sm:text-xl w-full bg-slate-200 rounded-md p-1 '
                 />
             </label>
             <label>
-                <p>Conform Password</p>
+                <p className=' text-sm sm:text-xl'>Conform Password<sup className=' text-red-500'>*</sup></p>
                 <input
                     type='password'
                     required
@@ -118,11 +118,11 @@ const SignUpForm = () => {
                     onChange={handleChange}
                     placeholder='Conform Password'
                     style={{boxShadow:"inset 0px -1px 0px rgba(255, 255, 255, 0.18)",outline:"none"}}
-                    className=' pl-2 w-full bg-slate-200 rounded-md p-1 '
+                    className=' pl-2 text-sm sm:text-xl w-full bg-slate-200 rounded-md p-1 '
                     />
             </label>
         </div>
-        <button className=' bg-yellow-400 flex w-full rounded-md py-1 px-3 mx-auto text-black  max-w-max justify-center items-center'>Create Account</button>
+        <button className=' bg-yellow-400 flex w-full sm:text-xl text-sm  px-2 rounded-md py-1 sm:px-3 mx-auto text-black  max-w-max justify-center items-center'>Create Account</button>
     </form>
   )
 }

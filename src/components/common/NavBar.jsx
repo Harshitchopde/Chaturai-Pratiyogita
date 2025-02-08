@@ -9,12 +9,12 @@ export const NavBar = () => {
     // console.log("User ",user)
     const navigate = useNavigate();
   return (
-    <div className='h-12  border-b-slate-600 border-b bg-white text-black justify-center flex'>
+    <div className='h-12 text-[0.5rem]  border-b-slate-600 border-b bg-white text-black justify-center flex'>
         <div className='flex items-center justify-between w-10/12 max-w-maxContent'>
          {/* left  -> name-> Quiz-test*/}
-         <div className="text-xl font-bold">Quiz-test</div>
+         <div className="sm:text-xl font-bold">Quiz-test</div>
          {/* center -> home , quizzes*/}
-         <div className=" flex gap-4    ">
+         <div className=" sm:text-xl flex sm:gap-4  gap-1   ">
             <Link to={"/"}>
                 <div className="">Home</div>
             </Link>
@@ -23,7 +23,7 @@ export const NavBar = () => {
             </Link>
          </div>
          {/* right -> login sign up | user */}
-         <div className="flex gap-2">
+         <div className="flex sm:text-xl  sm:gap-2 gap-1">
             {
                 user && (
                     <Link to={"/dashboard/profile"}>
@@ -34,14 +34,14 @@ export const NavBar = () => {
             {
                 token ==null && (
                     <Link to={"/login"}>
-                        <button className='border border-slate-400 rounded-md px-2 py-[1px]'>Login</button>
+                        <button className='border border-slate-400 rounded-md px-1 sm:px-2 sm:py-[1px]'>Login</button>
                     </Link>
                 )
             }
             {
                 token===null && (
                     <Link to={"/signUp"}>
-                        <button className='border border-slate-400 rounded-md px-2 py-[1px]'>Sign Up</button>
+                        <button className='border border-slate-400  px-1 rounded-md sm:px-2 '>Sign Up</button>
                     </Link>
                 )
             }
