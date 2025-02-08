@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import QuestionForm from '../QuestionForm';
 import toast from 'react-hot-toast';
-import { submitQuizResponce } from '../../../../services/operations/resultApis';
+import { getSubmitedQuizResp, submitQuizResponce } from '../../../../services/operations/resultApis';
 /*
   let timer = 2;
   const [currentQuestion,setCurrentQuestion] = useState(dumy_data[0]);
@@ -13,7 +13,7 @@ import { submitQuizResponce } from '../../../../services/operations/resultApis';
   const totalQuestion = dumy_data.length;
 
 */
-const CardQuizRoom = () => {
+const CardQuizRoom = ({submitted,setSubmitted}) => {
     const {quiz} = useSelector(state=> state.quiz);
     const { token} = useSelector(state=> state.auth);
    
@@ -24,15 +24,28 @@ const CardQuizRoom = () => {
     const [yourResponse,setYourResponse] = useState({});
     // result 
     const [result,setResult] = useState(null);
-    const [submitted,setSubmitted] = useState(false);
+    // const [submitted,setSubmitted] = useState(false);
     // handle option selected
+    
     const handleOptionSelect = (questionId,optionId)=>{
       if(submitted){
         return;
       }
       setYourResponse({...yourResponse,[questionId]:optionId});
     }
-  
+    
+    useEffect(()=>{
+      if(submitted===true){
+        const fetchDetails = async ()=>{
+          const res = await getSubmitedQuizResp(quiz?._id,token)
+          console.log("RESPONCE GET ",res);
+          setResult(res);
+        }
+        fetchDetails();
+        console.log("Submitted ture")
+        
+      }
+    },[submitted,quiz?._id])
     const handleOptionSubmition = async()=>{
        // yourResponse ko submit karna hai
        const formData = new FormData();
@@ -55,21 +68,22 @@ const CardQuizRoom = () => {
     // timer related calculation
     const [timeLeft, setTimeLeft] = useState(timer*60);
     useEffect(()=>{
-       
-        if(timeLeft<=0){
-            toast.success("Test is over now");
-            handleOptionSubmition();
-            return;
-        }
-        if(timeLeft===60){
-            toast.success("Hurry Up 60 second left");
-           
-        }
-        const interval = setInterval(()=>{
-            setTimeLeft(prev=>prev-1)
-        },1000);
-        return ()=> clearInterval(interval);
-    },[timeLeft])
+       if(!submitted){
+            if(timeLeft<=0){
+              toast.success("Test is over now");
+              handleOptionSubmition();
+              return;
+          }
+          if(timeLeft===60){
+              toast.success("Hurry Up 60 second left");
+            
+          }
+          const interval = setInterval(()=>{
+              setTimeLeft(prev=>prev-1)
+          },1000);
+          return ()=> clearInterval(interval);
+       }
+    },[timeLeft,submitted])
     
   return (
     <div>

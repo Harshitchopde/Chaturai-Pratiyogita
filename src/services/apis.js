@@ -23,5 +23,6 @@ export const questionEndPoints = {
     GET_QUIZ_QUESTIONS_API:BASE_URL+"/quiz/getQuizQuestions"
 }
 export const resultEndPoints = {
-    SUBMIT_RESPONCE_API:BASE_URL+"/res/submitQuiz"
+    SUBMIT_RESPONCE_API:BASE_URL+"/res/submitQuiz",
+    GET_SUBMITED_RESP_API:BASE_URL+"/res/getResultQuiz"
 }

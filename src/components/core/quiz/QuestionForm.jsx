@@ -22,8 +22,12 @@ const QuestionForm = ({result,handleOptionSubmition, submitted,question,setQuest
 
 
     const handleNext = (e)=>{
-       if(quesNumber===total){
+       if(quesNumber===total && !submitted ){
         handleOptionSubmition();
+            return;
+       } 
+       if(quesNumber===total){
+       
             return;
        } 
        setQuestionNumber(prev=>prev+1);
