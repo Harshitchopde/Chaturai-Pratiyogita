@@ -1,9 +1,10 @@
-import { compare, genSaltSync, hashSync } from "bcrypt";
+import bcryptjs from "bcryptjs";
 import Otp from "../models/Otp.js";
 import User from "../models/User.js";
 import { generate } from "otp-generator";
 import Profile from "../models/Profile.js";
 import pkg from "jsonwebtoken";
+const { compare, genSaltSync, hashSync } = bcryptjs;
 const { sign } = pkg
 /* 
     email, 

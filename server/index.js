@@ -8,13 +8,14 @@ import cookieParser from "cookie-parser";
 import userRouter from "./routes/User.js"
 import quizRouter from "./routes/Quiz.js"
 import resultRouter from "./routes/Result.js"
+import serverless from "serverless-http";
 const PORT = process.env.PORT || 4000;
 const app = express();
 app.use(express.json());
 // cors
 app.use(cors({
-    // origin:"http://localhost:3000",
-    credentials:true,
+    origin:"*",
+ 
 }));
 // cookieParser --> cookie-parser
 app.use(cookieParser())
@@ -32,6 +33,7 @@ app.get("/",(req,res)=>{
     })
 })
 
-app.listen(PORT,()=>{
-    console.log("Server is running "+PORT)
-})
+export const handler = serverless(app)
+// app.listen(PORT,()=>{
+//     console.log("Server is running "+PORT)
+// })
