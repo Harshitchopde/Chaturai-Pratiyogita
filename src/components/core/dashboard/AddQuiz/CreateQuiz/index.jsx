@@ -18,7 +18,18 @@ const CreateQuiz = () => {
         setValue,
         handleSubmit,
         formState:{errors},
-    } = useForm()
+    } = useForm({
+        defaultValues: {
+            quizName: quiz?.quizName || "",
+            quizDesc: quiz?.quizDesc || "",
+            numberOfQuestions: quiz?.numberOfQuestions || "",
+            timeDuration: quiz?.timeDuration || "",
+            tags: quiz?.tags || [],
+            topic: quiz?.topic || "",
+            difficulty: quiz?.difficulty || "Any",
+            questions:quiz?.questions || []
+        }
+    })
     const {token} = useSelector(state=> state.auth);
     const [loading,setLoading] = useState(false);
     const dispatch = useDispatch();
