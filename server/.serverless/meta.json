@@ -126,7 +126,7 @@
               "Properties": {
                 "Code": {
                   "S3Bucket": "serverless-framework-deployments-ap-south-1-742a1e34-61d6",
-                  "S3Key": "serverless/quiz-server-api/dev/1739110905896-2025-02-09T14:21:45.896Z/quiz-server-api.zip"
+                  "S3Key": "serverless/quiz-server-api/dev/1739130264683-2025-02-09T19:44:24.683Z/quiz-server-api.zip"
                 },
                 "Handler": "index.handler",
                 "Runtime": "nodejs20.x",
@@ -144,14 +144,14 @@
                 "ApiLogGroup"
               ]
             },
-            "ApiLambdaVersionucJb9unkVGZN83FPovi10Pyw8aHIKK984d0FMMuw": {
+            "ApiLambdaVersion9uFhRKiBUpa8HO4VCKpuBLOG7sA5wm5xrRbA8J7HaBE": {
               "Type": "AWS::Lambda::Version",
               "DeletionPolicy": "Retain",
               "Properties": {
                 "FunctionName": {
                   "Ref": "ApiLambdaFunction"
                 },
-                "CodeSha256": "vnN0Lm6u5nO4Z65pNUbM9hUlzMwt/ixXOHCSuOYICvE="
+                "CodeSha256": "5eUbhIbCniwxYZajVcE69j9BBvT7Gqtd3OVjNTCpINY="
               }
             },
             "HttpApi": {
@@ -277,7 +277,7 @@
             "ApiLambdaFunctionQualifiedArn": {
               "Description": "Current Lambda function version",
               "Value": {
-                "Ref": "ApiLambdaVersionucJb9unkVGZN83FPovi10Pyw8aHIKK984d0FMMuw"
+                "Ref": "ApiLambdaVersion9uFhRKiBUpa8HO4VCKpuBLOG7sA5wm5xrRbA8J7HaBE"
               },
               "Export": {
                 "Name": "sls-quiz-server-api-dev-ApiLambdaFunctionQualifiedArn"
@@ -340,7 +340,7 @@
           "timeout": 20,
           "runtime": "nodejs20.x",
           "vpc": {},
-          "versionLogicalId": "ApiLambdaVersionucJb9unkVGZN83FPovi10Pyw8aHIKK984d0FMMuw"
+          "versionLogicalId": "ApiLambdaVersion9uFhRKiBUpa8HO4VCKpuBLOG7sA5wm5xrRbA8J7HaBE"
         }
       },
       "plugins": [
@@ -466,7 +466,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-ap-south-1-742a1e34-61d6",
-                "S3Key": "serverless/quiz-server-api/dev/1739110905896-2025-02-09T14:21:45.896Z/quiz-server-api.zip"
+                "S3Key": "serverless/quiz-server-api/dev/1739130264683-2025-02-09T19:44:24.683Z/quiz-server-api.zip"
               },
               "Handler": "index.handler",
               "Runtime": "nodejs20.x",
@@ -484,14 +484,14 @@
               "ApiLogGroup"
             ]
           },
-          "ApiLambdaVersionucJb9unkVGZN83FPovi10Pyw8aHIKK984d0FMMuw": {
+          "ApiLambdaVersion9uFhRKiBUpa8HO4VCKpuBLOG7sA5wm5xrRbA8J7HaBE": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ApiLambdaFunction"
               },
-              "CodeSha256": "vnN0Lm6u5nO4Z65pNUbM9hUlzMwt/ixXOHCSuOYICvE="
+              "CodeSha256": "5eUbhIbCniwxYZajVcE69j9BBvT7Gqtd3OVjNTCpINY="
             }
           },
           "HttpApi": {
@@ -617,7 +617,7 @@
           "ApiLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ApiLambdaVersionucJb9unkVGZN83FPovi10Pyw8aHIKK984d0FMMuw"
+              "Ref": "ApiLambdaVersion9uFhRKiBUpa8HO4VCKpuBLOG7sA5wm5xrRbA8J7HaBE"
             },
             "Export": {
               "Name": "sls-quiz-server-api-dev-ApiLambdaFunctionQualifiedArn"
@@ -686,12 +686,12 @@
     "serviceProviderAwsCfStackName": "quiz-server-api-dev",
     "serviceProviderAwsCfStackId": "arn:aws:cloudformation:ap-south-1:457272581074:stack/quiz-server-api-dev/48cc9430-e6e9-11ef-a1ab-06dddfe15eaf",
     "serviceProviderAwsCfStackCreated": "2025-02-09T13:25:09.571Z",
-    "serviceProviderAwsCfStackUpdated": "2025-02-09T13:49:32.471Z",
+    "serviceProviderAwsCfStackUpdated": "2025-02-09T14:22:01.063Z",
     "serviceProviderAwsCfStackStatus": "UPDATE_COMPLETE",
     "serviceProviderAwsCfStackOutputs": [
       {
         "OutputKey": "ApiLambdaFunctionQualifiedArn",
-        "OutputValue": "arn:aws:lambda:ap-south-1:457272581074:function:quiz-server-api-dev-api:9",
+        "OutputValue": "arn:aws:lambda:ap-south-1:457272581074:function:quiz-server-api-dev-api:10",
         "Description": "Current Lambda function version",
         "ExportName": "sls-quiz-server-api-dev-ApiLambdaFunctionQualifiedArn"
       },
@@ -806,7 +806,7 @@
           "Properties": {
             "Code": {
               "S3Bucket": "serverless-framework-deployments-ap-south-1-742a1e34-61d6",
-              "S3Key": "serverless/quiz-server-api/dev/1739110905896-2025-02-09T14:21:45.896Z/quiz-server-api.zip"
+              "S3Key": "serverless/quiz-server-api/dev/1739130264683-2025-02-09T19:44:24.683Z/quiz-server-api.zip"
             },
             "Handler": "index.handler",
             "Runtime": "nodejs20.x",
@@ -824,14 +824,14 @@
             "ApiLogGroup"
           ]
         },
-        "ApiLambdaVersionucJb9unkVGZN83FPovi10Pyw8aHIKK984d0FMMuw": {
+        "ApiLambdaVersion9uFhRKiBUpa8HO4VCKpuBLOG7sA5wm5xrRbA8J7HaBE": {
           "Type": "AWS::Lambda::Version",
           "DeletionPolicy": "Retain",
           "Properties": {
             "FunctionName": {
               "Ref": "ApiLambdaFunction"
             },
-            "CodeSha256": "vnN0Lm6u5nO4Z65pNUbM9hUlzMwt/ixXOHCSuOYICvE="
+            "CodeSha256": "5eUbhIbCniwxYZajVcE69j9BBvT7Gqtd3OVjNTCpINY="
           }
         },
         "HttpApi": {
@@ -956,7 +956,7 @@
         "ApiLambdaFunctionQualifiedArn": {
           "Description": "Current Lambda function version",
           "Value": {
-            "Ref": "ApiLambdaVersionucJb9unkVGZN83FPovi10Pyw8aHIKK984d0FMMuw"
+            "Ref": "ApiLambdaVersion9uFhRKiBUpa8HO4VCKpuBLOG7sA5wm5xrRbA8J7HaBE"
           },
           "Export": {
             "Name": "sls-quiz-server-api-dev-ApiLambdaFunctionQualifiedArn"
