@@ -24,12 +24,12 @@ const RenderSteps = () => {
   return (
     <div>
         {/* handle step 1 - 2 - 3 */}
-        <div className=" flex  relative justify-center mt-14 mb-7 ">
+        <div className=" flex   justify-center mt-7 md:mt-14 mb-7 ">
             {
                 steps.map((ele,i)=>(
                     <>
                     <div key={i} className="flex flex-col items-center">
-                        <button className={` flex grid cursor-default place-items-center rounded-full border  w-[34px] aspect-square 
+                        <button className={`  grid cursor-default place-items-center rounded-full border  w-[34px] aspect-square 
                             ${step>= ele.id ? " text-white  border-green-300 bg-green-500":" text-white border-slate-600 bg-slate-400"}
                             `}>
                             {

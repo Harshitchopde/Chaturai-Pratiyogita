@@ -3,11 +3,11 @@ import React, { useState } from 'react'
 import ConformationPopUp from '../../../../common/ConformationPopUp'
 import NestedQuestionView from './NestedQuestionView'
 import IconBtn from '../../../../common/IconBtn'
-import { MdNavigateNext } from 'react-icons/md'
+import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import toast from 'react-hot-toast'
 import { setEditQuiz, setStep } from '../../../../../slices/quizSlicer'
-
+// import clsx from "clsx"
 
 const AddQuestion = () => {
   const {quiz}= useSelector(state=>state.quiz);
@@ -25,20 +25,20 @@ const AddQuestion = () => {
   }
   return (
     <>
-    <div className=' border-[1px] bg-slate-100 p-6 space-y-8 rounded-md '>
-      <div className=" text-2xl font-semibold">Quiz Builder</div>
+    <div className=' border-[1px] bg-slate-100 sm:p-6 p-3 space-y-4 sm:space-y-8 rounded-md '>
+      <div className=" sm:text-2xl text-xl font-semibold">Quiz Builder</div>
       <NestedQuestionView/>
       {/* prev & next button */}
       <div className=" flex justify-end items-center gap-x-3">
       <button onClick={goToBack}
-         className={`flex cursor-pointer items-center gap-x-2 rounded-md py-[4px] px-[20px] font-semibold bg-slate-200`}>prev</button>
+         className={`flex cursor-pointer items-center gap-x-2  max-h-max rounded-md py-[4px] sm:text-xl text-sm px-[10px] sm:px-[10px] font-semibold bg-slate-200`} ><MdNavigateBefore/>Prev</button>
 
          <IconBtn text="Next" onClick={goToNext}>
           {/* <MdNavigateNext/> */}
           <MdNavigateNext/>
          </IconBtn>
       </div>
-    </div>
+    </div>  
    
     </>
   )

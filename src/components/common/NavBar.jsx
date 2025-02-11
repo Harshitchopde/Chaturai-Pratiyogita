@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { FaUserCircle } from "react-icons/fa";
+import ProfileDropDown from '../core/auth/ProfileDropDown';
 export const NavBar = () => {
     const {token} = useSelector(state=> state.auth);
     const { user} = useSelector(state=> state.profile);
@@ -9,12 +10,13 @@ export const NavBar = () => {
     // console.log("User ",user)
     const navigate = useNavigate();
   return (
-    <div className='h-12 text-[0.5rem]  border-b-slate-600 border-b bg-white text-black justify-center flex'>
+    <div className='h-12 text-[1rem]  border-b-slate-600 border-b bg-white text-black justify-center flex'>
         <div className='flex items-center justify-between w-10/12 max-w-maxContent'>
+        
          {/* left  -> name-> Quiz-test*/}
          <div className="sm:text-xl font-bold">Quiz-test</div>
          {/* center -> home , quizzes*/}
-         <div className=" sm:text-xl flex sm:gap-4  gap-1   ">
+         <div className=" sm:text-xl flex sm:gap-4  gap-2   ">
             <Link to={"/"}>
                 <div className="">Home</div>
             </Link>
@@ -26,9 +28,10 @@ export const NavBar = () => {
          <div className="flex sm:text-xl  sm:gap-2 gap-1">
             {
                 user && (
-                    <Link to={"/dashboard/profile"}>
-                        <FaUserCircle className=''/>
-                    </Link>
+                    // <Link to={"/dashboard/profile"}>
+                    //     <FaUserCircle className=''/>
+                    // </Link>
+                    <ProfileDropDown/>
                 )
             }
             {

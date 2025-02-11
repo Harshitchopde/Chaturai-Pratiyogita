@@ -17,8 +17,22 @@
   @apply 
   rounded-lg 
   bg-slate-50
-  p-3
-  leading-[24px]
+  sm:p-3 p-2
+  sm:text-xl
+  text-sm
+  leading-[16px]
+  sm:leading-[24px]
+  shadow-[0_1px_0_0] shadow-white/50 placeholder:text-gray-400 focus-within:outline-none;
+
+
+}
+.form-responsive{
+  @apply 
+  rounded-lg 
+  bg-slate-50
+  p-2
+  leading-[16px]
+  text-sm
   shadow-[0_1px_0_0] shadow-white/50 placeholder:text-gray-400 focus-within:outline-none;
 
 

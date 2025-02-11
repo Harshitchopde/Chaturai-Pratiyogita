@@ -74,29 +74,29 @@ const CardQuiz = () => {
              (
                 <CardQuizRoom setSubmitted={setShowAnswer} submitted={showAnswer}/>
             ):(
-                <div className="">
-                    <div className="  flex justify-between  px-11 w-10/12 mx-auto rounded-lg bg-gray-200 py-6">
-                          <div className=" space-y-2">
-                          <p className=' capitalize text-2xl text-black'>{quiz?.quizName}</p>
-                            <p className=' pl-1 text-sm text-slate-400'>{quiz?.quizDesc}</p>
-                            <p className=' text-lg '>Topic it Cover : {quiz?.topic}</p>
-                            <div className=" flex text-lg ">
+                <div className=" text-[0.75rem]">
+                    <div className="  flex justify-between  px-5 sm:px-11 w-10/12 mx-auto rounded-lg bg-gray-200 py-4 sm:py-6">
+                          <div className=" space-y-[5px] sm:space-y-2">
+                          <p className=' capitalize  text-xl sm:text-2xl text-black'>{quiz?.quizName}</p>
+                            <p className=' pl-1 text-[0.75rem] leading-4 sm:text-sm text-slate-400'>{quiz?.quizDesc}</p>
+                            <p className=' sm:text-lg  '>Topic it Cover : {quiz?.topic}</p>
+                            <div className=" flex sm:text-lg ">
                                 <p>Tags :</p>
                                 {
                                 quiz?.tags?.map((tag,i)=>(
-                                    <div key={i} className=" px-2 py-[1px] mx-1 max-w-max flex items-center justify-center rounded-lg bg-yellow-100">{tag}</div>
+                                    <div key={i} className=" px-2 py-0 sm:py-[1px] mx-1  max-w-max flex items-center justify-center rounded-lg bg-yellow-100">{tag}</div>
                                 ))
                             }
                             </div>
                            
-                            <p className=' text-sm'>Difficulty : <span className={`
+                            <p className=' sm:text-sm'>Difficulty : <span className={`
                              rounded-md px-2 py-[1px] ${
                                 quiz?.difficulty===QUIZ_DIFFICULTY.EASY?"bg-green-200 text-green-600":quiz?.difficulty===QUIZ_DIFFICULTY.MEDIUM?" bg-yellow-200 text-yellow-600":quiz?.difficulty===QUIZ_DIFFICULTY.HARD?"bg-red-200 text-red-600":"bg-gray-200 text-gray-600"}`}>{quiz?.difficulty}</span></p>
-                            <p className=' text-sm'>Number Of Questions : {quiz?.numberOfQuestions}</p>
+                            <p className='  sm:text-sm'>Number Of Questions : {quiz?.numberOfQuestions}</p>
                
                           </div>
                           
-                          <button onClick={handleStartQuiz} disabled={loading} className=' rounded-md bg-blue-500 max-h-max py-1 px-4 flex justify-center items-center'>
+                          <button onClick={handleStartQuiz} disabled={loading} className=' sm:text-xl text-[0.75rem] leading-4 rounded-md bg-blue-500 max-h-max py-1 px-[2px] sm:px-4 flex justify-center items-center'>
                             {
                                 showAnswer ? (
                                     <div className="">Show Answer</div>

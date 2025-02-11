@@ -35,24 +35,28 @@ const CreateQuiz = () => {
     const dispatch = useDispatch();
     //  edit check | from update
     const checkUpdated = ()=>{
+        
         const currValues = getValues();
-        console.log("Curr ",currValues);
-        console.log("prev ",quiz)
-        if(quiz.quizName !== currValues.quizName ||
-            quiz.quizDesc !== currValues.quizDesc ||
-            quiz.numberOfQuestions !== currValues.numberOfQuestions ||
-            quiz.timeDuration !== currValues.timeDuration ||
-            quiz.tags.toString() !== currValues.tags.toString() ||
-            quiz.topic !== currValues.topic ||
-            quiz.difficulty !== currValues.difficulty
+        // console.log("Curr ",currValues);
+        // console.log("prev ",quiz)
+
+        if((quiz.quizName !== currValues.quizName) ||
+            (quiz.quizDesc !== currValues.quizDesc) ||
+            (quiz.numberOfQuestions !== currValues.numberOfQuestions) ||
+            (quiz.timeDuration !== currValues.timeDuration) ||
+            (quiz.tags.toString() !== currValues.tags.toString()) ||
+            (quiz.topic !== currValues.topic) ||
+            (quiz.difficulty !== currValues.difficulty)
         ){
             return true;
         }else return false;
     }
     // onSubmitHandle
     const onSubmitHandle = async(data)=>{
-       console.log("Data : ",data);
+    //    console.log("Data : ",data);
        if(editQuiz){
+        // console.log("Edit qu ",editQuiz)
+        // console.log("Chceck : ",checkUpdated())
         if(checkUpdated()){
             const currValues = getValues();
             const formData = new FormData();
@@ -93,16 +97,12 @@ const CreateQuiz = () => {
                 toast.error("No Changes is made")
             }
 
+        }else{
+            toast.error("No Changes is made")
         }
+        return;
        } 
-    //    quiz.quizName !== currValues.quizName ||
-    //     quiz.quizDesc !== currValues.quizDesc ||
-    //     quiz.numberOfQuestions !== currValues.numberOfQuestions ||
-    //     quiz.timeDuration !== currValues.timeDuration ||
-    //     quiz.tags.toString() !== currValues.tags.toString() ||
-    //     quiz.topic !== currValues.topic ||
-    //     quiz.difficulty !== currValues.difficulty
-   
+
        // add details
        const formNewData = new  FormData();
        formNewData.append("quizName", data.quizName);
@@ -113,11 +113,11 @@ const CreateQuiz = () => {
        formNewData.append("topic" , data.topic);
        formNewData.append("difficulty" , data.difficulty);
        setLoading(true);
-       console.log("Data split : ",data.quizName,data.quizDesc)
-       console.log("Form data ",formNewData.get("tags"))
+    //    console.log("Data split : ",data.quizName,data.quizDesc)
+    //    console.log("Form data ",formNewData.get("tags"))
     //    const result = null;
        const result = await createQuiz(formNewData,token);
-       console.log("Create quiz result -> ",result);
+    //    console.log("Create quiz result -> ",result);
        if(result){
          dispatch(setStep(2));
          dispatch(setQuiz(result));
@@ -127,7 +127,7 @@ const CreateQuiz = () => {
   return (
     <div>
         <form onSubmit={handleSubmit(onSubmitHandle)}
-        className='space-y-8  mb-[50px] rounded-md  border-[1px] bg-slate-200 p-6 border-slate-700'>
+        className='sm:space-y-8 space-y-4 mb-[10px] sm:mb-[50px] rounded-md  border-[1px] bg-slate-200 p-6 border-slate-700'>
             {/* quizName !*/}
             <div className=" flex flex-col space-y-2">
                 <label htmlFor="quizName" className=' text-sm '>
@@ -149,7 +149,7 @@ const CreateQuiz = () => {
                 </label>
                 <input id="quizDesc"
                 placeholder='Enter the Quiz Description'
-                className=' form-style w-full'
+                className= {`form-style w-full`}
                 {...register("quizDesc",{required:true})}
                 />
                 {errors.quizDesc && (
@@ -181,7 +181,7 @@ const CreateQuiz = () => {
                 <label htmlFor="timeDuration" className='text-sm'>Time Duration of test<sup className=' text-pink-800'>*</sup></label>
                 <input id='timeDuration'
                 type='number'
-                className=' form-style w-full'
+                className='form-style w-full'
                 placeholder='Maximum time to finish in minute'
                 {...register("timeDuration",{required:true, min:1,})}/>
                 {
@@ -201,7 +201,7 @@ const CreateQuiz = () => {
                 <input id="topic"
                 placeholder='eg :- DSA in Java'
                 className=' form-style w-full'
-                {...register("topic",{required:true})}
+                {...register("topic")}
                 />
                 {/* {errors.topic && (
                     <span className=' text-sm text-red-500 tracking-wide '>Quiz Desc required*</span>
@@ -224,7 +224,7 @@ const CreateQuiz = () => {
                     editQuiz && (
                         <button onClick={()=>dispatch(setStep(2))}
                          dispatch={loading}
-                         className={` flex cursor-pointer items-center gap-x-2 rounded-md font-semibold text-white bg-slate-500 py-[8px] px-[20px]`}>
+                         className={` flex cursor-pointer sm:text-xl text-sm items-center gap-x-2 rounded-md font-semibold text-white bg-slate-500 sm:py-[8px] sm:px-[20px]`}>
                             Continue Without Saving
                          </button>
                     )
