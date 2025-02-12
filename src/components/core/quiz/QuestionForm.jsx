@@ -41,12 +41,12 @@ const QuestionForm = ({result,handleOptionSubmition, submitted,question,setQuest
     }
     // const [selected,setSelected] = useState("");
   return (
-    <div className=" flex select-none flex-col w-10/12 mx-auto border px-8 gap-3 py-9 h-[450px] rounded-md ">
+    <div className=" flex select-none flex-col  sm:w-10/12 mx-auto border px-4 py-4 sm:px-8 gap-1 sm:gap-3 sm:py-9 sm:h-[450px] rounded-md ">
         <div className="flex justify-between ">
-            <div className=" text-2xl font-bold">Question {quesNumber}/{total}</div>
-            <div className=" text-gray-500 text-[1rem]  ">{formateTimer(timeLeft)}</div>
+            <div className=" text-xl sm:text-2xl font-bold">Question {quesNumber}/{total}</div>
+            <div className=" text-gray-500 text-sm sm:text-[1rem]  ">{formateTimer(timeLeft)}</div>
         </div>
-        <div className="">{question?.questionDesc}</div>
+        <div className=" text-sm capitalize mb-5">{question?.questionDesc}</div>
         {
             question?.options?.map((option,i)=>{
               let borderColor = "border-black";
@@ -63,23 +63,31 @@ const QuestionForm = ({result,handleOptionSubmition, submitted,question,setQuest
               }
               
               return (
-                <div key={i} onClick={()=>handleOptionSelect(question?._id,option?._id)}  className={`${ borderColor} flex border items-center h-12 rounded-md w-full  `}>
-                  <input type='radio' name='question' checked={option?._id===yourResponse[question?._id]} value={option.text} className='  accent-blue-600 flex m-4'/>
-                  {
+                <div key={i} onClick={()=>handleOptionSelect(question?._id,option?._id)}  className={`${ borderColor}  flex border items-center sm:h-12 rounded-md w-full  `}>
+                  <input type='radio' name='question' checked={(option?._id===yourResponse[question?._id]) || (result?.[question?._id]===option._id)  } value={option.text} className=' accent-blue-600 flex m-2 sm:m-4'/>
+                 <div className=" sm:text-xl text-sm">
+                 {
                       option.text
                   }
+                 </div>
             </div>
               )
             }
                
             )
         }
-        <div className=" flex  my-2 justify-between w-full">
-          <button className={ ` px-3  p-2 rounded-md text-white text-xl  flex gap-2 items-center border ${quesNumber===1?"bg-gray-500":"bg-blue-600"}`}
+        <div className=" flex my-2 justify-between w-full">
+          <button className={ ` sm:px-3  px-2 py-1 max-h-max rounded-md text-white sm:text-xl  text-sm flex gap-2 items-center border ${quesNumber===1?"bg-gray-500":"bg-blue-600"}`}
           disabled={quesNumber===1} onClick={handlePrev}> <FaArrowLeft/> Prev</button>
-          <button className=' px-3  p-2 rounded-md text-white  text-xl flex gap-2 items-center border bg-blue-600' onClick={handleNext}>{total===quesNumber?(<div>Submit</div>):(<div className='flex gap-2 items-center'>Next <FaArrowRight/></div>)} </button>
+          <button className=' sm:px-3  px-2 py-1 max-h-max rounded-md text-white  sm:text-xl flex text-sm gap-2 items-center border bg-blue-600' onClick={handleNext}>{total===quesNumber?(<div>Submit</div>):(<div className='flex gap-2 items-center'>Next <FaArrowRight/></div>)} </button>
         </div>
-       
+       {
+         submitted && (
+          <div className= {` ${question?.correctAnswer===result?.[question?._id]?" border-green-500 bg-green-100":"border-red-500 bg-red-100"} w-full border rounded-md p-2 sm:text-[1rem] text-sm capitalize`}>{
+            question?.explanation
+          }</div>
+         )
+       }
     </div>
   )
 }

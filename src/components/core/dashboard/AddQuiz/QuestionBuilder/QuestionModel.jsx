@@ -20,7 +20,11 @@ export const QuestionModel = ({
     setValue,
     handleSubmit,
     formState:{errors}
-  } = useForm();
+  } = useForm({
+    defaultValues:{
+      points:1
+    }
+  });
 
   const dispatch = useDispatch();
   const { quiz} = useSelector(state=>state.quiz);
@@ -95,7 +99,7 @@ export const QuestionModel = ({
        toast.error("Exactly 4 options required!")
        return;
     }
-    console.log("Optin : ",options)
+    // console.log("Optin : ",options)
     const currValues = getValues();
     const formData = new FormData();
     formData.append("quizId",modelData);
@@ -118,20 +122,20 @@ export const QuestionModel = ({
   
   return (
     <div className=' !mt-0 z-[100] h-screen w-screen overflow-auto grid place-items-center  fixed inset-0 backdrop-blur-sm bg-white bg-opacity-10'>
-      <div className="  my-10 w-11/12 rounded-lg max-w-[700px] border border-slate-700 bg-slate-400 
+      <div className=" my-5 sm:my-10 w-11/12 rounded-lg sm:max-w-[700px] border border-slate-700 bg-slate-400 
        ">
       {/* Model Heading */}
-      <div className=" flex justify-between items-center  rounded-lg p-5">
-      <p className=' text-2xl  font-bold flex items-center justify-center rounded-t-lg p-5'>
+      <div className=" flex justify-between items-center  rounded-lg sm:p-5">
+      <p className=' text-2xl  font-semibold sm:font-bold flex items-center justify-center rounded-t-lg p-5'>
         {add && "Adding"} {view && "Viewing"} {edit && "Editing"} Question
       </p>
       <button onClick={()=>(!loading ? setModelData(null):{})} >
-        <RxCross2 className=' text-2xl text-slate-800'/>
+        <RxCross2 className=' text-2xl mr-2 text-slate-800'/>
       </button>
       </div>
       {/* Model Form  */}
       <form onSubmit={handleSubmit(handleSubmitBtn)}
-       className=' w-11/12 px-3 mb-4 mx-auto flex flex-col space-y-3'>
+       className=' w-11/12 px-3 mb-4 mx-auto flex flex-col space-y-2 sm:space-y-3'>
         {/* Question input */}
         <div className=" relative flex flex-col space-y-1">
           <label htmlFor="questionDesc" className=' text-sm '>Question Description <sup className=' text-red-500'>*</sup></label>
@@ -139,7 +143,7 @@ export const QuestionModel = ({
            id='questionDesc'
            placeholder='Enter the Question Description'
            {...register("questionDesc",{required:true})}
-           className=' form-style '/>
+           className='form-style'/>
            {
             errors.questionDesc && (
               <span className=' absolute -bottom-5 right-0 text-red-400 text-sm' >Question Desc required*</span>
@@ -153,7 +157,7 @@ export const QuestionModel = ({
            id='explanation'
            placeholder='Enter the explanation '
            {...register("explanation")}
-           className=' form-style '/>
+           className='  form-style '/>
         
         </div>
         {/* Option +  */}
@@ -165,30 +169,30 @@ export const QuestionModel = ({
         <label htmlFor="points" className='text-sm'>
           Points
         </label>
-        <input type='number' {...register("points",{
+        <input type='number' max={1000}  {...register("points",{
           valueAsNumber: true,
-        })} className='w-10 rounded-md outline-none'/>
+        })} className='px-1 max-h-max  w-[60px] rounded-md outline-none'/>
        </div>
       </div>
         {
           options.map((option,index)=>(
             
-             <div className="flex items-center relative mb-7 bg-slate-600 p-1  rounded-md gap-3" key={index}>
+             <div className="flex items-center  relative mb-7 bg-slate-600  px-1 sm:p-1  rounded-md gap-1 sm:gap-3" key={index}>
               <input type='text' placeholder={`Option ${index+1}`}
               value={option.text}
               {...register(`options.${index}.text`,{required:true})}
               onChange={(e)=>handleOptionChange(index,"text",e.target.value)}
-              className=' outline-none border p-2 w-full rounded-md'/>
+              className=' outline-none border p-1 text-sm sm:text-xl  sm:p-2 w-full rounded-md'/>
               
               {/* toggle switch */}
-              <button type='button' className={` w-14 h-7 flex items-center rounded-full p-1 
+              <button type='button' className={` sm:w-14 w-10 sm:h-7 h-3 flex items-center rounded-full sm:p-1 
               ${option.isCorrect?"bg-green-500":"bg-gray-300"}`}
               {...register(`options.${index}.isCorrect`,{required:true,
 
               })}
                onClick={()=>toggleCorrectAnswer(index)}>
                 <div className={` h-5 w-5 bg-white rounded-full shadow-md  transform transition-all duration-500
-                  ${option.isCorrect?"translate-x-5":"translate-x-0"}`}></div>
+                  ${option.isCorrect?" translate-x-3 sm:translate-x-5":"translate-x-0"}`}></div>
                </button>
               {/* Cancel */}
               <button type='button' onClick={()=>removeOption(index)}
@@ -197,7 +201,7 @@ export const QuestionModel = ({
                </button>
                {
                 errors.options?.[index]?.text  && (
-                  <span className=' absolute -bottom-4 text-red-400 text-sm'>Option  required*</span>
+                  <span className=' absolute -bottom-5 text-red-400 text-[0.75rem]'>Option  required*</span>
                 )
               }
               
@@ -211,7 +215,7 @@ export const QuestionModel = ({
         {
             !view && (
               <div className=" flex justify-end gap-2">
-                <button type='button' onClick={()=>setModelData(null)} className=' bg-gray-300 border text-white px-2 py-1 rounded-md '>
+                <button type='button' onClick={()=>setModelData(null)} className=' bg-gray-300 border text-white px-2 sm:text-xl text-sm  sm:py-1 rounded-md '>
                   Cancel
                 </button>
                 {/* Save */}

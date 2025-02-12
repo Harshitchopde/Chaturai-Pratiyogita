@@ -21,10 +21,10 @@ const NestedQuestionView = () => {
      }
     return (
         <>
-        <div className=" flex flex-col space-y-5">
+        <div className=" flex flex-col space-y-3 sm:space-y-5">
           <button onClick={()=>setAddQuestion(quiz._id)}
-           className=' border-2 flex items-center max-w-max px-3 rounded-lg py-1 border-yellow-400  text-yellow-400'>
-            Question <CiCirclePlus className='ml-2 font-bold'/>
+           className=' border-2 flex items-center max-w-max px-1 text-sm sm:text-xl  sm:px-3 rounded-lg py-1 border-yellow-400  text-yellow-400'>
+            Question <CiCirclePlus className='sm:ml-2 ml-1 font-bold'/>
            </button>
            <div className=" bg-white rounded-lg px-20 py-10">
               {

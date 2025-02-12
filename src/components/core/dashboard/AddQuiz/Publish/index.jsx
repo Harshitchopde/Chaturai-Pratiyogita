@@ -77,12 +77,12 @@ const Publish = () => {
           </label>
         </div>
         {/* Next Prev Button */}
-        <div className="ml-auto flex max-w-max items-center gap-x-4">
+        <div className="ml-auto flex max-w-max items-center gap-x-2 sm:gap-x-4">
           <button
            disabled={loading}
            type='button'
            onClick={goBack}
-           className=' flex border bg-slate-200 border-slate-300  cursor-pointer items-center gap-x-2 rounded-md py-1 px-4 font-semibold '>Prev</button>
+           className=' flex border bg-slate-200 border-slate-300 sm:text-xl text-sm cursor-pointer items-center gap-x-2 rounded-md  px-2 py-1 sm:px-4 font-semibold '>Prev</button>
            <IconBtn disabled={loading} text={"Save Changes"}/>
         </div>
       </form>

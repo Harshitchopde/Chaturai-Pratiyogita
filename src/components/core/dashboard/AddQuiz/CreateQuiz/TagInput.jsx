@@ -15,7 +15,7 @@ const TagInput = ({
     const [chips,setChips] = useState([]);
     useEffect(()=>{
         if(editQuiz){
-            console.log("Quiz ",quiz);
+            // console.log("Quiz ",quiz);
             setChips(quiz?.tags)
         }
         register(name,{
@@ -56,7 +56,7 @@ const TagInput = ({
         <div className=" flex w-full flex-wrap gap-y-2">
             {
                 chips.map((chip,i)=>(
-                    <div className=" m-1 flex items-center rounded-full bg-yellow-400 px-2 py-1 text-sm text-white" key={i}>
+                    <div className=" sm:m-1 mx-1 flex items-center rounded-full bg-yellow-400 px-2  sm:py-1 text-sm text-white" key={i}>
                         {
                             chip
                         }

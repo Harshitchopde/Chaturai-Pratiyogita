@@ -1,4 +1,5 @@
 import bcryptjs from "bcryptjs";
+
 import Otp from "../models/Otp.js";
 import User from "../models/User.js";
 import { generate } from "otp-generator";

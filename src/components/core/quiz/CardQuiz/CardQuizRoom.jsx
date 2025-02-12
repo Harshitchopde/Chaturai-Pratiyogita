@@ -23,7 +23,7 @@ const CardQuizRoom = ({submitted,setSubmitted}) => {
       }
       setYourResponse({...yourResponse,[questionId]:optionId});
     }
-    console.log("Result set : ",result)
+    // console.log("Result set : ",result)
     useEffect(()=>{
       if(submitted===true){
         const fetchDetails = async ()=>{
