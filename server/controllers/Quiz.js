@@ -3,10 +3,10 @@ import User from "../models/User.js";
 import Question from "../models/Question.js";
 
 export const createQuiz = async(req,res)=>{
-    console.log("CREATE QUIZ")
+    // console.log("CREATE QUIZ")
     try {
        
-        console.log("Data ",req.body)
+        // console.log("Data ",req.body)
         // get data of quiz
         const {quizName,
             quizDesc,
@@ -50,6 +50,7 @@ export const createQuiz = async(req,res)=>{
             difficulty,
             status,
             timeDuration,
+            instructor:instructor._id,
             numberOfQuestions,
             tags:tag,
             topic

@@ -20,7 +20,7 @@ const CardQuiz = () => {
     useEffect(()=>{
         setShowAnswer(isSbmit)
     },[isSbmit])
-    // console.log("Quizx : ",quiz)
+    console.log("Quizx : ",quiz)
     // console.log("ShowAnd ",showAnswer)
     const [loading,setLoading] = useState(false);
     const [startQuiz,setStartQuiz] = useState(false);
@@ -28,6 +28,7 @@ const CardQuiz = () => {
     useEffect(()=>{
         const fetchQuizDetail = async()=>{
             const result = await getQuizDetails(quizId,token);
+            
             dispatch(setQuiz(result));
         }
         fetchQuizDetail();
@@ -80,11 +81,11 @@ const CardQuiz = () => {
                           <p className=' capitalize  text-xl sm:text-2xl text-black'>{quiz?.quizName}</p>
                             <p className=' pl-1 text-[0.75rem] leading-4 sm:text-sm text-slate-400'>{quiz?.quizDesc}</p>
                             <p className=' sm:text-lg  '>Topic it Cover : {quiz?.topic}</p>
-                            <div className=" flex sm:text-lg ">
-                                <p>Tags :</p>
+                            <div className=" flex text-sm sm:text-lg ">
+                                <p className='pr-1'>Tags:</p>
                                 {
                                 quiz?.tags?.map((tag,i)=>(
-                                    <div key={i} className=" px-2 py-0 sm:py-[1px] mx-1  max-w-max flex items-center justify-center rounded-lg bg-yellow-100">{tag}</div>
+                                    <div key={i} className=" px-2 py-0 sm:py-[1px] mx-1  text-sm max-h-max max-w-max flex items-center justify-center rounded-lg bg-yellow-100">{tag}</div>
                                 ))
                             }
                             </div>
@@ -96,15 +97,24 @@ const CardQuiz = () => {
                
                           </div>
                           
-                          <button onClick={handleStartQuiz} disabled={loading} className=' sm:text-xl text-[0.75rem] leading-4 rounded-md bg-blue-500 max-h-max py-1 px-[2px] sm:px-4 flex justify-center items-center'>
-                            {
-                                showAnswer ? (
-                                    <div className="">Show Answer</div>
-                                ):(
-                                    <div>Start Quiz!</div>
-                                )
-                            }
-                          </button>
+                         <div className=" flex flex-col space-y-36 items-center justify-center ">
+                            <button onClick={handleStartQuiz} disabled={loading} className=' sm:text-xl text-[0.75rem] leading-4 rounded-md bg-blue-500 max-h-max py-1 px-[2px] sm:px-4 flex justify-center items-center'>
+                                {
+                                    showAnswer ? (
+                                        <div className="">Show Answer</div>
+                                    ):(
+                                        <div>Start Quiz!</div>
+                                    )
+                                }
+                            </button>
+                            <div className=" text-[0.75rem] leading-3  flex flex-col sm:flex-row items-center justify-end sm:text-xl">
+                                <p>by - {` .`}</p>
+                                 <div className=" flex  italic items-center">{
+                                    quiz?.instructor?.firstName +" "+quiz?.instructor?.lastName
+                                }</div>
+                              
+                            </div>
+                         </div>
 
                     
                     </div>

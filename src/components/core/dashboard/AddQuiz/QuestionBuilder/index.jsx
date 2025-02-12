@@ -12,7 +12,9 @@ import { setEditQuiz, setStep } from '../../../../../slices/quizSlicer'
 const AddQuestion = () => {
   const {quiz}= useSelector(state=>state.quiz);
   const dispatch = useDispatch();
+  console.log("quiz : ",quiz)
   const goToNext = ()=>{
+   
     if(quiz.numberOfQuestions && quiz.questions.length !==quiz?.numberOfQuestions){
       toast.error("Total number of questions not match : ",quiz.numberOfQuestions)
       return;
@@ -26,7 +28,10 @@ const AddQuestion = () => {
   return (
     <>
     <div className=' border-[1px] bg-slate-100 sm:p-6 p-3 space-y-4 sm:space-y-8 rounded-md '>
+      <div className="flex w-full justify-between items-center">
       <div className=" sm:text-2xl text-xl font-semibold">Quiz Builder</div>
+      <div className=" sm:text-2xl text-xl font-semibold">{quiz?.questions.length}/{quiz?.numberOfQuestions}</div>
+      </div>
       <NestedQuestionView/>
       {/* prev & next button */}
       <div className=" flex justify-end items-center gap-x-3">
