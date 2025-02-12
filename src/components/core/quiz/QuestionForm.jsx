@@ -64,7 +64,7 @@ const QuestionForm = ({result,handleOptionSubmition, submitted,question,setQuest
               
               return (
                 <div key={i} onClick={()=>handleOptionSelect(question?._id,option?._id)}  className={`${ borderColor}  flex border items-center sm:h-12 rounded-md w-full  `}>
-                  <input type='radio' name='question' checked={(option?._id===yourResponse[question?._id]) || (result?.[question?._id]===option._id) } value={option.text} className=' accent-blue-600 flex m-2 sm:m-4'/>
+                  <input type='radio' name='question' checked={(option?._id===yourResponse[question?._id]) || (result?.[question?._id]===option._id)  } value={option.text} className=' accent-blue-600 flex m-2 sm:m-4'/>
                  <div className=" sm:text-xl text-sm">
                  {
                       option.text
