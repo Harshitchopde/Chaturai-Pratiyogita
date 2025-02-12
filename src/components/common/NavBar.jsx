@@ -14,7 +14,9 @@ export const NavBar = () => {
         <div className='flex items-center justify-between w-10/12 max-w-maxContent'>
         
          {/* left  -> name-> Quiz-test*/}
+         <Link to={"/"}>
          <div className="sm:text-xl font-bold">Quiz-test</div>
+         </Link>
          {/* center -> home , quizzes*/}
          <div className=" sm:text-xl flex sm:gap-4  gap-2   ">
             <Link to={"/"}>
