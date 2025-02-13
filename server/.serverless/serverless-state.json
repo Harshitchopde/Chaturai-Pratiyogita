@@ -123,7 +123,7 @@
             "Properties": {
               "Code": {
                 "S3Bucket": "serverless-framework-deployments-ap-south-1-742a1e34-61d6",
-                "S3Key": "serverless/quiz-server-api/dev/1739130264683-2025-02-09T19:44:24.683Z/quiz-server-api.zip"
+                "S3Key": "serverless/quiz-server-api/dev/1739366682635-2025-02-12T13:24:42.635Z/quiz-server-api.zip"
               },
               "Handler": "index.handler",
               "Runtime": "nodejs20.x",
@@ -141,14 +141,14 @@
               "ApiLogGroup"
             ]
           },
-          "ApiLambdaVersion9uFhRKiBUpa8HO4VCKpuBLOG7sA5wm5xrRbA8J7HaBE": {
+          "ApiLambdaVersionRlGXku3WuMCzzkOBi2NHvSAmzCTsKdY9SPhWta0ofEc": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "ApiLambdaFunction"
               },
-              "CodeSha256": "5eUbhIbCniwxYZajVcE69j9BBvT7Gqtd3OVjNTCpINY="
+              "CodeSha256": "j94tb/nneHbTT2IfVvXO+bXKt5FYz8ls2SyJ+2pe0cs="
             }
           },
           "HttpApi": {
@@ -270,7 +270,7 @@
           "ApiLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "ApiLambdaVersion9uFhRKiBUpa8HO4VCKpuBLOG7sA5wm5xrRbA8J7HaBE"
+              "Ref": "ApiLambdaVersionRlGXku3WuMCzzkOBi2NHvSAmzCTsKdY9SPhWta0ofEc"
             },
             "Export": {
               "Name": "sls-quiz-server-api-dev-ApiLambdaFunctionQualifiedArn"
@@ -337,7 +337,7 @@
         "timeout": 20,
         "runtime": "nodejs20.x",
         "vpc": {},
-        "versionLogicalId": "ApiLambdaVersion9uFhRKiBUpa8HO4VCKpuBLOG7sA5wm5xrRbA8J7HaBE"
+        "versionLogicalId": "ApiLambdaVersionRlGXku3WuMCzzkOBi2NHvSAmzCTsKdY9SPhWta0ofEc"
       }
     },
     "configValidationMode": "warn",
@@ -364,7 +364,7 @@
     "artifact": "C:\\Users\\chopd\\OneDrive\\Desktop\\MERN-Stack\\_____working project\\chaturai-pratiyogita\\server\\.serverless\\quiz-server-api.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/quiz-server-api/dev/1739130264683-2025-02-09T19:44:24.683Z",
+    "artifactDirectoryName": "serverless/quiz-server-api/dev/1739366682635-2025-02-12T13:24:42.635Z",
     "artifact": "quiz-server-api.zip"
   }
 }

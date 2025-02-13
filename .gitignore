@@ -9,7 +9,7 @@ node_modules
 demoRough
 # testing
 coverage
-
+.serverless
 # next.js
 .next/
 out/
