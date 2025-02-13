@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { isInstructor, verifyAuth } from "../middlewares/auth.js";
-import { createQuiz, deleteQuiz, getAllQuiz, getQuizDetails, updateQuiz } from "../controllers/Quiz.js";
+import { isAdmin, isInstructor, verifyAuth } from "../middlewares/auth.js";
+import { createQuiz, deleteQuiz, getAllQuiz, getQuizDetails, updateQuiz, verifyTheQuiz } from "../controllers/Quiz.js";
 import { createQuestion, deleteQuestion, getAllQuestions, getQuestionDetails, updateQuestion } from "../controllers/Question.js";
 import multer from "multer";
 const upload = multer();
@@ -41,4 +41,5 @@ router.get("/getQuestionDetails", getQuestionDetails)
 router.get("/getAllQuestions",getAllQuestions)
 // getQuizQuestions  -> all the questions in the particulte quiz (future )
 // router.get()
-export default router;
+router.post("/verify",verifyAuth,isAdmin,verifyTheQuiz)
+export default router;  

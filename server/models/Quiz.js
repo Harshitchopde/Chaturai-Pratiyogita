@@ -11,6 +11,11 @@ const quizSchema = new Schema({
         trim:true,
         required:true
     },
+    verifyed:{
+        type:Boolean,
+        required:true,
+        default:false,
+    },
     instructor: {
         type: Schema.Types.ObjectId,
         ref: "User",

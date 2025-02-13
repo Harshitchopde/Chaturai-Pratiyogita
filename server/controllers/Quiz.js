@@ -247,3 +247,35 @@ export const getAllQuiz = async(req,res)=>{
         })
     }
 }
+
+export const verifyTheQuiz = async(req,res)=>{
+    try {
+        const { quizId} = req.body;
+        if(!quizId){
+            return res.status(400).json({
+                success:false,
+                message:"Quiz Id Not Found!"
+            })
+        }
+        const quiz = await Quiz.findById(quizId);
+        if(!quiz){
+            return res.status(400).json({
+                success:false,
+                message:"Quiz Not Found!"
+            })
+        }
+        quiz.verifyed = true;
+        await quiz.save();
+        return res.status(200).json({
+            success:true,
+            message:`Verify the Quiz: ${quiz._id}`
+        })
+    } catch (error) {
+        console.log("Error in verifyTheQuiz ",error);
+        return res.status(500).json({
+            success:false,
+            message:error.message,
+            errorIn:"verifyTheQuiz"
+        })
+    }
+}
