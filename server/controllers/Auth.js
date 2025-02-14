@@ -5,6 +5,7 @@ import User from "../models/User.js";
 import { generate } from "otp-generator";
 import Profile from "../models/Profile.js";
 import pkg from "jsonwebtoken";
+import Report from "../models/Report.js";
 const { compare, genSaltSync, hashSync } = bcryptjs;
 const { sign } = pkg
 /* 
@@ -212,6 +213,37 @@ export const login = async(req,res)=>{
         return res.status(400).json({
             success:false,
             message:"Error in login -> "+error
+        })
+    }
+}
+export const report = async(req,res)=>{
+    try {
+        const {photo,status,issueDesc} = req.body;
+        const email = req.user.email;
+        const issueName = "contact/bug";
+        if(!issueDesc){
+            return res.status(400).json({
+                success:false,
+                message:"IssueDesc required!"
+            })
+        }
+        const report = await Report.create({
+            issueName,
+            issueDesc,
+            email,
+            photo,
+            status
+        })
+        return res.status(200).json({
+            success:true,
+            message:"Reported Successfully!"
+        })
+    } catch (error) {
+        console.log("Error in report ",error)
+        return res.status(400).json({
+            success:false,
+            message:error,
+            errorIn:"report"
         })
     }
 }

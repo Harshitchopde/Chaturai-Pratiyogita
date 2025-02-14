@@ -25,7 +25,8 @@ export const NavBar = () => {
   return (
     <div className="h-12 text-[1rem]  border-b-slate-600 border-b bg-white text-black justify-center flex">
       <div className="flex items-center justify-between gap-x-2 w-10/12 max-w-maxContent">
-        {/* left  -> name-> Quiz-test*/}
+        <div className="flex flex-1 justify-between">
+              {/* left  -> name-> Quiz-test*/}
         <Link to={"/"}>
           <div className="sm:text-xl hidden sm:block font-bold">Quiz-test</div>
         </Link>
@@ -37,14 +38,18 @@ export const NavBar = () => {
           <Link to={"/quizzes"}>
             <div className="">Quizzes</div>
           </Link>
+          <Link to={"/contacts"}>
+            <div className="">Contacts</div>
+          </Link>
+        </div>
         </div>
 
         {/* right -> login sign up | user */}
-        <div className="flex sm:text-xl  sm:gap-2 gap-1">
+        <div className="flex justify-end flex-1 sm:text-xl  sm:gap-2 gap-1">
           {/* Search Bar */}
          {
             location.pathname==="/quizzes" && (
-                <div className=" border  rounded-full overflow-hidden relative">
+                <div className=" border   rounded-full overflow-hidden relative">
                 <div className=" flex gap-x-2 border border-gray-200">
                   <input
                     type="text"

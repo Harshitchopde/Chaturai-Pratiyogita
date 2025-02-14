@@ -30,6 +30,7 @@ const Quizzes = () => {
     const getAllQuizResp = async ()=>{
       const result = await getAllQuiz(token)
       setQuizs(result);
+      console.log("Quiz : ",result)
       dispatch(setQuizzes(result));
     }
     if(!quizzes){

@@ -16,6 +16,7 @@ import MyQuiz from './components/core/dashboard/MyQuiz';
 import Instructor from './components/core/dashboard/Instructors/Instructor';
 import Setting from './components/core/dashboard/Setting';
 import CardQuiz from './components/core/quiz/CardQuiz';
+import Contact from './pages/Contact';
 
 
 function App() {
@@ -34,6 +35,11 @@ function App() {
                <Route path=':quizId' element={<CardQuiz/>}/>
             </Route>
         </Route>
+        <Route path='/contacts' element={
+          <PrivateRoute>
+            <Contact/>
+          </PrivateRoute>
+        }/>
         <Route element={
           <PrivateRoute>
             <DashBoard/>

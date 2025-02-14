@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState ={
-    quizzes:[],
+    quizzes:null,
     query:""
 }
 
