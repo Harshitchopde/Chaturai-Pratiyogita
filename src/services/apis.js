@@ -10,8 +10,10 @@ export const authEndPoints = {
 export const quizEndPoints = {
     CREATE_QUIZ_API:BASE_URL+"/quiz/createQuiz",
     UPDATE_QUIZ_API:BASE_URL+"/quiz/updateQuiz",
+    UPDATE_ONLY_QUIZ_API:BASE_URL+"/quiz/updateOnlyQuiz",
     DELETE_QUIZ_API:BASE_URL+"/quiz/deleteQuiz",
     GET_QUIZ_DETAILS_API:BASE_URL+"/quiz/getQuizDetails",
+    GET_INSTRUCTOR_QUIZ_API:BASE_URL+"/quiz/getInstructorQuiz",
     GET_ALL_QUIZ_API:BASE_URL+"/quiz/getAllQuiz"
 }
 // createQuestion,updateQuestion,deleteQuestion,getQuestionDetails,getAllQuestions,getQuizQuestions  

@@ -90,7 +90,7 @@ export const updateQuiz = async(req,res)=>{
             })
         }
 
-        console.log("Update",updated)
+        // console.log("Update",updated)
         for(const key in updated){
             // not make sense below line
             if(updated[key]){
@@ -125,6 +125,49 @@ export const updateQuiz = async(req,res)=>{
             success:false,
             message:error.message,
             errorIn:"updateQuiz"
+        })
+    }
+}
+export const updateOnlyQuiz = async(req,res)=>{
+    console.log("UPDATE updateOnlyQuiz")
+    try {
+        // get updated data
+        const { quizId} = req.body;
+        const updated = req.body;
+        const quiz = await Quiz.findById({_id:quizId});
+        if(!quiz){
+            return res.status(400).json({
+                success:false,
+                message:"Quiz Not found!"
+            })
+        }
+
+        // console.log("Update",updated)
+        for(const key in updated){
+            // not make sense below line
+            if(updated[key]){
+                if(key==="tags"){
+                    quiz[key] = JSON.parse(updated[key]);
+                }else{
+                    quiz[key] = updated[key];
+                }
+            }
+        }
+        // quiz detail
+        // save
+        await quiz.save();
+    
+        return res.status(200).json({
+            success:true,
+            message:"Updated SuccessFully!",
+        })
+
+    } catch (error) {
+        console.log("Error in updateOnlyQuiz ",error);
+        return res.status(500).json({
+            success:false,
+            message:error.message,
+            errorIn:"updateOnlyQuiz"
         })
     }
 }
@@ -247,7 +290,27 @@ export const getAllQuiz = async(req,res)=>{
         })
     }
 }
+export const getInstructorQuiz = async(req,res)=>{
+    try {
+        const userId = req.user.id;
+        const instructorQuiz = await Quiz.find({
+            instructor:userId
+        });
+        console.log("Instructor Quiz : ",instructorQuiz);
 
+        return res.status(200).json({
+            success:true,
+            message:"SuccessFully Get InstructorQuiz",
+            data:instructorQuiz
+        })
+    } catch (error) {
+        console.error("Error occure in getInstructorQuiz : ",error);
+        return res.status(500).json({
+            success:false,
+            message:error.message
+        })
+    }
+}
 export const verifyTheQuiz = async(req,res)=>{
     try {
         const { quizId} = req.body;
