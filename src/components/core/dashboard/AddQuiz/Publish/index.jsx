@@ -30,7 +30,7 @@ const Publish = () => {
   // go to Quizs
   const goToQuiz = ()=>{
     dispatch(resetQuizDetails());
-    navigate("/")
+    navigate("/dashboard/instructor")
   }
 
   const handlePublish = async()=>{
@@ -47,7 +47,7 @@ const Publish = () => {
      const quizStatus = getValues('public')?QUIZ_STATUS.PUBLISHED:QUIZ_STATUS.DRAFT
      formData.append("status",quizStatus);
      setLoading(true);
-     console.log("Token ",token)
+    //  console.log("Token ",token)
      const result = await updateQuiz(formData,token);
      if(result){
        goToQuiz();
