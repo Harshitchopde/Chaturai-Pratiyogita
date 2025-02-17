@@ -7,7 +7,8 @@ import { setUser } from "../../slices/profileSlicer.js";
 const {
     SEND_OTP_API,
     SIGN_UP_API,
-    LOGIN_API
+    LOGIN_API,
+    REPOR_ISSUE_API
 } = authEndPoints
 // sendOtp
 export function sendOtp(email,navigate){
@@ -109,6 +110,27 @@ export function login(
         }
         dispatch(setLoading(false));
         toast.dismiss(toastId);
+    }
+}
+export function reportIssue(issueDesc,token){
+    return async(dispatch)=>{
+        const toastId = toast.loading("Loading...");
+    try {
+        const res = await apiConnector("POST",REPOR_ISSUE_API,{
+            issueDesc
+        },{
+              Authorization:`Bearer ${token}`
+        })
+        console.log("REsponse reportIssue... ",res);
+        if(!res.data.success){
+            throw new Error(res.data.message)
+        }
+        toast.success("Reported Issue!")
+    } catch (error) {
+        console.log("Error in reportIssue");
+        toast.error(error.message)
+    }
+    toast.dismiss(toastId)
     }
 }
 export function logOut(navigate){

@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { isInstructor, verifyAuth } from "../middlewares/auth.js";
-import { createQuiz, deleteQuiz, getAllQuiz, getQuizDetails, updateQuiz } from "../controllers/Quiz.js";
+import { isAdmin, isInstructor, verifyAuth } from "../middlewares/auth.js";
+import { createQuiz, deleteQuiz, getAllQuiz, getInstructorQuiz, getQuizDetails, instructorAnalysis, updateOnlyQuiz, updateQuiz, verifyTheQuiz } from "../controllers/Quiz.js";
 import { createQuestion, deleteQuestion, getAllQuestions, getQuestionDetails, updateQuestion } from "../controllers/Question.js";
 import multer from "multer";
 const upload = multer();
@@ -13,6 +13,8 @@ const router = Router();
 router.post("/createQuiz",upload.none(), verifyAuth,isInstructor,createQuiz);
 // updateQuiz
 router.post("/updateQuiz",upload.none(),verifyAuth,isInstructor,updateQuiz);
+// update only
+router.post("/updateOnlyQuiz",upload.none(),verifyAuth,isInstructor,updateOnlyQuiz);
 // deleteQuiz
 router.post("/deleteQuiz",verifyAuth,isInstructor,deleteQuiz);
 
@@ -23,6 +25,9 @@ router.post("/getQuizDetails",verifyAuth,getQuizDetails);
 // getAllQuiz
 router.get("/getAllQuiz",verifyAuth,getAllQuiz);
 
+router.get("/getInstructorQuiz",verifyAuth,isInstructor,getInstructorQuiz);
+// get Single Analitics quiz
+router.post("/instructorAnalysis",verifyAuth,isInstructor,instructorAnalysis);
 // ********************************************************************************************************
 //                                      Question (Only Instrutor)
 // ********************************************************************************************************
@@ -41,4 +46,5 @@ router.get("/getQuestionDetails", getQuestionDetails)
 router.get("/getAllQuestions",getAllQuestions)
 // getQuizQuestions  -> all the questions in the particulte quiz (future )
 // router.get()
-export default router;
+router.post("/verify",verifyAuth,isAdmin,verifyTheQuiz)
+export default router;  

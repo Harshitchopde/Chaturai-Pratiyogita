@@ -1,6 +1,7 @@
 import React from 'react'
 import { QUIZ_DIFFICULTY, QUIZ_STATUS } from '../../../../utils/constants'
 import { Link } from 'react-router-dom'
+import { MdOutlineVerifiedUser } from "react-icons/md";
 // const quiz ={
 //     "_id": "67a4b74c0c863bde2bdcbcae",
 //     "quizName": "test your skill in oops",
@@ -51,7 +52,14 @@ const SingleCard = ({quiz}) => {
          rounded-md px-2 py-[1px] ${
             quiz?.difficulty===QUIZ_DIFFICULTY.EASY?"bg-green-200 text-green-600":quiz?.difficulty===QUIZ_DIFFICULTY.MEDIUM?" bg-yellow-200 text-yellow-600":quiz?.difficulty===QUIZ_DIFFICULTY.HARD?"bg-red-200 text-red-600":"bg-gray-200 text-gray-600"}`}>{quiz?.difficulty}</span></p>
         <p className=' text-sm'>Number Of Questions : {quiz?.numberOfQuestions}</p>
-
+        {/* show for only verified */}
+        {
+          quiz?.verifyed===true && (
+            <div className=" absolute -top-2 rounded-md p-1 right-0 border-b border-l bg-yellow-200  flex items-center gap-x-1  text-sm">
+              Verified: <MdOutlineVerifiedUser/>
+              </div>
+          )
+        }
         <div className=" absolute bottom-11 left-0 right-0  flex  justify-center  w-full">
             <Link to={quiz?._id}>
             <button className='border-blue-950  hover:bg-blue-500  border bg-blue-600 max-w-max rounded-md px-4 py-1'>
