@@ -11,6 +11,7 @@ const {
     DELETE_QUIZ_API,
     GET_QUIZ_DETAILS_API,
     GET_ALL_QUIZ_API,
+    INSTRUCTOR_ANAYLISIS_API,
     GET_INSTRUCTOR_QUIZ_API,
 } = quizEndPoints;
 
@@ -144,6 +145,29 @@ export const getAllQuiz = async (token)=>{
         // toast.success(response.data.message);
     } catch (error) {
         console.log("Error in getAllQuiz ",error);
+        toast.error(error.message);
+    }
+    toast.dismiss(toastId);
+    return result;
+}
+// INSTRUCTOR_ANAYLISIS_API,
+export const instructorAnalysis = async (quizId,token)=>{
+    let result = null;
+    const toastId = toast.loading("Loading...");
+    try {
+        const response = await apiConnector("POST",GET_QUIZ_DETAILS_API,{
+            quizId,
+        },{
+            Authorization:`Bearer ${token}`,
+        })
+        // console.log("GET QUIZ DETAILS RESPONCE... ",response);
+        if(!response?.data?.success){
+            throw new Error(response.data.message);
+        }
+        result = response?.data?.data?.quiz;
+        // toast.success("Get Quiz Details Successfully");
+    } catch (error) {
+        console.log("Error in INSTRUCTOR_ANAYLISIS_API ",error);
         toast.error(error.message);
     }
     toast.dismiss(toastId);

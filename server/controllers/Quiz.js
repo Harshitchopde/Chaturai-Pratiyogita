@@ -20,7 +20,7 @@ export const createQuiz = async(req,res)=>{
         
         const tag = JSON.parse(_tag);
     
-        console.log("tags ",tag)
+        // console.log("tags ",tag)
         // validate
         if(!quizName || !quizDesc || !timeDuration){
             return res.status(400).json({
@@ -62,7 +62,7 @@ export const createQuiz = async(req,res)=>{
             }
         })
 
-        console.log("Data : ",quiz);
+        // console.log("Data : ",quiz);
         return res.status(200).json({
             success:true,
             message:"SuccessFull Creation",
@@ -77,7 +77,7 @@ export const createQuiz = async(req,res)=>{
     }
 }
 export const updateQuiz = async(req,res)=>{
-    console.log("UPDATE QUIZ")
+    // console.log("UPDATE QUIZ")
     try {
         // get updated data
         const { quizId} = req.body;
@@ -129,7 +129,7 @@ export const updateQuiz = async(req,res)=>{
     }
 }
 export const updateOnlyQuiz = async(req,res)=>{
-    console.log("UPDATE updateOnlyQuiz")
+    // console.log("UPDATE updateOnlyQuiz")
     try {
         // get updated data
         const { quizId} = req.body;
@@ -236,7 +236,7 @@ export const getQuizDetails = async(req,res)=>{
         // console.log("Studen enrlod ",quizDetails.studentEnrolled);
         
         const updatedQuiz = {...quizDetails.toObject(),attempted};
-        console.log("user ",updatedQuiz)
+        // console.log("user ",updatedQuiz)
         return res.status(200).json({
             success:true,
             message:`Quiz Details of ${quizId}`,
@@ -266,16 +266,16 @@ export const getAllQuiz = async(req,res)=>{
             ...quiz.toObject(),
             attempted: quiz.studentEnrolled.some((user)=>{
             //    console.log("QQ ",user)
-             console.log("QMT : ",user._id,userId)
+            //  console.log("QMT : ",user._id,userId)
                if(user._id.toString()===userId){
-                console.log("user string ")
+                // console.log("user string ")
                   return true;
                }
                return false;
 
             })
         }))
-        console.log("UpdatedQuiz : ",updatedQuiz)
+        // console.log("UpdatedQuiz : ",updatedQuiz)
         return res.status(200).json({
             success:true,
             message:"Get All Quizzes",
@@ -296,7 +296,7 @@ export const getInstructorQuiz = async(req,res)=>{
         const instructorQuiz = await Quiz.find({
             instructor:userId
         });
-        console.log("Instructor Quiz : ",instructorQuiz);
+        // console.log("Instructor Quiz : ",instructorQuiz);
 
         return res.status(200).json({
             success:true,
@@ -305,6 +305,36 @@ export const getInstructorQuiz = async(req,res)=>{
         })
     } catch (error) {
         console.error("Error occure in getInstructorQuiz : ",error);
+        return res.status(500).json({
+            success:false,
+            message:error.message
+        })
+    }
+}
+export const instructorAnalysis = async(req,res)=>{
+    try {
+        const userId = req.user.id;
+        const {quizId} = req.body;
+        const instructorQuiz = await Quiz.findOne({
+            instructor:userId,
+            _id:quizId
+        }).populate("instructor")
+        .populate("studentEnrolled")
+        .populate("questions");
+        // console.log("Instructor Quiz : ",instructorQuiz);
+        if(!instructorQuiz){
+            return res.status(400).json({
+                success:false,
+                message:"Quiz not Present"
+            })
+        }
+        return res.status(200).json({
+            success:true,
+            message:"SuccessFully instructorAnalysis",
+            data:instructorQuiz
+        })
+    } catch (error) {
+        console.error("Error occure in instructorAnalysis : ",error);
         return res.status(500).json({
             success:false,
             message:error.message

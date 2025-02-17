@@ -4,13 +4,19 @@ import { QUIZ_STATUS } from "../utils/constants"
 const initialState ={
     quizzes:null,
     instructorQuiz:null,
+    analyticsQuiz:null,
     query:""
 }
-
 const quizziesSlice = createSlice({
     name:"quizzes",
     initialState,
     reducers:{
+        setAnalyticsQuiz(state,action){
+            state.analyticsQuiz = action.payload
+        },
+        resetAnalyticsQuiz(state){
+            state.analyticsQuiz = null
+        },
         setQuizzes:(state,action)=>{
             state.quizzes = action.payload
         },
@@ -49,5 +55,5 @@ const quizziesSlice = createSlice({
     }   
 })
 
-export const { setQuizzes,resetQuizzes,deleteStateQuiz, publishQuiz,unPublishQuiz, resetInstructorQuiz,setInstructorQuiz ,setQuery,resetQuery} = quizziesSlice.actions;
+export const {setAnalyticsQuiz, resetAnalyticsQuiz, setQuizzes,resetQuizzes,deleteStateQuiz, publishQuiz,unPublishQuiz, resetInstructorQuiz,setInstructorQuiz ,setQuery,resetQuery} = quizziesSlice.actions;
 export default quizziesSlice.reducer;

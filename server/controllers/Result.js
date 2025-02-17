@@ -7,8 +7,8 @@ export const submitQuiz = async(req,res)=>{
     const { responses,quizId} = req.body;
     const userId = req.user.id; 
     const formatedResp = {...responses};
-    console.log("req : ",responses);
-    console.log("Formatd  ",formatedResp)
+    // console.log("req : ",responses);
+    // console.log("Formatd  ",formatedResp)
     try {
         
         if(!responses || !quizId){
@@ -32,13 +32,13 @@ export const submitQuiz = async(req,res)=>{
         }
         quiz.studentEnrolled.push(userId);
         await quiz.save();
-        console.log("Updated quiz ",quiz);
+        // console.log("Updated quiz ",quiz);
         const result  = await QuizResult.create({
             quizId,
             userId,
             responses:formatedResp,
         })
-        console.log("REsult store : ",result)
+        // console.log("REsult store : ",result)
         return res.status(201).json({
             success:true,
             message:"Submited Successfully!b",
@@ -62,7 +62,7 @@ export const getResultQuiz = async(req,res)=>{
     const { quizId} = req.body;
     const userId = req.user.id; 
   
-    console.log("req : ",quizId,userId);
+    // console.log("req : ",quizId,userId);
     
     try {
         
@@ -91,7 +91,7 @@ export const getResultQuiz = async(req,res)=>{
                 message:"Quiz Result Not Found!"
             })
         }
-        console.log("REsult store : ",result)
+        // console.log("REsult store : ",result)
         return res.status(201).json({
             success:true,
             message:"Show Result Successfully!b",

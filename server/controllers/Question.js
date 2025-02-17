@@ -2,7 +2,7 @@ import Question from "../models/Question.js";
 import Quiz from "../models/Quiz.js";
 
 export const createQuestion  = async(req,res)=>{
-    console.log("req body" ,req.body)
+    // console.log("req body" ,req.body)
     try {
         const {quizId,questionDesc,options:_options,
             correctAnswer,points,explanation
@@ -39,7 +39,7 @@ export const createQuestion  = async(req,res)=>{
         // find correct options 
         const correctId = question.options.find(option=>option.isCorrect);
         question.correctAnswer = correctId._id;
-        console.log("options ",correctId)
+        // console.log("options ",correctId)
         await question.save();
         // add question to quiz 
         const updatedQuiz =  await Quiz.findByIdAndUpdate(quizId,{
@@ -64,7 +64,7 @@ export const createQuestion  = async(req,res)=>{
 export const updateQuestion  = async(req,res)=>{
     try {
         const {questionId,...other} = req.body;
-        console.log("Other Details : ",other);
+        // console.log("Other Details : ",other);
         const question = await Question.findById(questionId);
         if(!question){
             return res.status(400).json({
@@ -72,7 +72,7 @@ export const updateQuestion  = async(req,res)=>{
                 message:"Question not found!"
             })
         }
-        console.log("Ques ",question);
+        // console.log("Ques ",question);
         for(const key of Object.keys(other)){
             if(other.hasOwnProperty(key)){
                 if(key==="options"){
@@ -114,7 +114,7 @@ export const deleteQuestion  = async(req,res)=>{
         }
         
 
-        const updatedQuiz = await Quiz.findByIdAndUpdate(ques.quizId,{
+        await Quiz.findByIdAndUpdate(ques.quizId,{
             $pull:{
                 questions:ques._id
             }

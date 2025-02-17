@@ -41,7 +41,7 @@ const Instructor = () => {
   const [difficultyFilter, setDifficultyFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [sortOption, setSortOption] = useState("");
-  console.log("Instrucot quiz : ",instructorQuiz);
+  // console.log("Instrucot quiz : ",instructorQuiz);
   useEffect(()=>{
     const fetchInstructorQuiz = async()=>{
         dispatch(getInstructorQuiz(token))

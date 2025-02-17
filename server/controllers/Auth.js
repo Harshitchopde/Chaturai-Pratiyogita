@@ -53,7 +53,7 @@ export const sendOtp = async (req,res)=>{
         //otp saved
         const otpPayload = {email,otp};
         const saveOtp = await Otp.create(otpPayload);
-        console.log("Saved OTP -> ",saveOtp);
+        // console.log("Saved OTP -> ",saveOtp);
         //result
         return res.status(200).json({
             success:true,
