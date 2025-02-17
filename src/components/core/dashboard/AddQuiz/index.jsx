@@ -3,7 +3,7 @@ import RenderSteps from './RenderSteps'
 
 const AddQuiz = () => {
   return (
-    <div className=' flex  w-full items-start  gap-x-6'>
+    <div className=' flex w-full items-start  gap-x-6'>
       <div className=" flex-1 flex flex-col gap-2">
          <h1 className=' text-3xl text-black'>Add Quiz</h1>
          <div className=" flex-1">

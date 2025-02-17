@@ -28,15 +28,19 @@ const QuizAnalysis = () => {
   },[])
   const copyToClipboard = ()=>{
     const url = window.location.href;
-    // console.log("Url : ",url);
-    navigator.clipboard.writeText(url);
+    const pom = url.split("/") 
+    pom[3]="quizzes";
+    pom[4]=quizId;
+    pom[5] = "";
+    const copiedUrl = pom.join("/");
+    navigator.clipboard.writeText(copiedUrl);
     setCopied(true);
     setTimeout(()=>setCopied(false),1000);
   }
   return (
     <div className="p-6 max-w-4xl mx-auto">
     <div className=" flex w-full justify-between">
-    <h1 className="text-3xl font-bold mb-4">{analyticsQuiz?.quizName}</h1>
+    <h1 className="text-2xl sm:text-3xl font-bold mb-4 capitalize">{analyticsQuiz?.quizName}</h1>
     <div className="flex gap-x-0 items-center justify-center">
     <Button onClick={copyToClipboard} className="flex max-h-max max-w-max ">
       {copied ? <Check className="w-4 h-4 text-green-500" /> : <Clipboard className="w-4 h-4" />}
@@ -83,7 +87,7 @@ const QuizAnalysis = () => {
     <h2 className="text-2xl font-semibold mb-3">Questions</h2>
     <div className="space-y-3">
       {analyticsQuiz?.questions.map((q,i) => (
-        <Card key={q.id} className="flex justify-between p-4">
+        <Card key={i} className="flex justify-between p-4">
           <p className=' capitalize'>{i+1}.{" "}{q?.questionDesc}</p>
           <div className=" border max-w-max max-h-max rounded-md">
           <Button variant="ghost">

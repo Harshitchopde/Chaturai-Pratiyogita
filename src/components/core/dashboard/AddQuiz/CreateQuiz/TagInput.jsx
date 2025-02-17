@@ -1,3 +1,4 @@
+import { Add } from '@mui/icons-material';
 import React, { useEffect, useState } from 'react'
 import { MdClose } from 'react-icons/md';
 import { useSelector } from 'react-redux'
@@ -13,6 +14,7 @@ const TagInput = ({
 }) => {
     const {editQuiz,quiz} = useSelector(state=>state.quiz);
     const [chips,setChips] = useState([]);
+    const [chip,setChip] = useState("");
     useEffect(()=>{
         if(editQuiz){
             // console.log("Quiz ",quiz);
@@ -32,16 +34,19 @@ const TagInput = ({
  
     const handleKeyDown = (event)=>{
         // console.log("KEy : ",event.key)
-        if(event.key ==="Enter" || event.key===","){
+        if(event.key ==="Enter" || event.key==="," || event.type==="click"){
             event.preventDefault();
-            const chipValue = event.target.value.trim();
+            const chipValue = chip.trim();
+            if(!chip){
+                return;
+            }
             // check unique
             if(chipValue && !chips.includes(chipValue)){
                 // add to chips array and clear
                 const newChips = [...chips,chipValue];
                 setChips(newChips)
                 // event.target.value.clear()
-                event.target.value=""
+                setChip("");
             }
         }
     }
@@ -69,11 +74,16 @@ const TagInput = ({
                     </div>
                 ))
             }
-            <input id={name}
+           <div className=" relative w-full">
+           <input id={name}
              type='text'
+             value={chip}
+             onChange={(e)=>setChip(e.target.value)}
              placeholder={placeholder}
              onKeyDown={handleKeyDown}
              className=' form-style w-full'/>
+             <button onClick={handleKeyDown} className=' block sm:hidden absolute top-0 right-1'><Add/></button>
+           </div>
         </div>
         {
             errors[name] && (
