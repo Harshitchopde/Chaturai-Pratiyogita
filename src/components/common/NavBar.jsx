@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Search, X } from "lucide-react";
 import ProfileDropDown from "../core/auth/ProfileDropDown";
 import { resetQuery, setQuery } from "../../slices/quizzesSlice";
+import QuizDropDown from "./QuizDropDown";
+import { motion} from "framer-motion"
+import BannerQuiz from "./BannerQuiz";
 export const NavBar = () => {
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
@@ -22,8 +25,20 @@ export const NavBar = () => {
     }
   }
 
+ const [isOpen, setIsOpen] = useState(true);
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
   return (
-    <div className="h-12 text-[1rem]  border-b-slate-600 border-b bg-white text-black justify-center flex">
+    <div className="h-12 text-[1rem]  relative border-b-slate-600 border-b bg-white text-black justify-center flex">
       <div className="flex items-center justify-between gap-x-2 w-10/12 max-w-maxContent">
         <div className="flex flex-1 justify-between">
               {/* left  -> name-> Quiz-test*/}
@@ -35,9 +50,9 @@ export const NavBar = () => {
           <Link to={"/"}>
             <div className="">Home</div>
           </Link>
-          <Link to={"/quizzes"}>
-            <div className="">Quizzes</div>
-          </Link>
+          {/* <Link to={"/quizzes"}> */}
+          <QuizDropDown isOpen={isOpen} setIsOpen={setIsOpen} dropdownRef={dropdownRef}/>
+          {/* </Link> */}
           <Link to={"/contacts"}>
             <div className="">Contacts</div>
           </Link>
@@ -81,9 +96,7 @@ export const NavBar = () => {
             )
          }
           {user && (
-            // <Link to={"/dashboard/profile"}>
-            //     <FaUserCircle className=''/>
-            // </Link>
+
             <ProfileDropDown />
           )}
           {token == null && (
@@ -102,6 +115,22 @@ export const NavBar = () => {
           )}
         </div>
       </div>
+      {isOpen && (
+                <motion.div ref={dropdownRef}
+                    className="absolute transform top-14 w-[98vw] bg-white shadow-lg rounded-lg"
+                    animate={{opacity:1,y:0}}
+                    initial={{opacity:0,y:-10}}
+                    exit={{opacity:0,y:-10}}
+                    >
+                    
+                    {/* Triangle Pointer */}
+                    <div className="absolute top-0 left-[40vw]  transform -translate-x-1/2 -translate-y-1/2 w-9 rounded-md h-9 bg-white  rotate-45 shadow-2xl"></div>
+                    <div className=" absolute rounded-md  left-0 top-0  h-[30vh] bg-white w-full">
+                      <BannerQuiz setIsOpen={setIsOpen}/>
+                    </div>
+                   
+                </motion.div>
+            )}
     </div>
   );
 };
