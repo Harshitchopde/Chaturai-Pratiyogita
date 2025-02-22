@@ -4,12 +4,14 @@ const initialState = {
     step:1,
     quiz:null,
     editQuiz:false,
+   
 }
 
 const quizSlice = createSlice({
     name:"quiz",
     initialState,
     reducers:{
+       
         setStep(state,action){
             state.step = action.payload
         },
@@ -27,5 +29,5 @@ const quizSlice = createSlice({
     }
 })
 
-export const { setEditQuiz,setQuiz,setStep,resetQuizDetails} = quizSlice.actions;
+export const { setEditQuiz, setQuiz,setStep,resetQuizDetails} = quizSlice.actions;
 export default quizSlice.reducer;

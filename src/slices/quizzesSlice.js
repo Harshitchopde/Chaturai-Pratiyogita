@@ -5,12 +5,20 @@ const initialState ={
     quizzes:null,
     instructorQuiz:null,
     analyticsQuiz:null,
+    testQuiz:null,
+    attempted:1,
     query:""
 }
 const quizziesSlice = createSlice({
     name:"quizzes",
     initialState,
     reducers:{
+        setAttempted(state,action){
+            state.attempted = action.payload
+        },
+        setTestQuiz(state,action){
+            state.testQuiz = action.payload
+        },
         setAnalyticsQuiz(state,action){
             state.analyticsQuiz = action.payload
         },
@@ -55,5 +63,5 @@ const quizziesSlice = createSlice({
     }   
 })
 
-export const {setAnalyticsQuiz, resetAnalyticsQuiz, setQuizzes,resetQuizzes,deleteStateQuiz, publishQuiz,unPublishQuiz, resetInstructorQuiz,setInstructorQuiz ,setQuery,resetQuery} = quizziesSlice.actions;
+export const {setAnalyticsQuiz,setAttempted, resetAnalyticsQuiz, setTestQuiz, setQuizzes,resetQuizzes,deleteStateQuiz, publishQuiz,unPublishQuiz, resetInstructorQuiz,setInstructorQuiz ,setQuery,resetQuery} = quizziesSlice.actions;
 export default quizziesSlice.reducer;

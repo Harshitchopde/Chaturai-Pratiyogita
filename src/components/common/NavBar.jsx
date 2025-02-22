@@ -14,7 +14,7 @@ export const NavBar = () => {
   // console.log("token ",token)
   // console.log("User ",user)
   const location = useLocation();
-
+  // console.log("Location : ",location.pathname)
   const [qWord, setQWord] = useState("");
   const handleSearch = () => {
     dispatch(setQuery(qWord))
@@ -25,7 +25,7 @@ export const NavBar = () => {
     }
   }
 
- const [isOpen, setIsOpen] = useState(true);
+ const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
     useEffect(() => {

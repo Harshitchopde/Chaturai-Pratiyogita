@@ -34,6 +34,11 @@ const userSchema = new Schema({
         ref:"Profile",
         req:true,
     },
+    coins:{
+        type:Number,
+        default:50,  
+        min:0,      
+    },
     image:{
         type:String,
         req:true,

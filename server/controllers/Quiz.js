@@ -1,6 +1,8 @@
 import Quiz from "../models/Quiz.js";
 import User from "../models/User.js";
 import Question from "../models/Question.js";
+import QuizResult from "../models/QuizResult.js";
+import { useId } from "react";
 
 export const createQuiz = async(req,res)=>{
     // console.log("CREATE QUIZ")
@@ -30,9 +32,12 @@ export const createQuiz = async(req,res)=>{
         }
         // check for instructor
         const userId = req.user.id;
-        const instructor = await User.findById(userId,{
+        const instructor = await User.findOne({
+            _id:userId,
             accountType:"Instructor"
         })
+        instructor.coins+=10;
+        await instructor.save();
         if(!instructor){
             return res.status(400).json({
                 success:false,
@@ -232,11 +237,15 @@ export const getQuizDetails = async(req,res)=>{
                 message:"Quiz Details Not Found!"
             })
         }
-        let attempted = quizDetails.studentEnrolled.map((id)=>id.toString()).includes(userId);
-        // console.log("Studen enrlod ",quizDetails.studentEnrolled);
-        
+        let register = quizDetails.studentEnrolled.map((id)=>id.toString()).includes(userId);
+        const results  = await QuizResult.findOne({quizId,userId});
+        let attempted = 1
+        if(results){
+            attempted = 3
+        }else if(register){
+            attempted = 2
+        }
         const updatedQuiz = {...quizDetails.toObject(),attempted};
-        // console.log("user ",updatedQuiz)
         return res.status(200).json({
             success:true,
             message:`Quiz Details of ${quizId}`,
@@ -262,19 +271,34 @@ export const getAllQuiz = async(req,res)=>{
         }).populate("instructor")
         .populate("studentEnrolled")
         .exec();
-        const updatedQuiz = quizzesAll.map((quiz)=>({
-            ...quiz.toObject(),
-            attempted: quiz.studentEnrolled.some((user)=>{
-            //    console.log("QQ ",user)
-            //  console.log("QMT : ",user._id,userId)
-               if(user._id.toString()===userId){
-                // console.log("user string ")
-                  return true;
-               }
-               return false;
+        // const updatedQuiz = quizzesAll.map((quiz)=>({
+        //     ...quiz.toObject(),
+        //     attempted: quiz.studentEnrolled.some((user)=>{
+        //     //    console.log("QQ ",user)
+        //     //  console.log("QMT : ",user._id,userId)
+        //        if(user._id.toString()===userId){
+        //           return true;
+        //        }
+        //        return false;
 
+        //     })   
+        // }))
+        const updatedQuiz = await Promise.all(
+            quizzesAll.map(async(quiz)=>{
+                const isRegister = quiz.studentEnrolled.some(
+                    (user)=> user._id.toString()=== userId
+                );
+                const result = await QuizResult.findOne({quizId:quiz._id,userId});
+                // console.log("quiz : ",isRegister)
+                let attempted = 1;
+                if(result){
+                    attempted = 3;
+                }else if(isRegister){
+                    attempted = 2;
+                }
+                return {...quiz.toObject(),attempted}
             })
-        }))
+        )
         // console.log("UpdatedQuiz : ",updatedQuiz)
         return res.status(200).json({
             success:true,

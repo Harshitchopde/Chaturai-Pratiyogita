@@ -11,9 +11,9 @@ import { filterQuizzes } from '../utils/searchUtils';
 
 const Quizzes = () => {
   const [quizs,setQuizs] = useState([]);
-  // console.log("Quizzes : ",quizzes)
   const { token} = useSelector(state=>state.auth);
   const { query,quizzes} = useSelector(state=>state.quizzes);
+  console.log("Quizzes : ",quizzes)
   // console.log("Quizzes : ",query,quizs)
   const dispatch = useDispatch();
   const navigate = useNavigate();

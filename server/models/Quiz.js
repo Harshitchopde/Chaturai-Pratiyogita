@@ -46,6 +46,13 @@ const quizSchema = new Schema({
         type:Schema.Types.ObjectId,
         ref:"User"
     }],
+    coins:{
+        type:Number,
+        default:1,
+        min:0,
+        max:5,
+        required:true,
+    },
     questions:[
         {
             type:Schema.Types.ObjectId,

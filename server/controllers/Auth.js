@@ -142,6 +142,7 @@ export const signUp = async (req,res)=>{
             email,
             contactNumber,
             accountType,
+            coins:50,
             additionalDetails:profileOfUser._id,
             image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`
         })
@@ -195,7 +196,15 @@ export const login = async(req,res)=>{
                 expiresIn:"24h"
             }
             )
+
+        console.log("Coin ",existingUser.coins)
+        // console.log(existingUser);
+        if(!existingUser.coins){
+            existingUser.coins = 50;
+            await existingUser.save();
+        }
         existingUser.token = token;
+        // console.log("Ex ",existingUser)
         // create cookies
         const options = {
             httpOnly:true,

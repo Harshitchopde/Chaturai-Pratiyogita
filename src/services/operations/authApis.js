@@ -3,6 +3,7 @@ import { authEndPoints } from "../apis.js";
 import { setLoading, setToken } from "../../slices/authSlicer.js";
 import { apiConnector } from "../apiconnectors.js";
 import { setUser } from "../../slices/profileSlicer.js";
+import { setCoins } from "../../slices/coinSlicer.js";
 
 const {
     SEND_OTP_API,
@@ -101,7 +102,7 @@ export function login(
             localStorage.setItem("token",JSON.stringify(response.data.user.token))
             // user
             localStorage.setItem("user",JSON.stringify(response.data.user))
-          
+            dispatch(setCoins(response.data.user.coins))
             navigate("/")
 
         } catch (error) {

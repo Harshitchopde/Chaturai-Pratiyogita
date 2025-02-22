@@ -4,11 +4,11 @@ import QuestionForm from '../QuestionForm';
 import toast from 'react-hot-toast';
 import { getSubmitedQuizResp, submitQuizResponce } from '../../../../services/operations/resultApis';
 const CardQuizRoom = ({submitted,setSubmitted}) => {
-    const {quiz} = useSelector(state=> state.quiz);
+    const {testQuiz} = useSelector(state=> state.quizzes);
     const { token} = useSelector(state=> state.auth);
    
-    let timer = quiz?.timeDuration 
-    const [currentQuestion,setCurrentQuestion] = useState(quiz?.questions[0]);
+    let timer = testQuiz?.timeDuration 
+    const [currentQuestion,setCurrentQuestion] = useState(testQuiz?.questions[0]);
     const [quesNumber,setQuestionNumber] = useState(1);
     // yourResponse
     const [yourResponse,setYourResponse] = useState({});
@@ -27,17 +27,17 @@ const CardQuizRoom = ({submitted,setSubmitted}) => {
     useEffect(()=>{
       if(submitted===true){
         const fetchDetails = async ()=>{
-          const res = await getSubmitedQuizResp(quiz?._id,token)
+          const res = await getSubmitedQuizResp(testQuiz?._id,token)
           // console.log("RESPONCE GET ",res);
           setResult(res);
         }
         fetchDetails();
       }
-    },[submitted,quiz?._id])
+    },[submitted,testQuiz?._id])
     const handleOptionSubmition = async()=>{
        // yourResponse ko submit karna hai
        const formData = new FormData();
-       formData.append("quizId",quiz._id)
+       formData.append("quizId",testQuiz._id)
        Object.entries(yourResponse).forEach(([questionId,optionId])=>{
          formData.append(`responses[${questionId}]`,optionId);
        })
@@ -49,9 +49,9 @@ const CardQuizRoom = ({submitted,setSubmitted}) => {
        }
     }
     useEffect(()=>{
-      setCurrentQuestion(quiz?.questions[quesNumber-1])
+      setCurrentQuestion(testQuiz?.questions[quesNumber-1])
     },[quesNumber])
-    const totalQuestion = quiz?.questions?.length;
+    const totalQuestion = testQuiz?.questions?.length;
     
     // timer related calculation
     const [timeLeft, setTimeLeft] = useState(timer*60);
