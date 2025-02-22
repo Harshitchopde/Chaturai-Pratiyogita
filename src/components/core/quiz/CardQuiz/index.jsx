@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuizDetails } from "../../../../services/operations/quiz.Apis";
 import { QUIZ_DIFFICULTY } from "../../../../utils/constants";
@@ -8,23 +8,16 @@ import { formateTimer } from "../../../../utils/formateTime";
 import CardQuizRoom from "./CardQuizRoom";
 import { registerQuizResponse } from "../../../../services/operations/resultApis";
 import ConformationPopUp from "../../../common/ConformationPopUp";
-
 import { spendCoins } from "../../../../slices/coinSlicer";
 import { setAttempted, setTestQuiz } from "../../../../slices/quizzesSlice";
 
 
 const CardQuiz = () => {
-  // const location = useLocation();
-  // console.log("loca ",location)
   const { quizId } = useParams();
   const { token } = useSelector((state) => state.auth);
-  const {user} = useSelector(state=>state.profile);
   const { testQuiz,attempted } = useSelector((state) => state.quizzes);
   const {coins} = useSelector(state=>state.coins)
   const dispatch = useDispatch();
-  console.log("IS ",user)
-  console.log("Call quiz : ",testQuiz)
-  console.log("Atmpt : ",attempted)
   const navigate = useNavigate();
   const [showAnswer, setShowAnswer] = useState(attempted===3);
   const [conformationModel,setConformationModel] = useState(null);
@@ -46,22 +39,12 @@ const CardQuiz = () => {
   useEffect(() => {
     setShowAnswer(attempted === 3);
   }, [attempted]);
-  console.log("Quizx : ", testQuiz);
-  // console.log("ShowAnd ",showAnswer)
   const [loading, setLoading] = useState(false);
   const [startQuiz, setStartQuiz] = useState(false);
-
-  // console.log("PArams ",location.pathname+" - ",quizId)
   const [timer, setTimer] = useState(0);
   // handleRegister
   const handleQuizRegister =async ()=>{
-    console.log("Handle quiz reg ")
-    console.log("Coins : ",testQuiz?.coins ," ",coins)
-   
-   
     const apmt = await registerQuizResponse(testQuiz._id,token)
-    
-    console.log("Ampt ",apmt)
     if(apmt){
       dispatch(spendCoins(testQuiz?.coins));
       dispatch(setAttempted(2));
@@ -70,7 +53,6 @@ const CardQuiz = () => {
       console.log("Error null")
     }
     setConformationModel(null);
-    console.log("Confo ",conformationModel)
   }
 
   // handleStartQuiz
@@ -99,7 +81,6 @@ const CardQuiz = () => {
         btn1Handler:()=>handleQuizRegister(),
         btn2Handler:()=>setConformationModel(null)
       });
-      //  await handleQuizRegister();
       return;
     }
     setLoading(true);
@@ -117,8 +98,6 @@ const CardQuiz = () => {
       });
     }, 1000);
   };
-  // console.log(startQuiz)
-
   return (
    <>
     <div className=" w-full h-full p-10">

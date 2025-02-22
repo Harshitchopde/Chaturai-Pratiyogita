@@ -13,7 +13,7 @@ const {
 } = authEndPoints
 // sendOtp
 export function sendOtp(email,navigate){
-    console.log("SEND OTP start ->",email)
+    // console.log("SEND OTP start ->",email)
     return async(dispatch)=>{
         const toastId = toast.loading("Loading...");
         dispatch(setLoading(true));
@@ -22,7 +22,7 @@ export function sendOtp(email,navigate){
                 email
             });
 
-            console.log("SEND OTP res ---> ",res);
+            // console.log("SEND OTP res ---> ",res);
             if(!res.data.success){
                 toast.error(res.data.message);
                 return;
@@ -55,7 +55,7 @@ export function signUp(
             const response = await apiConnector("POST",SIGN_UP_API,{
                 firstName,lastName,password,conformPassword,email,accountType,otp
             })
-            console.log("API response of signup ",response)
+            // console.log("API response of signup ",response)
             if(!response.data.success){
                 toast.error(response.data.message)
                 throw new Error(response.data.message);
@@ -122,7 +122,7 @@ export function reportIssue(issueDesc,token){
         },{
               Authorization:`Bearer ${token}`
         })
-        console.log("REsponse reportIssue... ",res);
+        // console.log("REsponse reportIssue... ",res);
         if(!res.data.success){
             throw new Error(res.data.message)
         }

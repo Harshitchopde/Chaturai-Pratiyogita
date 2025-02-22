@@ -1,5 +1,5 @@
 import React from 'react'
-import { QUIZ_DIFFICULTY, QUIZ_STATUS } from '../../../../utils/constants'
+import { QUIZ_DIFFICULTY } from '../../../../utils/constants'
 import { Link } from 'react-router-dom'
 import { MdOutlineVerifiedUser } from "react-icons/md";
 // const quiz ={

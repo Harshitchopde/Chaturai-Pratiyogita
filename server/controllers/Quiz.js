@@ -2,13 +2,10 @@ import Quiz from "../models/Quiz.js";
 import User from "../models/User.js";
 import Question from "../models/Question.js";
 import QuizResult from "../models/QuizResult.js";
-import { useId } from "react";
+
 
 export const createQuiz = async(req,res)=>{
-    // console.log("CREATE QUIZ")
     try {
-       
-        // console.log("Data ",req.body)
         // get data of quiz
         const {quizName,
             quizDesc,
@@ -21,8 +18,7 @@ export const createQuiz = async(req,res)=>{
         let { status} = req.body;
         
         const tag = JSON.parse(_tag);
-    
-        // console.log("tags ",tag)
+
         // validate
         if(!quizName || !quizDesc || !timeDuration){
             return res.status(400).json({
@@ -264,25 +260,12 @@ export const getQuizDetails = async(req,res)=>{
 }
 export const getAllQuiz = async(req,res)=>{
     try {
-        // console.log("user : ",req.user)
         const userId= req.user.id;
         const quizzesAll = await Quiz.find({
             status:"Published"
         }).populate("instructor")
         .populate("studentEnrolled")
         .exec();
-        // const updatedQuiz = quizzesAll.map((quiz)=>({
-        //     ...quiz.toObject(),
-        //     attempted: quiz.studentEnrolled.some((user)=>{
-        //     //    console.log("QQ ",user)
-        //     //  console.log("QMT : ",user._id,userId)
-        //        if(user._id.toString()===userId){
-        //           return true;
-        //        }
-        //        return false;
-
-        //     })   
-        // }))
         const updatedQuiz = await Promise.all(
             quizzesAll.map(async(quiz)=>{
                 const isRegister = quiz.studentEnrolled.some(

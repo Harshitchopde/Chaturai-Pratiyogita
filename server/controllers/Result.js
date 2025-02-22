@@ -1,17 +1,11 @@
-import { useId } from "react";
 import Quiz from "../models/Quiz.js";
 import QuizResult from "../models/QuizResult.js";
 import User from "../models/User.js";
-import mongoose from "mongoose";
 
 export const submitQuiz = async(req,res)=>{
-    // console.log("body : ",req.body);
-    // console.log("user id : ",req.user.id)
     const { responses,quizId} = req.body;
     const userId = req.user.id; 
     const formatedResp = {...responses};
-    // console.log("req : ",responses);
-    // console.log("Formatd  ",formatedResp)
     try {
         
         if(!responses || !quizId){
@@ -45,7 +39,6 @@ export const submitQuiz = async(req,res)=>{
             message:"Submited Successfully!b",
             data:result.responses
         })
-        // return res.status(00).json()
     } catch (error) {
         console.log("Error in submitQuiz-b ",error);
         return res.status(500).json({
@@ -96,11 +89,8 @@ export const registerQuiz = async(req,res)=>{
             user.coins-=quiz.coins;
             await user.save();
         }
-        console.log("quis : ",quiz.studentEnrolled)
         quiz.studentEnrolled.push(userId);
-        console.log("co ",quiz.studentEnrolled)
         await quiz.save();
-        
         return res.status(201).json({
             success:true,
             message:"Registered succesfully"
@@ -117,13 +107,8 @@ export const registerQuiz = async(req,res)=>{
     }
 }
 export const getResultQuiz = async(req,res)=>{
-    // console.log("body : ",req.body);
-    // console.log("user id : ",req.user.id)
     const { quizId} = req.body;
     const userId = req.user.id; 
-  
-    // console.log("req : ",quizId,userId);
-    
     try {
         
         if(!quizId){
@@ -151,7 +136,6 @@ export const getResultQuiz = async(req,res)=>{
                 message:"Quiz Result Not Found!"
             })
         }
-        // console.log("REsult store : ",result)
         return res.status(201).json({
             success:true,
             message:"Show Result Successfully!b",

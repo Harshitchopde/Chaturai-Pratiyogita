@@ -39,7 +39,7 @@ export const getSubmitedQuizResp = async (quizId,token)=>{
             Authorization:`Bearer ${token}`
         })
 
-        console.log("GET Submited quiz REsponses .... ",res);
+        // console.log("GET Submited quiz REsponses .... ",res);
         if(!res?.data?.success){
             throw new Error("Error occure in getting")
         }
@@ -62,7 +62,7 @@ export const registerQuizResponse = async(quizId,token)=>{
         },{
             Authorization:`Bearer ${token}`
         });
-        console.log("reps requiz ",response)
+        // console.log("reps requiz ",response)
         if(!response?.data?.success){
             throw new Error("Error occure in registerQuiz")
         }
