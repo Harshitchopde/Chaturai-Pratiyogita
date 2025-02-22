@@ -1,5 +1,5 @@
 import React from 'react'
-import { QUIZ_DIFFICULTY, QUIZ_STATUS } from '../../../../utils/constants'
+import { QUIZ_DIFFICULTY } from '../../../../utils/constants'
 import { Link } from 'react-router-dom'
 import { MdOutlineVerifiedUser } from "react-icons/md";
 // const quiz ={
@@ -31,6 +31,7 @@ import { MdOutlineVerifiedUser } from "react-icons/md";
 //     "__v": 0
 //   }
 const SingleCard = ({quiz}) => {
+
   return (
     <div className=' relative space-y-2 flex flex-col w-[300px] h-[350px] select-none p-5 border border-purple-400 rounded-md '>
         <p className=' capitalize text-2xl text-black'>{quiz?.quizName}</p>
@@ -60,14 +61,18 @@ const SingleCard = ({quiz}) => {
               </div>
           )
         }
-        <div className=" absolute bottom-11 left-0 right-0  flex  justify-center  w-full">
+        <div
+         className=" absolute bottom-11 left-0 right-0  flex  justify-center  w-full">
             <Link to={quiz?._id}>
-            <button className='border-blue-950  hover:bg-blue-500  border bg-blue-600 max-w-max rounded-md px-4 py-1'>
+            <button
+             className='border-blue-950  hover:bg-blue-500  border bg-blue-600 max-w-max rounded-md px-4 py-1'>
               {
-                quiz?.attempted?(
+                quiz?.attempted ===2 ?(
+                  <div className="">Take Test</div>
+                 ): quiz?.attempted === 3 ?(
                 <div className="">Show Result</div> 
                 ):(
-                  <div className="">Take Test</div>
+                  <div className="">Register</div>
                 )
               }
             </button>

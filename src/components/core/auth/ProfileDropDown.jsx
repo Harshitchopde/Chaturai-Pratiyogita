@@ -5,22 +5,29 @@ import { useOnClickOutside } from '../../../hooks/useOnClickOutside';
 import { AiOutlineCaretDown } from 'react-icons/ai';
 import { VscDashboard, VscSignOut } from 'react-icons/vsc';
 import { logOut } from '../../../services/operations/authApis';
-
+import { Coins } from 'lucide-react';
+import { PiCoin, PiCoinVertical } from "react-icons/pi";
+import { BsCoin } from "react-icons/bs";
 const ProfileDropDown = () => {
     const {user} = useSelector(state=>state.profile);
     const dispatch = useDispatch();
     const [open,setOpen] = useState(false);
     const navigate = useNavigate();
     const ref = useRef(null);
-
+    const {coins} = useSelector(state=>state.coins);
     useOnClickOutside(ref,()=>setOpen(false));
     if(!user) return null;
   return (
-    <button className=' relative' onClick={()=>setOpen(true)}>
+    <button className=' relative flex items-center gap-x-2' onClick={()=>setOpen(true)}>
+        <div className="flex  items-center  rounded-md bg-slate-100">
+                <p className=' text-sm'>+{coins}</p>
+                <PiCoinVertical className=' text-xl text-orange-300'/>
+        </div>
         <div className=" flex items-center gap-x-1">
             <img src={user?.image} alt={`profile-${user?.firstName}`} 
              className=' aspect-square w-[30px] rounded-full object-cover'/>
              <AiOutlineCaretDown className=' text-sm text-slate-500'/>
+           
         </div>
         {
             open && (

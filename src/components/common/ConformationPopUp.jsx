@@ -2,7 +2,6 @@ import React from 'react'
 import IconBtn from './IconBtn';
 
 const ConformationPopUp = ({modelData}) => {
-    console.log("Mode Data ",modelData);
  
   return (
     <div className=' fixed backdrop-blur-sm backdrop:blur-xl inset-0 z-[100] !mt-0 grid place-items-center 

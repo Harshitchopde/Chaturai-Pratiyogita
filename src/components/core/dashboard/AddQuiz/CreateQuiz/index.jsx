@@ -7,6 +7,7 @@ import IconBtn from '../../../../common/IconBtn';
 import { MdNavigateNext } from 'react-icons/md';
 import toast from 'react-hot-toast';
 import { createQuiz, updateQuiz } from '../../../../../services/operations/quiz.Apis';
+import { earnCoins } from '../../../../../slices/coinSlicer';
 
 const CreateQuiz = () => {
     const { step, quiz ,editQuiz} = useSelector(state=> state.quiz);
@@ -121,6 +122,8 @@ const CreateQuiz = () => {
        if(result){
          dispatch(setStep(2));
          dispatch(setQuiz(result));
+         dispatch(earnCoins(10));
+         toast.success("Earn Coins +",10)
        }
        setLoading(false);
     }

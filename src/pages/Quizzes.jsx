@@ -11,10 +11,8 @@ import { filterQuizzes } from '../utils/searchUtils';
 
 const Quizzes = () => {
   const [quizs,setQuizs] = useState([]);
-  // console.log("Quizzes : ",quizzes)
   const { token} = useSelector(state=>state.auth);
   const { query,quizzes} = useSelector(state=>state.quizzes);
-  // console.log("Quizzes : ",query,quizs)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   if(token===null){
@@ -23,14 +21,12 @@ const Quizzes = () => {
   }
   useEffect(()=>{
     const fileterQuiz = filterQuizzes(query,quizzes);
-    // console.log("fileterd : ",fileterQuiz)
     setQuizs(fileterQuiz)
   },[query])
   useEffect(()=>{
     const getAllQuizResp = async ()=>{
       const result = await getAllQuiz(token)
       setQuizs(result);
-      console.log("Quiz : ",result)
       dispatch(setQuizzes(result));
     }
     if(!quizzes){
