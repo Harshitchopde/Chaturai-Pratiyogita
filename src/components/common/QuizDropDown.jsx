@@ -1,10 +1,9 @@
 
-const QuizzesDropdown = ({isOpen,setIsOpen,dropdownRef}) => {
+const QuizzesDropdown = () => {
     return (
-        <div className="relative" ref={dropdownRef}
+        <div className="relative"
            >
-            <button className="text-black hover:bg-gray-200 rounded-md" 
-                onClick={() => setIsOpen(!isOpen)}>
+            <button className="text-black hover:bg-gray-200 rounded-md">
                 Quizzes
             </button>
 

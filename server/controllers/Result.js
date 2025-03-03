@@ -3,7 +3,7 @@ import QuizResult from "../models/QuizResult.js";
 import User from "../models/User.js";
 
 export const submitQuiz = async(req,res)=>{
-    const { responses,quizId} = req.body;
+    const { responses,quizId,timeTaken} = req.body;
     const userId = req.user.id; 
     const formatedResp = {...responses};
     try {
@@ -14,7 +14,7 @@ export const submitQuiz = async(req,res)=>{
                 message:"responses and QuizId required!"
             })
         }
-        const quiz = await Quiz.findById(quizId);
+        const quiz = await Quiz.findById(quizId).populate("questions");
         if(!quiz){
             return res.status(400).json({
                 success:false,
@@ -28,16 +28,44 @@ export const submitQuiz = async(req,res)=>{
                 message:"Already Attempted!"
             })
         }
+        const totalQuestions = quiz.questions.length;
+        let correctAnswers = 0;
+        let wrongAnswers = 0;
+        let total = 0;
+        let totalScore = 0;
+        // console.log("Question : ",quiz)
+        for(let question of quiz.questions){
+            const userAnswer = responses[question._id];
+            total+=question.points;
+            if(!userAnswer){
+                // skip the unanswer question
+                continue;
+
+            }
+            if(question.correctAnswer.toString()===userAnswer){
+                // right answer
+                correctAnswers++;
+                totalScore+=question.points;
+            }else{
+                wrongAnswers++;
+            }
+        }
         const result  = await QuizResult.create({
             quizId,
             userId,
+            total,
+            totalScore,
+            timeTaken,
+            totalQuestions,
+            correctAnswers,
+            wrongAnswers,
             responses:formatedResp,
         })
         // console.log("REsult store : ",result)
         return res.status(201).json({
             success:true,
             message:"Submited Successfully!b",
-            data:result.responses
+            data:result
         })
     } catch (error) {
         console.log("Error in submitQuiz-b ",error);
@@ -139,7 +167,7 @@ export const getResultQuiz = async(req,res)=>{
         return res.status(201).json({
             success:true,
             message:"Show Result Successfully!b",
-            data:result.responses
+            data:result
         })
     } catch (error) {
         console.log("Error in getResultQuiz-b ",error);

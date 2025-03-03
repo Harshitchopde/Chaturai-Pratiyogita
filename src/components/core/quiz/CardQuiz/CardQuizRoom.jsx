@@ -1,83 +1,142 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import QuestionForm from '../QuestionForm';
 import toast from 'react-hot-toast';
 import { getSubmitedQuizResp, submitQuizResponce } from '../../../../services/operations/resultApis';
-const CardQuizRoom = ({submitted,setSubmitted}) => {
-    const {testQuiz} = useSelector(state=> state.quizzes);
-    const { token} = useSelector(state=> state.auth);
-   
-    let timer = testQuiz?.timeDuration 
-    const [currentQuestion,setCurrentQuestion] = useState(testQuiz?.questions[0]);
-    const [quesNumber,setQuestionNumber] = useState(1);
-    // yourResponse
-    const [yourResponse,setYourResponse] = useState({});
-    // result 
-    const [result,setResult] = useState(null);
-    // const [submitted,setSubmitted] = useState(false);
-    // handle option selected
-    
-    const handleOptionSelect = (questionId,optionId)=>{
-      if(submitted){
-        return;
-      }
-      setYourResponse({...yourResponse,[questionId]:optionId});
-    }
-    // console.log("Result set : ",result)
-    useEffect(()=>{
-      if(submitted===true){
-        const fetchDetails = async ()=>{
-          const res = await getSubmitedQuizResp(testQuiz?._id,token)
-          // console.log("RESPONCE GET ",res);
-          setResult(res);
-        }
-        fetchDetails();
-      }
-    },[submitted,testQuiz?._id])
-    const handleOptionSubmition = async()=>{
-       // yourResponse ko submit karna hai
-       const formData = new FormData();
-       formData.append("quizId",testQuiz._id)
-       Object.entries(yourResponse).forEach(([questionId,optionId])=>{
-         formData.append(`responses[${questionId}]`,optionId);
-       })
-       // call for the submit
-       const response = await submitQuizResponce(formData,token);
-       if(response){
-          setResult(response);
-          setSubmitted(true);
-       }
-    }
-    useEffect(()=>{
-      setCurrentQuestion(testQuiz?.questions[quesNumber-1])
-    },[quesNumber])
-    const totalQuestion = testQuiz?.questions?.length;
-    
-    // timer related calculation
-    const [timeLeft, setTimeLeft] = useState(timer*60);
-    useEffect(()=>{
-       if(!submitted){
-            if(timeLeft<=0){
-              toast.success("Test is over now");
-              handleOptionSubmition();
-              return;
-          }
-          if(timeLeft===60){
-              toast.success("Hurry Up 60 second left");
-            
-          }
-          const interval = setInterval(()=>{
-              setTimeLeft(prev=>prev-1)
-          },1000);
-          return ()=> clearInterval(interval);
-       }
-    },[timeLeft,submitted])
-    
-  return (
-    <div>
-        <QuestionForm submitted={submitted} handleOptionSubmition={handleOptionSubmition} result={result} question={currentQuestion} yourResponse={yourResponse} handleOptionSelect={handleOptionSelect} setQuestionNumber={setQuestionNumber} total={totalQuestion} quesNumber={quesNumber} timeLeft={timeLeft}/> 
-    </div>
-  )
-}
+import { formateTimer } from '../../../../utils/formateTime';
 
-export default CardQuizRoom
+const CardQuizRoom = ({ submitted, setSubmitted }) => {
+    const { testQuiz } = useSelector(state => state.quizzes);
+    const { token } = useSelector(state => state.auth);
+    
+    let timer = testQuiz?.timeDuration;
+    const [currentQuestion, setCurrentQuestion] = useState(testQuiz?.questions[0]);
+    const [quesNumber, setQuestionNumber] = useState(1);
+    const [yourResponse, setYourResponse] = useState({});
+    const [result, setResult] = useState(null);
+    const [review,setReview] = useState(false);
+    // console.log("Result : ",result)
+    // console.log("response : ",yourResponse)
+    const handleOptionSelect = (questionId, optionId) => {
+        if (submitted) return;
+        setYourResponse({ ...yourResponse, [questionId]: optionId });
+    };
+   
+    useEffect(() => {
+        if (submitted) {
+            const fetchDetails = async () => {
+                const res = await getSubmitedQuizResp(testQuiz?._id, token);
+                setResult(res);
+            };
+            fetchDetails();
+        }
+    }, [submitted, testQuiz?._id]);
+
+    const handleOptionSubmission = async () => {
+        const formData = new FormData();
+        formData.append("quizId", testQuiz._id);
+        formData.append("timeTaken",timeLeft);
+        Object.entries(yourResponse).forEach(([questionId, optionId]) => {
+            formData.append(`responses[${questionId}]`, optionId);
+        });
+        const response = await submitQuizResponce(formData, token);
+        if (response) {
+            setResult(response);
+            setSubmitted(true);
+        }
+    };
+
+    useEffect(() => {
+        setCurrentQuestion(testQuiz?.questions[quesNumber - 1]);
+    }, [quesNumber]);
+
+    const totalQuestions = testQuiz?.questions?.length;
+    const [timeLeft, setTimeLeft] = useState(timer * 60);
+    
+    useEffect(() => {
+        if (!submitted) {
+            if (timeLeft <= 0) {
+                toast.success("Test is over now");
+                handleOptionSubmission();
+                return;
+            }
+            if (timeLeft === 60) {
+                toast.success("Hurry Up! 60 seconds left");
+            }
+            const interval = setInterval(() => {
+                setTimeLeft(prev => prev - 1);
+            }, 1000);
+            return () => clearInterval(interval);
+        }
+    }, [timeLeft, submitted]);
+    // console.log("Questions : ",testQuiz.questions)
+    console.log("Result ",result)
+    return (
+        <div>
+            {!submitted || review ? (
+                <QuestionForm
+                    submitted={submitted}
+                    review={review}
+                    setReview={setReview}
+                    handleOptionSubmition={handleOptionSubmission}
+                    result={result}
+                    question={currentQuestion}
+                    yourResponse={yourResponse}
+                    handleOptionSelect={handleOptionSelect}
+                    setQuestionNumber={setQuestionNumber}
+                    total={totalQuestions}
+                    quesNumber={quesNumber}
+                    timeLeft={timeLeft}
+                />
+            ) : (
+                <div className="mt-10 p-6 bg-gray-100 rounded-md">
+                    <h2 className="text-2xl font-bold mb-4">Quiz Analysis</h2>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                        <div className="p-4 bg-white rounded-md shadow">
+                            <p className="text-xl font-bold">{result?.totalQuestions}</p>
+                            <p className="text-gray-500">Total Questions</p>
+                        </div>
+                        <div className="p-4 bg-green-100 rounded-md shadow">
+                            <p className="text-xl font-bold">{result?.correctAnswers}</p>
+                            <p className="text-green-600">Correct Answers</p>
+                        </div>
+                        <div className="p-4 bg-red-100 rounded-md shadow">
+                            <p className="text-xl font-bold">{result?.wrongAnswers}</p>
+                            <p className="text-red-600">Wrong Answers</p>
+                        </div>
+                        <div className="p-4 bg-blue-100 rounded-md shadow">
+                            <p className="text-xl font-bold">{result?.totalScore}</p>
+                            <p className="text-blue-600">Total Score</p>
+                        </div>
+                    </div>
+                    <div className="mt-4 p-4 bg-yellow-100 rounded-md shadow text-center">
+                        <p className="text-xl font-bold">{formateTimer(result?.timeTaken)}</p>
+                        <p className="text-yellow-600">Time Taken</p>
+                    </div>
+                    <h3 className="text-xl font-semibold mt-6">Review Questions</h3>
+                    <div className="mt-4 grid grid-cols-6 gap-2">
+                    {testQuiz?.questions.map((q, index) => (
+                            <button
+                                key={q._id}
+                                onClick={()=>{
+                                  setQuestionNumber(index+1);
+                                  setReview(true)
+                                }}
+                                className={`p-2 text-sm rounded-md ${
+                                   result?.responses?.[q._id] ==null? "bg-gray-500 text-white":
+                                    result?.responses?.[q._id] === q.correctAnswer
+                                        ? "bg-green-500 text-white"
+                                        : "bg-red-500 text-white"
+                                }`}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default CardQuizRoom;

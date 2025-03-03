@@ -17,7 +17,7 @@ import { FaArrowLeft } from "react-icons/fa";
     "explanation": "Mars is often called the Red Planet because of its reddish appearance."
   },
   */
-const QuestionForm = ({result,handleOptionSubmition, submitted,question,setQuestionNumber,quesNumber,total,timeLeft,yourResponse,handleOptionSelect}) => {
+const QuestionForm = ({result,setReview,review,handleOptionSubmition, submitted,question,setQuestionNumber,quesNumber,total,timeLeft,yourResponse,handleOptionSelect}) => {
 
 
     const handleNext = (e)=>{
@@ -41,6 +41,9 @@ const QuestionForm = ({result,handleOptionSubmition, submitted,question,setQuest
     // const [selected,setSelected] = useState("");
   return (
     <div className=" flex select-none flex-col  sm:w-10/12 mx-auto border px-4 py-4 sm:px-8 gap-1 sm:gap-3 sm:py-9 sm:h-[450px] rounded-md ">
+     {/* <di>back to review</div> */}
+     {/* <button onClick={()=>setReview(false)}>back to review</button> */}
+     <div onClick={()=>setReview(false)} className=' flex items-center gap-x-2 text-sm' ><FaArrowLeft/> back to result</div>
         <div className="flex justify-between ">
             <div className=" text-xl sm:text-2xl font-bold">Question {quesNumber}/{total}</div>
             <div className=" text-gray-500 text-sm sm:text-[1rem]  ">{formateTimer(timeLeft)}</div>
@@ -78,7 +81,13 @@ const QuestionForm = ({result,handleOptionSubmition, submitted,question,setQuest
         <div className=" flex my-2 justify-between w-full">
           <button className={ ` sm:px-3  px-2 py-1 max-h-max rounded-md text-white sm:text-xl  text-sm flex gap-2 items-center border ${quesNumber===1?"bg-gray-500":"bg-blue-600"}`}
           disabled={quesNumber===1} onClick={handlePrev}> <FaArrowLeft/> Prev</button>
-          <button className=' sm:px-3  px-2 py-1 max-h-max rounded-md text-white  sm:text-xl flex text-sm gap-2 items-center border bg-blue-600' onClick={handleNext}>{total===quesNumber?(<div>Submit</div>):(<div className='flex gap-2 items-center'>Next <FaArrowRight/></div>)} </button>
+          <button 
+          disabled={submitted && total===quesNumber}
+          className= {`sm:px-3  px-2 py-1 max-h-max rounded-md text-white  sm:text-xl flex text-sm gap-2 items-center border ${ total===quesNumber && submitted ?"bg-gray-500":"bg-blue-600"}`} onClick={handleNext}>
+              {total===quesNumber?(<div>Submit</div> ):
+              (<div className='flex gap-2 items-center'>
+                Next <FaArrowRight/></div>)} 
+            </button>
         </div>
        {
          submitted && (

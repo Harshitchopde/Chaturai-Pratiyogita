@@ -11,6 +11,24 @@ const quizResultSchema = new Schema({
         ref:"User",
         required:true,
     },
+    totalQuestions:{
+        type:Number,
+    },
+    correctAnswers:{
+        type:Number
+    },
+    wrongAnswers:{
+        type:Number
+    },
+    totalScore:{
+        type:Number,
+    },
+    timeTaken:{
+        type:Number
+    },
+    total:{
+        type:Number,
+    },
     responses:{
         type:Map,
         of:String,
