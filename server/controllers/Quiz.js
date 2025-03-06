@@ -2,6 +2,10 @@ import Quiz from "../models/Quiz.js";
 import User from "../models/User.js";
 import Question from "../models/Question.js";
 import QuizResult from "../models/QuizResult.js";
+import { QUIZ_STATUS } from "../utils/constants.js";
+import { isValidEmail } from "../utils/checks.js";
+import { quizNotificationEmail } from "../mails/reportsMail.js";
+import mailSender from "../utils/mailSender.js";
 
 
 export const createQuiz = async(req,res)=>{
@@ -346,6 +350,55 @@ export const instructorAnalysis = async(req,res)=>{
             success:false,
             message:error.message
         })
+    }
+}
+export const notifyQuiz = async (req,res)=>{
+    try {
+        const {quizId} = req.body;
+        const userId = req.user.id;
+        const quiz = await Quiz.findOne({_id:quizId});
+        if(!quiz){
+            return res.status(400).json({
+                message:`Could Not Find Quiz id -> ${quizId}`,
+                success:false
+            })
+        }
+        if(quiz.status===QUIZ_STATUS.DRAFT){
+            return res.status(400).json({
+                success:false,
+                message:"The Quiz is not Published"
+            })
+        }
+        // find user
+        const userInstructor = await User.findById(userId);
+        if(userInstructor.coins <5){
+            return res.status(400).json({
+                success:false,
+                message:"You need atleast 5 coins to publish"
+            })
+        }
+        userInstructor.coins-=5;
+        await userInstructor.save();
+        let sendEmail = 0;
+        const clientBaseURL = req.headers.referer || req.headers.origin
+        // quiz link 
+        let quizLink = `${clientBaseURL}/quizzes/${quiz._id}` 
+        const users = await User.find({ email:{ $eq:"chopdeharshit@gmail.com"}})
+        for(const user of users){
+            if(isValidEmail(user.email)){
+                const emailBody = quizNotificationEmail(user.firstName,quiz.quizName,quiz.quizDesc,quiz.timeDuration,quiz.numberOfQuestions,quizLink)
+                await mailSender(user.email, `🚀 New Quiz Alert: ${quiz.quizName}!`,emailBody)
+                sendEmail++;
+            }
+        }
+
+        return res.status(200).json({
+            success:true,
+            message: `Quiz notification sent to ${sendEmail} users` 
+        })
+        
+    } catch (error) {
+        
     }
 }
 export const verifyTheQuiz = async(req,res)=>{

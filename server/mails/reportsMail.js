@@ -30,6 +30,36 @@ export const developerEmailTemplate = (issueName,issueDesc,email,status) => {
       </div>
     `;
   };
+  export const quizNotificationEmail = (userName, quizName, quizDesc, timeDuration, numberOfQuestions,quizLink) => {
+    return `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
+        <h2 style="color: #007bff; text-align: center;">🚀 Get Ready for the ${quizName}!</h2>
+        <p>Hi <strong>${userName}</strong>,</p>
+        <p>We are excited to invite you to test your AWS skills in our latest quiz. Here are the details:</p>
+        
+        <div style="background-color: #fff; padding: 15px; border-radius: 5px; border-left: 5px solid #007bff; margin-bottom: 15px;">
+          <p><strong>📌 Quiz Name:</strong> ${quizName}</p>
+          <p><strong>📝 Description:</strong> ${quizDesc}</p>
+          <p><strong>⏳ Duration:</strong> ${timeDuration} minutes</p>
+          <p><strong>❓ Total Questions:</strong> ${numberOfQuestions}</p>
+          <p><strong>🔥 Difficulty Level:</strong> Medium</p>
+        </div>
+
+        <p>Don't miss out on this opportunity to challenge yourself and enhance your AWS expertise! Click the button below to start:</p>
+
+        <div style="text-align: center; margin: 20px 0;">
+          <a href="${quizLink}" style="background-color: #007bff; color: #fff; padding: 12px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; display: inline-block;">
+            🚀 Register Now
+          </a>
+        </div>
+
+        <p style="text-align: center;">Hurry! The quiz is live now. Best of luck! 💪</p>
+        <hr>
+        <p style="color: #555; text-align: center;">Best Regards, <br> The Quiz Team</p>
+      </div>
+    `;
+};
+
   
 
   
