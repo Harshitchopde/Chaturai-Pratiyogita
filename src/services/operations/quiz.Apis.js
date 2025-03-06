@@ -12,6 +12,7 @@ const {
     GET_QUIZ_DETAILS_API,
     GET_ALL_QUIZ_API,
     INSTRUCTOR_ANAYLISIS_API,
+    SEND_QUIZ_MAIL_API,
     GET_INSTRUCTOR_QUIZ_API,
 } = quizEndPoints;
 
@@ -169,6 +170,27 @@ export const instructorAnalysis = async (quizId,token)=>{
     } catch (error) {
         console.log("Error in INSTRUCTOR_ANAYLISIS_API ",error);
         toast.error(error.message);
+    }
+    toast.dismiss(toastId);
+    return result;
+}
+//SEND_QUIZ_MAIL_API
+export const sendQuizMail = async(token,quizUrl,quizId)=>{
+    const toastId  = toast.loading("Loading...")
+    let result = null;
+    try {
+        const response = await apiConnector("POST",SEND_QUIZ_MAIL_API,{
+            quizId,
+        },{
+            Authorization:`Bearer ${token}`,
+            quizUrl:quizUrl
+        })
+        // console.log("RESPONSE SEND QUIZ : ",response);
+        toast.success(response.data.message)
+        result = true;
+    } catch (error) {
+        console.error("Error in sendQuizMail ",error);
+        toast.error(error)
     }
     toast.dismiss(toastId);
     return result;

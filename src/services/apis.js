@@ -15,7 +15,8 @@ export const quizEndPoints = {
     INSTRUCTOR_ANAYLISIS_API:BASE_URL+"/quiz/instructorAnalysis",
     GET_QUIZ_DETAILS_API:BASE_URL+"/quiz/getQuizDetails",
     GET_INSTRUCTOR_QUIZ_API:BASE_URL+"/quiz/getInstructorQuiz",
-    GET_ALL_QUIZ_API:BASE_URL+"/quiz/getAllQuiz"
+    GET_ALL_QUIZ_API:BASE_URL+"/quiz/getAllQuiz",
+    SEND_QUIZ_MAIL_API:BASE_URL+"/quiz/notifyQuiz"
 }
 // createQuestion,updateQuestion,deleteQuestion,getQuestionDetails,getAllQuestions,getQuizQuestions  
 export const questionEndPoints = {

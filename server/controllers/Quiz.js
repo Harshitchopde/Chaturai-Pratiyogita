@@ -380,13 +380,13 @@ export const notifyQuiz = async (req,res)=>{
         userInstructor.coins-=5;
         await userInstructor.save();
         let sendEmail = 0;
-        const clientBaseURL = req.headers.referer || req.headers.origin
-        // quiz link 
-        let quizLink = `${clientBaseURL}/quizzes/${quiz._id}` 
-        const users = await User.find({ email:{ $eq:"chopdeharshit@gmail.com"}})
+        const quizUrl = req.header("quizUrl")
+        // const users = await User.find({ email:{ $eq:"chopdeharshit@gmail.com"}})
+        const users = await User.find({ _id:{ $ne:userId}})
         for(const user of users){
             if(isValidEmail(user.email)){
-                const emailBody = quizNotificationEmail(user.firstName,quiz.quizName,quiz.quizDesc,quiz.timeDuration,quiz.numberOfQuestions,quizLink)
+                console.log("U-> ",user.firstName);
+                const emailBody = quizNotificationEmail(user.firstName,quiz.quizName,quiz.quizDesc,quiz.timeDuration,quiz.numberOfQuestions,quizUrl)
                 await mailSender(user.email, `🚀 New Quiz Alert: ${quiz.quizName}!`,emailBody)
                 sendEmail++;
             }

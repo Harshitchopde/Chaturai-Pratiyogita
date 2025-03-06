@@ -9,7 +9,7 @@ const ConformationPopUp = ({modelData}) => {
         <div className=" w-11/12 max-w-[350px] p-4 rounded-lg border border-slate-700  bg-slate-200 font-semibold
         ">
             <p className=' text-2xl font-semibold '>{modelData?.text1}</p>
-            <p className=' mt-3 mb-5 leading-6'>{modelData?.text2}</p>
+            <p className=' mt-2 text-sm mb-5 leading-6 text-gray-500'>{modelData?.text2}</p>
             <div className="flex items-center gap-x-4">
                 <IconBtn onClick={modelData?.btn1Handler}
                  text={modelData?.btn1Text}/>
