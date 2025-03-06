@@ -43,7 +43,7 @@ const QuestionForm = ({result,setReview,review,handleOptionSubmition, submitted,
     <div className=" flex select-none flex-col  sm:w-10/12 mx-auto border px-4 py-4 sm:px-8 gap-1 sm:gap-3 sm:py-9 sm:h-[450px] rounded-md ">
      {/* <di>back to review</div> */}
      {/* <button onClick={()=>setReview(false)}>back to review</button> */}
-     <div onClick={()=>setReview(false)} className=' flex items-center gap-x-2 text-sm' ><FaArrowLeft/> back to result</div>
+    {review && <div onClick={()=>setReview(false)} className=' flex items-center gap-x-2 text-sm' ><FaArrowLeft/> back to result</div>}
         <div className="flex justify-between ">
             <div className=" text-xl sm:text-2xl font-bold">Question {quesNumber}/{total}</div>
             <div className=" text-gray-500 text-sm sm:text-[1rem]  ">{formateTimer(timeLeft)}</div>

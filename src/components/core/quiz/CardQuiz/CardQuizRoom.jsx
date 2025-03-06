@@ -70,7 +70,7 @@ const CardQuizRoom = ({ submitted, setSubmitted }) => {
         }
     }, [timeLeft, submitted]);
     // console.log("Questions : ",testQuiz.questions)
-    console.log("Result ",result)
+    // console.log("Result ",result)
     return (
         <div>
             {!submitted || review ? (
