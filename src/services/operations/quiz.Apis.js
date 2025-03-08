@@ -185,7 +185,7 @@ export const sendQuizMail = async(token,quizUrl,quizId)=>{
         },{
             Authorization:`Bearer ${token}`
         })
-        // console.log("RESPONSE SEND QUIZ : ",response);
+        console.log("RESPONSE SEND QUIZ : ",response);
         toast.success(response.data.message)
         result = true;
     } catch (error) {

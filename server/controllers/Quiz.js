@@ -6,8 +6,7 @@ import { QUIZ_STATUS } from "../utils/constants.js";
 import { isValidEmail } from "../utils/checks.js";
 import { quizNotificationEmail } from "../mails/reportsMail.js";
 import mailSender from "../utils/mailSender.js";
-
-
+import { performance} from "perf_hooks"
 export const createQuiz = async(req,res)=>{
     try {
         // get data of quiz
@@ -353,10 +352,15 @@ export const instructorAnalysis = async(req,res)=>{
     }
 }
 export const notifyQuiz = async (req,res)=>{
+    // starttime
+    const startTime = performance.now();
     try {
         const {quizId, quizUrl} = req.body;
         const userId = req.user.id;
-        const quiz = await Quiz.findOne({_id:quizId});
+        const [quiz,userInstructor] = await Promise.all([
+            Quiz.findOne({_id:quizId}).lean(),
+            User.findById(userId).lean()
+        ])
         if(!quiz){
             return res.status(400).json({
                 message:`Could Not Find Quiz id -> ${quizId}`,
@@ -369,32 +373,43 @@ export const notifyQuiz = async (req,res)=>{
                 message:"The Quiz is not Published"
             })
         }
-        // find user
-        const userInstructor = await User.findById(userId);
         if(userInstructor.coins <5){
             return res.status(400).json({
                 success:false,
-                message:"You need atleast 5 coins to publish"
+                message:"You need at least 5 coins to publish"
             })
         }
-        // console.log("a ",quizUrl)
-        userInstructor.coins-=5;
-        await userInstructor.save();
+        // update optimise
+        await User.updateOne({_id:userId},{$inc:{coins:-5}});
+        const BATCH_SIZE = 50;
+        const users = await User.find({ _id:{ $ne:userId}}).lean();
         let sendEmail = 0;
-        // const users = await User.find({ email:{ $eq:"chopdeharshit@gmail.com"}})
-        const users = await User.find({ _id:{ $ne:userId}})
-        for(const user of users){
-            if(isValidEmail(user.email)){
-                // console.log("U-> ",user.firstName);
-                const emailBody = quizNotificationEmail(user.firstName,quiz.quizName,quiz.quizDesc,quiz.timeDuration,quiz.numberOfQuestions,quizUrl)
-                await mailSender(user.email, `🚀 New Quiz Alert: ${quiz.quizName}!`,emailBody)
-                sendEmail++;
-            }
+        // batch Processing logic
+        for(let i =0;i<users.length ;i+=BATCH_SIZE){
+            const batch = users.slice(i,i+BATCH_SIZE);
+            // eslint-disable-next-line no-loop-func
+            const emailPromise = batch.map(async (user)=>{
+                if(isValidEmail(user.email)){
+                    const emailBody = quizNotificationEmail(user.firstName,
+                        quiz.quizName,
+                        quiz.quizDesc,
+                        quiz.timeDuration,
+                        quiz.numberOfQuestions,
+                        quizUrl)
+                    await mailSender(user.email, `🚀 New Quiz Alert: ${quiz.quizName}!`,emailBody)
+                    sendEmail++;    
+                }
+            });
+            //Ensure that failures doesnt block the loop
+            await Promise.allSettled(emailPromise); 
         }
-
+        const endTime = performance.now();
+        const executionTime = ((endTime-startTime)/1000).toFixed(2); //time in sec
+        console.log("Execution Time : ",executionTime);
         return res.status(200).json({
             success:true,
-            message: `Quiz notification sent to ${sendEmail} users` 
+            message: `Quiz notification sent to ${sendEmail} users` ,
+            executionTime:executionTime
         })
         
     } catch (error) {
