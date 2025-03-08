@@ -354,7 +354,7 @@ export const instructorAnalysis = async(req,res)=>{
 }
 export const notifyQuiz = async (req,res)=>{
     try {
-        const {quizId} = req.body;
+        const {quizId, quizUrl} = req.body;
         const userId = req.user.id;
         const quiz = await Quiz.findOne({_id:quizId});
         if(!quiz){
@@ -377,15 +377,15 @@ export const notifyQuiz = async (req,res)=>{
                 message:"You need atleast 5 coins to publish"
             })
         }
+        // console.log("a ",quizUrl)
         userInstructor.coins-=5;
         await userInstructor.save();
         let sendEmail = 0;
-        const quizUrl = req.header("quizUrl")
         // const users = await User.find({ email:{ $eq:"chopdeharshit@gmail.com"}})
         const users = await User.find({ _id:{ $ne:userId}})
         for(const user of users){
             if(isValidEmail(user.email)){
-                console.log("U-> ",user.firstName);
+                // console.log("U-> ",user.firstName);
                 const emailBody = quizNotificationEmail(user.firstName,quiz.quizName,quiz.quizDesc,quiz.timeDuration,quiz.numberOfQuestions,quizUrl)
                 await mailSender(user.email, `🚀 New Quiz Alert: ${quiz.quizName}!`,emailBody)
                 sendEmail++;

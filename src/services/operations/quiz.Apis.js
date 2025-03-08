@@ -181,9 +181,9 @@ export const sendQuizMail = async(token,quizUrl,quizId)=>{
     try {
         const response = await apiConnector("POST",SEND_QUIZ_MAIL_API,{
             quizId,
+            quizUrl
         },{
-            Authorization:`Bearer ${token}`,
-            quizUrl:quizUrl
+            Authorization:`Bearer ${token}`
         })
         // console.log("RESPONSE SEND QUIZ : ",response);
         toast.success(response.data.message)
