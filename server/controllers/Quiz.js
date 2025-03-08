@@ -398,7 +398,12 @@ export const notifyQuiz = async (req,res)=>{
         })
         
     } catch (error) {
-        
+        console.log("Error in notify ",error);
+        return res.status(500).json({
+            success:false,
+            message:error.message,
+            errorIn:"verifyTheQuiz"
+        })
     }
 }
 export const verifyTheQuiz = async(req,res)=>{

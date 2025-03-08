@@ -10,7 +10,10 @@ provider:
   httpApi:
     cors: 
       allowedOrigins:
-        - "*"  # Change to "http://localhost:3000" for security
+         - "https://chaturai-pratiyogita.vercel.app"
+         - "http://localhost:3000"
+         - "https://chaturai-pratiyogita-git-main-harshitchopdes-projects.vercel.app"
+         - "https://chaturai-pratiyogita-memz694rj-harshitchopdes-projects.vercel.app"
       allowedMethods:
         - GET
         - POST

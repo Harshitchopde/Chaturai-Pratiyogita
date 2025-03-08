@@ -14,9 +14,16 @@ const app = express();
 app.use(express.json());
 // cors
 app.use(cors({
-    origin:"*",
- 
-}));
+    origin: [
+      "https://chaturai-pratiyogita.vercel.app",
+      "http://localhost:3000",
+      "https://chaturai-pratiyogita-git-main-harshitchopdes-projects.vercel.app",
+      "https://chaturai-pratiyogita-memz694rj-harshitchopdes-projects.vercel.app",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  }));
 // cookieParser --> cookie-parser
 app.use(cookieParser())
 
@@ -34,7 +41,7 @@ app.get("/",(req,res)=>{
 })
 
 // export const handler = serverless(app)
-app.listen(PORT,()=>console.log("SErverRunning..."))
+// app.listen(PORT,()=>console.log("SErverRunning..."))
 export const handler = async (event,context)=>{
     context.callbackWaitsForEmptyEventLoop  = false; // Prevents Lambda from closing DB connection
     return serverless(app)(event,context);
