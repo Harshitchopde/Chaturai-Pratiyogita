@@ -9,6 +9,10 @@ import { QUIZ_STATUS } from '../../../../utils/constants';
 import ConformationPopUp from '../../../common/ConformationPopUp';
 import toast from 'react-hot-toast';
 import { spendCoins } from '../../../../slices/coinSlicer';
+import { CiCirclePlus } from 'react-icons/ci';
+import { QuestionModel } from '../AddQuiz/QuestionBuilder/QuestionModel';
+import { Delete } from '@mui/icons-material';
+import { deleteQuestion } from '../../../../services/operations/questionApis';
 
 const QuizAnalysis = () => {
   const location = useLocation();
@@ -16,6 +20,11 @@ const QuizAnalysis = () => {
   const [copied,setCopied] = useState(false);
   const [quizUrl,setQuizUrl] = useState("");
   const { analyticsQuiz} = useSelector(state=>state.quizzes);
+  const [addQuestion,setAddQuestion] = useState(null);
+  const [editQuestion,setEditQuestion] = useState(null);
+  const [viewQuestion,setViewQuestion] = useState(null);
+  const [delQuestion,setDelQuestion] = useState(null);
+  console.log("Quiz Data : ",analyticsQuiz);
   const { token } = useSelector(state=>state.auth)
   // const [publishedConformation,setPublishedConformation] = useState(null);
   const [sendEmailConformation,setSendEmailConformation] = useState(null);
@@ -49,6 +58,28 @@ const QuizAnalysis = () => {
     const copiedUrl = pom.join("/");
    
     setQuizUrl(copiedUrl);
+  }
+  const handleDeleteQuestion = async (questionId)=>{
+    if(analyticsQuiz?.status!==QUIZ_STATUS.DRAFT){
+      toast.error("Can not add Question to published quiz");
+      toast.error("First UnPublished the quiz");
+      setDelQuestion(null);
+      return;
+    }
+    const res =  await deleteQuestion(questionId,token);
+    if(res){
+      dispatch(setAnalyticsQuiz(res));
+      toast.success("Deleted SuccessFully ",questionId)
+    }
+    setDelQuestion(null);
+  }
+  const handleAddQuestion = ()=>{
+    if(analyticsQuiz?.status!==QUIZ_STATUS.DRAFT){
+      toast.error("Can not add Question to published quiz");
+      toast.error("First UnPublished the quiz");
+      return;
+    }
+    setAddQuestion(analyticsQuiz._id);
   }
   const copyToClipboard = ()=>{
     navigator.clipboard.writeText(quizUrl);
@@ -120,13 +151,31 @@ const QuizAnalysis = () => {
         </CardContent>
       </Card>
     </div>
-    <h2 className="text-2xl font-semibold mb-3">Questions</h2>
+   <div className="flex w-full  justify-between">
+   <h2 className="text-2xl font-semibold mb-3">Questions</h2>
+     <button onClick={handleAddQuestion} className=' border-2 flex items-center max-w-max px-1  max-h-max  py-1 text-sm sm:text-xl sm:px-3 rounded-lg  border-black text-black'>
+      Add <CiCirclePlus className=' sm:ml-2 ml-1 font-bold'/>
+      </button>          
+   </div>
     <div className="space-y-3">
       {analyticsQuiz?.questions.map((q,i) => (
         <Card key={i} className="flex justify-between p-4">
           <p className=' capitalize'>{i+1}.{" "}{q?.questionDesc}</p>
-          <div className=" border max-w-max max-h-max rounded-md">
-          <Button variant="ghost">
+          <div className=" border max-w-max max-h-max  flex-col items-center justify-center sm:flex-row rounded-md">
+            <Button  variant='ghost'
+          
+            onClick={()=>setDelQuestion({
+              text1:`Delete Question ${i+1}`,
+              text2:"Are You Sure want to delete question",
+              btn1Text:"Delete",
+              btn2Text:"Cancel",
+              btn1Handler:()=>handleDeleteQuestion(q._id),
+              btn2Handler:()=>setDelQuestion(null)
+            })}
+            >
+              <Delete className=' mr-2 w-4'/> Delete
+            </Button>
+          <Button onClick={()=>setEditQuestion(q)} variant="ghost">
             <Pencil className="mr-2 w-4" /> Edit
           </Button>
           </div>
@@ -134,6 +183,15 @@ const QuizAnalysis = () => {
       ))}
     </div>
   </div>
+  {
+    addQuestion ? <QuestionModel modelData={addQuestion} analysis={true} setModelData={setAddQuestion} add={true}/>:
+    editQuestion ? <QuestionModel modelData={editQuestion} analysis={true} setModelData={setEditQuestion} edit={true}/>:
+    viewQuestion ? <QuestionModel modelData={viewQuestion} analysis={true} setModelData={setViewQuestion} view={true}/>:
+    <></>
+  }
+  {
+    delQuestion && <ConformationPopUp modelData={delQuestion}/>
+  }
   {
     sendEmailConformation && <ConformationPopUp modelData={sendEmailConformation}/>
   }

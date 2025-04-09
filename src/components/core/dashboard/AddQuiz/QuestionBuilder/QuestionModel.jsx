@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { RxCross2 } from 'react-icons/rx'
 import { useDispatch, useSelector } from 'react-redux';
 import IconBtn from '../../../../common/IconBtn';
 import toast from 'react-hot-toast';
-import { createQuestion } from '../../../../../services/operations/questionApis';
+import { createQuestion, updateQuestion } from '../../../../../services/operations/questionApis';
 import { setQuiz } from '../../../../../slices/quizSlicer';
+import { setAnalyticsQuiz } from '../../../../../slices/quizzesSlice';
 
 export const QuestionModel = ({
   modelData, 
-  setModelData
+  setModelData,
+  analysis=false
   ,add=false,
   view=false,
   edit=false
@@ -27,12 +29,26 @@ export const QuestionModel = ({
   });
 
   const dispatch = useDispatch();
-  const { quiz} = useSelector(state=>state.quiz);
   const { token } = useSelector(state=> state.auth)
   const [loading,setLoading] = useState(false)
   // options
-  const [options,setOptions] = useState([{text:"",isCorrect:false}]);
+  const [options,setOptions] = useState([
+    {text:"",isCorrect:false},
+    {text:"",isCorrect:false},
+    {text:"",isCorrect:false},
+    {text:"",isCorrect:false},
+  ]);
 
+  useEffect(() => {
+    if (edit || view) {
+      if (modelData?.questionDesc) {
+        setValue("questionDesc", modelData.questionDesc);
+        setValue("explanation", modelData.explanation);
+        setValue("points", modelData.points);
+        setOptions(modelData.options || []);
+      }
+    }
+  }, [modelData, edit, view, setValue]);
   // handleOption Change
   const handleOptionChange = (index,field,value)=>{
     const newOption = [...options];// destructure
@@ -49,6 +65,7 @@ export const QuestionModel = ({
     setOptions(newOptions);
     setValue(`options`,newOptions)
   }
+  
   // add option button 
    const addOption = ()=>{
     // setOptions([...options, { text: "", isCorrect: false }]);
@@ -68,11 +85,50 @@ export const QuestionModel = ({
    // isFormUpdate
    const isFormUpdate = ()=>{
     const currValues = getValues();
-    
+    console.log("Before : ",modelData);
+    console.log("After : ",currValues);
+    if(modelData?.questionDesc !== currValues.questionDesc){
+        return true;
+    }
+    if(modelData?.explanation!==currValues.explanation){
+      return true;
+    }
+    if(modelData?.points!==currValues.points){
+      return true;
+    }
+    if(JSON.stringify(modelData?.options)!==JSON.stringify(currValues?.options)){
+       return true;
+    }
+    return false;
    }
-
-   const handleEditQuestion =()=>{
-     toast.error("Currently not Available!")
+   const handleEditQuestion = async ()=>{
+    //  toast.error("Currently not Available!")
+    const currValues  = getValues();
+    const formData = new FormData();
+    formData.append("questionId",modelData._id);
+    if(modelData?.questionDesc !== currValues.questionDesc){
+      formData.append("questionDesc",currValues.questionDesc);
+    }
+    if(modelData?.explanation !== currValues.explanation){
+       formData.append("explanation",currValues.explanation);
+    }
+    if(modelData?.points !== currValues.points){
+      formData.append("points",currValues.points);
+    }
+    if(JSON.stringify(modelData?.options)!==JSON.stringify(currValues?.options)){
+      formData.append("options",JSON.stringify(currValues.options));
+    }
+    setLoading(true);
+    const res = await updateQuestion(formData,token);
+    if(res){
+      if(analysis){
+         dispatch(setAnalyticsQuiz(res));
+      }else{
+        dispatch(setQuiz(res));
+      }
+    }
+    setLoading(false);
+    setModelData(null);
    }
   const handleSubmitBtn = async (data)=>{
     console.log("Submit : ",data)
@@ -111,7 +167,12 @@ export const QuestionModel = ({
     const res = await createQuestion(formData,token);
     
     if(res){
-      dispatch(setQuiz(res));
+      if(analysis){
+        dispatch(setAnalyticsQuiz(res));
+      }else{
+
+        dispatch(setQuiz(res));
+      }
       // toast.success("Added succesfully!")
     }
     setModelData(null)
@@ -187,7 +248,7 @@ export const QuestionModel = ({
               {/* toggle switch */}
               <button type='button' className={` sm:w-14 w-10 sm:h-7 h-3 flex items-center rounded-full sm:p-1 
               ${option.isCorrect?"bg-green-500":"bg-gray-300"}`}
-              {...register(`options.${index}.isCorrect`,{required:true,
+              {...register(`options.${index}.isCorrect`,{
 
               })}
                onClick={()=>toggleCorrectAnswer(index)}>

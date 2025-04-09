@@ -64,7 +64,7 @@ export const createQuestion  = async(req,res)=>{
 export const updateQuestion  = async(req,res)=>{
     try {
         const {questionId,...other} = req.body;
-        // console.log("Other Details : ",other);
+        console.log("Other Details : ",other);
         const question = await Question.findById(questionId);
         if(!question){
             return res.status(400).json({
@@ -102,9 +102,10 @@ export const updateQuestion  = async(req,res)=>{
 }
 
 export const deleteQuestion  = async(req,res)=>{
+  
     try {
         const { questionId } = req.body;
-
+        // console.log("d ",questionId)
         const ques = await Question.findById(questionId);
         if(!ques){
             return res.status(400).json({
@@ -114,7 +115,7 @@ export const deleteQuestion  = async(req,res)=>{
         }
         
 
-        await Quiz.findByIdAndUpdate(ques.quizId,{
+        let updatedQuiz = await Quiz.findByIdAndUpdate(ques.quizId,{
             $pull:{
                 questions:ques._id
             }
@@ -123,7 +124,7 @@ export const deleteQuestion  = async(req,res)=>{
         return res.status(200).json({
             success:true,
             message:"SuccessFully Delete Question",
-            
+            updatedQuiz
         })
         
     } catch (error) {
