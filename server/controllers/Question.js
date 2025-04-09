@@ -64,7 +64,7 @@ export const createQuestion  = async(req,res)=>{
 export const updateQuestion  = async(req,res)=>{
     try {
         const {questionId,...other} = req.body;
-        // console.log("Other Details : ",other);
+        console.log("Other Details : ",other);
         const question = await Question.findById(questionId);
         if(!question){
             return res.status(400).json({

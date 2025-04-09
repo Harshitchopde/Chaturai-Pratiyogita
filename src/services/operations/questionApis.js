@@ -38,12 +38,12 @@ export const updateQuestion = async(data,token)=>{
     const toastId = toast.loading("Loading...");
     let result = null;
     try {
-        const response = await apiConnector("POST",DELETE_QUESTION_API,data,{
+        const response = await apiConnector("POST",UPDATE_QUESTION_API,data,{
              Authorization:`Bearer ${token}`
         })
-        console.log("CREATE QUESTION RESPONSE... ",response);
+        console.log("CREATE UPDATE QUESTION RESPONSE... ",response);
         if(!response?.data?.success){
-            throw new Error("Could Not CreateQuestion");
+            throw new Error("Could Not Update");
         }
         result = response.data.updatedQuiz
         toast.success(response.data.message);

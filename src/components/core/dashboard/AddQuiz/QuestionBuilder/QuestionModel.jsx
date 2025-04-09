@@ -4,7 +4,7 @@ import { RxCross2 } from 'react-icons/rx'
 import { useDispatch, useSelector } from 'react-redux';
 import IconBtn from '../../../../common/IconBtn';
 import toast from 'react-hot-toast';
-import { createQuestion } from '../../../../../services/operations/questionApis';
+import { createQuestion, updateQuestion } from '../../../../../services/operations/questionApis';
 import { setQuiz } from '../../../../../slices/quizSlicer';
 import { setAnalyticsQuiz } from '../../../../../slices/quizzesSlice';
 
@@ -101,9 +101,34 @@ export const QuestionModel = ({
     }
     return false;
    }
-
-   const handleEditQuestion =()=>{
-     toast.error("Currently not Available!")
+   const handleEditQuestion = async ()=>{
+    //  toast.error("Currently not Available!")
+    const currValues  = getValues();
+    const formData = new FormData();
+    formData.append("questionId",modelData._id);
+    if(modelData?.questionDesc !== currValues.questionDesc){
+      formData.append("questionDesc",currValues.questionDesc);
+    }
+    if(modelData?.explanation !== currValues.explanation){
+       formData.append("explanation",currValues.explanation);
+    }
+    if(modelData?.points !== currValues.points){
+      formData.append("points",currValues.points);
+    }
+    if(JSON.stringify(modelData?.options)!==JSON.stringify(currValues?.options)){
+      formData.append("options",JSON.stringify(currValues.options));
+    }
+    setLoading(true);
+    const res = await updateQuestion(formData,token);
+    if(res){
+      if(analysis){
+         dispatch(setAnalyticsQuiz(res));
+      }else{
+        dispatch(setQuiz(res));
+      }
+    }
+    setLoading(false);
+    setModelData(null);
    }
   const handleSubmitBtn = async (data)=>{
     console.log("Submit : ",data)
@@ -223,7 +248,7 @@ export const QuestionModel = ({
               {/* toggle switch */}
               <button type='button' className={` sm:w-14 w-10 sm:h-7 h-3 flex items-center rounded-full sm:p-1 
               ${option.isCorrect?"bg-green-500":"bg-gray-300"}`}
-              {...register(`options.${index}.isCorrect`,{required:true,
+              {...register(`options.${index}.isCorrect`,{
 
               })}
                onClick={()=>toggleCorrectAnswer(index)}>
