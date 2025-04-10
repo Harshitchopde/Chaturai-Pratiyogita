@@ -7,6 +7,7 @@ import { isValidEmail } from "../utils/checks.js";
 import { quizNotificationEmail } from "../mails/reportsMail.js";
 import mailSender from "../utils/mailSender.js";
 import { performance} from "perf_hooks"
+import { makeQuizAi } from "../utils/makeQuiz.js";
 export const createQuiz = async(req,res)=>{
     try {
         // get data of quiz
@@ -348,6 +349,24 @@ export const instructorAnalysis = async(req,res)=>{
         return res.status(500).json({
             success:false,
             message:error.message
+        })
+    }
+}
+export const generateQuizAi = async (req,res)=>{
+    const { name,description, numberOfQuestions} = req.body;
+    try{
+        const quiz = await makeQuizAi({name,description,numberOfQuestions});
+        console.log("Quiz : ",quiz);
+        return res.status(200).json({
+            message:"Success",
+            success:true,
+            data: quiz
+        })
+    }catch(err){
+        console.error("Error occure in generateQuizAi : ",err);
+        return res.status(500).json({
+            success:false,
+            message:err.message
         })
     }
 }

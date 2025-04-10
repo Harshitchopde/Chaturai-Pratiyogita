@@ -46,6 +46,6 @@ export const handler = async (event,context)=>{
     context.callbackWaitsForEmptyEventLoop  = false; // Prevents Lambda from closing DB connection
     return serverless(app)(event,context);
 }
-// app.listen(PORT,()=>{
-//     console.log("Server is running "+PORT) 
-// })
+app.listen(PORT,()=>{
+    console.log("Server is running "+PORT) 
+})
