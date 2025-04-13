@@ -151,6 +151,7 @@ export const getAllQuiz = async (token)=>{
     toast.dismiss(toastId);
     return result;
 }
+
 // INSTRUCTOR_ANAYLISIS_API,
 export const instructorAnalysis = async (quizId,token)=>{
     let result = null;
@@ -181,11 +182,11 @@ export const sendQuizMail = async(token,quizUrl,quizId)=>{
     try {
         const response = await apiConnector("POST",SEND_QUIZ_MAIL_API,{
             quizId,
-            quizUrl
         },{
-            Authorization:`Bearer ${token}`
+            Authorization:`Bearer ${token}`,
+            quizUrl:quizUrl
         })
-        console.log("RESPONSE SEND QUIZ : ",response);
+        // console.log("RESPONSE SEND QUIZ : ",response);
         toast.success(response.data.message)
         result = true;
     } catch (error) {
