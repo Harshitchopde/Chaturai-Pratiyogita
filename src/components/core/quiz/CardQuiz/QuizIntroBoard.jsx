@@ -28,7 +28,7 @@ const QuizIntroBoard = ({showAnswer,setConformationModel,setStartQuiz}) => {
       const result = await registerQuizResponse(testQuiz._id, token);
       if (result) {
         setQuizResults(result);
-        
+
         toast.success("Quiz Submitted! See your results below.");
       } else {
         toast.error("Failed to submit quiz.");
