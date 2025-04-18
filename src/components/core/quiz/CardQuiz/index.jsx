@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuizDetails } from "../../../../services/operations/quiz.Apis";
 import CardQuizRoom from "./CardQuizRoom";
-
+import dummy_multi_quiz from '../../../../data/dumy-multi-quiz.json'
 import ConformationPopUp from "../../../common/ConformationPopUp";
 
 import { setAttempted, setTestQuiz } from "../../../../slices/quizzesSlice";
@@ -16,9 +16,11 @@ const CardQuiz = () => {
 
   const dispatch = useDispatch();
 
+  console.log("Test quiz : ",testQuiz);
 
   const [showAnswer, setShowAnswer] = useState(attempted === 3);
-  
+  console.log("Shhow anwer : ",showAnswer)
+  console.log("Type : ",testQuiz?.quizType);
  
   const [conformationModel, setConformationModel] = useState(null);
  
@@ -38,7 +40,9 @@ const CardQuiz = () => {
         }
       }
     };
-    fetchQuizDetail();
+    dispatch(setAttempted(1));
+    dispatch(setTestQuiz(dummy_multi_quiz))
+    // fetchQuizDetail();
   }, []);
 
   useEffect(() => {
@@ -55,7 +59,7 @@ const CardQuiz = () => {
         {startQuiz ? (
           <CardQuizRoom setSubmitted={setShowAnswer} submitted={showAnswer} />
         ) : (
-            <QuizIntroBoard showAnswer={showAnswer} setStartQuiz={setStartQuiz} setConformationModel={setConformationModel}
+            <QuizIntroBoard quizType={testQuiz?.quizType} showAnswer={showAnswer} setStartQuiz={setStartQuiz} setConformationModel={setConformationModel}
              />
         )}
       </div>

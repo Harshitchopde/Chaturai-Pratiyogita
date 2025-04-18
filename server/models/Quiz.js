@@ -11,6 +11,12 @@ const quizSchema = new Schema({
         trim:true,
         required:true
     },
+    quizType:{
+        type:String,
+        trim:true,
+        enum:["Regular","Survey","Multi"],
+        default:"Regular",
+    },
     verifyed:{
         type:Boolean,
         required:true,
@@ -62,6 +68,10 @@ const quizSchema = new Schema({
     maxAttempt:{
         type:Number,
         default:1,
+    },
+    quizzes:{
+        type:Schema.Types.ObjectId,
+        ref:"Quiz"
     },
     status:{
         type:String,

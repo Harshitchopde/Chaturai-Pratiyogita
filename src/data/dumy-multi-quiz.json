@@ -1,0 +1,169 @@
+{
+    "quizName": "🌍 The Hidden Wonders of the World (Explore Earth's Greatest Secrets!)",
+    "quizDesc": "Discover Earth's most mysterious, historic, and awe-inspiring wonders through a variety of quizzes.",
+    "quizType": "Multi",
+    "verifyed": true,
+    "instructor": "USER_OBJECT_ID_HERE",
+    "timeDuration": 60,
+    "tags": ["geography", "history", "natural wonders", "mystery"],
+    "topic": "Geography & History",
+    "difficulty": "Any",
+    "numberOfQuestions": 0,
+    "coins": 5,
+    "questions": [],
+    "maxAttempt": 2,
+    "quizzes": [
+      {
+        "quizType": "Regular",
+        "quizName": "🏛️ The Seven Wonders Challenge: Can You Name Them All?",
+        "quizDesc": "Test your knowledge of the ancient and modern Seven Wonders of the World.",
+        "numberOfQuestions": 2,
+        "difficulty": "Medium",
+        "questions": [
+          {
+            "quizId": "W1",
+            "questionDesc": "Which of these is one of the Seven Ancient Wonders?",
+            "options": "[{\"text\":\"Great Pyramid of Giza\"},{\"text\":\"Eiffel Tower\"},{\"text\":\"Statue of Liberty\"},{\"text\":\"Stonehenge\"}]",
+            "correctAnswer": "Great Pyramid of Giza",
+            "explanation": "The Great Pyramid is the only remaining Ancient Wonder.",
+            "tags": "[\"history\", \"wonders\"]"
+          },
+          {
+            "quizId": "W1",
+            "questionDesc": "Which modern wonder is located in Brazil?",
+            "options": "[{\"text\":\"Christ the Redeemer\"},{\"text\":\"Machu Picchu\"},{\"text\":\"Taj Mahal\"},{\"text\":\"Chichen Itza\"}]",
+            "correctAnswer": "Christ the Redeemer",
+            "explanation": "The statue of Christ the Redeemer is in Rio de Janeiro.",
+            "tags": "[\"geography\", \"modern wonders\"]"
+          }
+        ]
+      },
+      {
+        "quizType": "Survey",
+        "quizName": "🌍 Mysterious Places: What’s Real and What’s a Myth?",
+        "quizDesc": "Explore some of the world’s most mysterious locations — and tell us what *you* believe!",
+        "numberOfQuestions": 2,
+        "difficulty": "Easy",
+        "questions": [
+          {
+            "quizId": "W2",
+            "questionDesc": "Do you believe the Bermuda Triangle has unexplained powers?",
+            "options": "[{\"text\":\"Yes\"},{\"text\":\"No\"},{\"text\":\"Maybe\"},{\"text\":\"Never heard of it\"}]",
+            "correctAnswer": null,
+            "explanation": "Surveying belief in mysterious phenomena.",
+            "tags": "[\"survey\", \"mystery\"]"
+          },
+          {
+            "quizId": "W2",
+            "questionDesc": "Would you visit the Area 51 region if given the chance?",
+            "options": "[{\"text\":\"Absolutely\"},{\"text\":\"Maybe\"},{\"text\":\"No way\"},{\"text\":\"What's Area 51?\"}]",
+            "correctAnswer": null,
+            "explanation": "Exploring curiosity around secret locations.",
+            "tags": "[\"survey\", \"area51\"]"
+          }
+        ]
+      },
+      {
+        "quizType": "Regular",
+        "quizName": "🏝️ Lost Cities & Ancient Civilizations",
+        "quizDesc": "Uncover the truth behind legendary cities and forgotten civilizations.",
+        "numberOfQuestions": 2,
+        "difficulty": "Medium",
+        "questions": [
+          {
+            "quizId": "W3",
+            "questionDesc": "Which lost city was discovered in the Andes Mountains?",
+            "options": "[{\"text\":\"Machu Picchu\"},{\"text\":\"Atlantis\"},{\"text\":\"Pompeii\"},{\"text\":\"Babylon\"}]",
+            "correctAnswer": "Machu Picchu",
+            "explanation": "Machu Picchu is an Incan city in Peru.",
+            "tags": "[\"lost cities\", \"civilizations\"]"
+          },
+          {
+            "quizId": "W3",
+            "questionDesc": "Which ancient city was destroyed by a volcanic eruption?",
+            "options": "[{\"text\":\"Pompeii\"},{\"text\":\"Troy\"},{\"text\":\"Sparta\"},{\"text\":\"Carthage\"}]",
+            "correctAnswer": "Pompeii",
+            "explanation": "Mount Vesuvius buried Pompeii in ash in 79 AD.",
+            "tags": "[\"history\", \"volcano\"]"
+          }
+        ]
+      },
+      {
+        "quizType": "Regular",
+        "quizName": "🏔️ World’s Greatest Natural Wonders",
+        "quizDesc": "From the Grand Canyon to Mount Everest, how well do you know the planet's greatest spectacles?",
+        "numberOfQuestions": 2,
+        "difficulty": "Easy",
+        "questions": [
+          {
+            "quizId": "W4",
+            "questionDesc": "Which is the tallest mountain in the world?",
+            "options": "[{\"text\":\"Mount Everest\"},{\"text\":\"K2\"},{\"text\":\"Kangchenjunga\"},{\"text\":\"Denali\"}]",
+            "correctAnswer": "Mount Everest",
+            "explanation": "Mount Everest is 8,848 meters tall.",
+            "tags": "[\"geography\", \"mountains\"]"
+          },
+          {
+            "quizId": "W4",
+            "questionDesc": "Where is the Grand Canyon located?",
+            "options": "[{\"text\":\"USA\"},{\"text\":\"Canada\"},{\"text\":\"Australia\"},{\"text\":\"Mexico\"}]",
+            "correctAnswer": "USA",
+            "explanation": "The Grand Canyon is in Arizona, USA.",
+            "tags": "[\"natural wonders\", \"USA\"]"
+          }
+        ]
+      },
+      {
+        "quizType": "Regular",
+        "quizName": "🔥 Disaster Zones: Earthquakes, Volcanoes & Tsunamis",
+        "quizDesc": "Test your knowledge about Earth’s most powerful natural disasters and how they’ve shaped history.",
+        "numberOfQuestions": 2,
+        "difficulty": "Hard",
+        "questions": [
+          {
+            "quizId": "W5",
+            "questionDesc": "Which country is most prone to earthquakes?",
+            "options": "[{\"text\":\"Japan\"},{\"text\":\"India\"},{\"text\":\"Brazil\"},{\"text\":\"South Africa\"}]",
+            "correctAnswer": "Japan",
+            "explanation": "Japan lies on major tectonic boundaries.",
+            "tags": "[\"earthquakes\", \"geology\"]"
+          },
+          {
+            "quizId": "W5",
+            "questionDesc": "What causes a tsunami?",
+            "options": "[{\"text\":\"Underwater earthquake\"},{\"text\":\"Tornado\"},{\"text\":\"Forest fire\"},{\"text\":\"Meteor strike\"}]",
+            "correctAnswer": "Underwater earthquake",
+            "explanation": "Sudden seafloor shifts cause massive waves.",
+            "tags": "[\"tsunami\", \"disaster\"]"
+          }
+        ]
+      },
+      {
+        "quizType": "Survey",
+        "quizName": "🏰 Haunted Places Around the World: Would You Visit?",
+        "quizDesc": "Some places give people chills… What’s your take? Share your thoughts on the spookiest places on Earth.",
+        "numberOfQuestions": 2,
+        "difficulty": "Easy",
+        "questions": [
+          {
+            "quizId": "W6",
+            "questionDesc": "Would you visit the Tower of London at night?",
+            "options": "[{\"text\":\"Yes, thrill-seeker!\"},{\"text\":\"Maybe with friends\"},{\"text\":\"Nope, too spooky\"},{\"text\":\"What’s that?\"}]",
+            "correctAnswer": null,
+            "explanation": "Surveying courage level around haunted sites.",
+            "tags": "[\"survey\", \"haunted\"]"
+          },
+          {
+            "quizId": "W6",
+            "questionDesc": "Do you believe in ghosts?",
+            "options": "[{\"text\":\"Absolutely\"},{\"text\":\"Maybe\"},{\"text\":\"Not at all\"},{\"text\":\"I want to\"}]",
+            "correctAnswer": null,
+            "explanation": "Fun survey on supernatural beliefs.",
+            "tags": "[\"survey\", \"ghosts\"]"
+          }
+        ]
+      }
+    ],
+    "status": "Published"
+  }
+  

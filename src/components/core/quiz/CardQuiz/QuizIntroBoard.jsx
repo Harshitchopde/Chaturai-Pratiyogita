@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { QUIZ_DIFFICULTY } from '../../../../utils/constants'
+import { QUIZ_DIFFICULTY, QUIZ_TYPE } from '../../../../utils/constants'
 import { formateTimer } from '../../../../utils/formateTime'
 // import { registerQuizResponse } from "../../../../services/operations/resultApis";
 // import { spendCoins } from "../../../../slices/coinSlicer";
@@ -9,7 +9,9 @@ import { spendCoins } from '../../../../slices/coinSlicer';
 import { setAttempted } from '../../../../slices/quizzesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-const QuizIntroBoard = ({showAnswer,setConformationModel,setStartQuiz}) => {
+
+import MiniCard from './MiniCard';
+const QuizIntroBoard = ({quizType,showAnswer,setConformationModel,setStartQuiz}) => {
      const { token } = useSelector((state) => state.auth);
     // testQuiz
     const { testQuiz, attempted } = useSelector((state) => state.quizzes);
@@ -20,6 +22,8 @@ const QuizIntroBoard = ({showAnswer,setConformationModel,setStartQuiz}) => {
       const [loading, setLoading] = useState(false);
       const [timer, setTimer] = useState(0);
       const [selectedQuestion, setSelectedQuestion] = useState(null);
+      console.log("Tyep : ",quizType)
+      // console.log("MULTI : ",dummy_multi_quiz)
     // handleStartQuiz
      
         // Handle Quiz Submission
@@ -169,8 +173,22 @@ const QuizIntroBoard = ({showAnswer,setConformationModel,setStartQuiz}) => {
                       </button>
                     </div>
                   </div>
-                  <div className=" w-full h-[30vh]  flex justify-center items-center">
-                    <div className=" text-4xl text-gray-300">{formateTimer(timer)}</div>
+                  <div className=" overflow-hidden w-10/12 mx-auto m-5  flex justify-center items-center">
+                        {
+                          quizType===QUIZ_TYPE.MULTI?(
+                            <div className="  w-full h-[300px] space-y-2 overflow-scroll">
+                               {
+                                testQuiz?.quizzes?.map((quiz,i)=>(
+                                  <MiniCard key={i} quiz={quiz}/>
+                                ))
+                               }
+                            </div>
+                          ):(
+
+                            <div className=" h-[30vh]  text-4xl text-gray-300">{formateTimer(timer)}</div>
+                          )
+                        }
+
                   </div>
                 </div>
   )
