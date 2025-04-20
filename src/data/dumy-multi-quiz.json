@@ -15,32 +15,132 @@
     "attempted":2,
     "quizzes": [
       {
-        "_id":"1324132",
-        "quizType": "Regular",
-        "quizId": "W1",
-        "quizName": "🏛️ The Seven Wonders Challenge: Can You Name Them All?",
-        "quizDesc": "Test your knowledge of the ancient and modern Seven Wonders of the World.",
-        "numberOfQuestions": 2,
+        "_id": "67a893fefc6cb74e32855c2e",
+        "quizName": "AWS skill test",
+        "quizDesc": "this is to test you aws knowledge",
+        "timeDuration": 3,
+        "parentQuiz":"67a8946dfc6cb74e32855c42",
+        "tags": [
+            "aws",
+            "skill"
+        ],
+        "topic": "cloud learning",
         "difficulty": "Medium",
+        "numberOfQuestions": 3,
+        "studentEnrolled": [
+            "67a8929dfc6cb74e32855c13",
+            "67a89375fc6cb74e32855c22",
+            "67b3863f96e488696b8b4186",
+            "67b9efb08fd17117cb6c5578",
+            "67ad84b1b4bbf26019a1a839"
+        ],
         "questions": [
-          {
-            "quizId": "W1",
-            "questionDesc": "Which of these is one of the Seven Ancient Wonders?",
-            "options": "[{\"text\":\"Great Pyramid of Giza\"},{\"text\":\"Eiffel Tower\"},{\"text\":\"Statue of Liberty\"},{\"text\":\"Stonehenge\"}]",
-            "correctAnswer": "Great Pyramid of Giza",
-            "explanation": "The Great Pyramid is the only remaining Ancient Wonder.",
-            "tags": "[\"history\", \"wonders\"]"
-          },
-          {
-            "quizId": "W1",
-            "questionDesc": "Which modern wonder is located in Brazil?",
-            "options": "[{\"text\":\"Christ the Redeemer\"},{\"text\":\"Machu Picchu\"},{\"text\":\"Taj Mahal\"},{\"text\":\"Chichen Itza\"}]",
-            "correctAnswer": "Christ the Redeemer",
-            "explanation": "The statue of Christ the Redeemer is in Rio de Janeiro.",
-            "tags": "[\"geography\", \"modern wonders\"]"
-          }
-        ]
-      },
+            {
+                "_id": "67a8944afc6cb74e32855c32",
+                "questionDesc": "how do you know about Aws service?",
+                "options": [
+                    {
+                        "text": "friends",
+                        "isCorrect": false,
+                        "_id": "67a8944afc6cb74e32855c33"
+                    },
+                    {
+                        "text": "college",
+                        "isCorrect": true,
+                        "_id": "67a8944afc6cb74e32855c34"
+                    },
+                    {
+                        "text": "no budy",
+                        "isCorrect": false,
+                        "_id": "67a8944afc6cb74e32855c35"
+                    },
+                    {
+                        "text": "family",
+                        "isCorrect": false,
+                        "_id": "67a8944afc6cb74e32855c36"
+                    }
+                ],
+                "quizId": "67a893fefc6cb74e32855c2e",
+                "correctAnswer": "67a8944afc6cb74e32855c34",
+                "points": 1,
+                "questionType": "MCQ",
+                "explanation": "what matter",
+                "__v": 0
+            },
+            {
+                "_id": "67a8946dfc6cb74e32855c3f",
+                "questionDesc": "you",
+                "options": [
+                    {
+                        "text": "a",
+                        "isCorrect": true,
+                        "_id": "67a8946dfc6cb74e32855c40"
+                    },
+                    {
+                        "text": "b",
+                        "isCorrect": false,
+                        "_id": "67a8946dfc6cb74e32855c41"
+                    },
+                    {
+                        "text": "c",
+                        "isCorrect": false,
+                        "_id": "67a8946dfc6cb74e32855c42"
+                    },
+                    {
+                        "text": "d",
+                        "isCorrect": false,
+                        "_id": "67a8946dfc6cb74e32855c43"
+                    }
+                ],
+                "quizId": "67a893fefc6cb74e32855c2e",
+                "correctAnswer": "67a8946dfc6cb74e32855c40",
+                "points": 1,
+                "questionType": "MCQ",
+                "explanation": "dfas",
+                "__v": 0
+            },
+            {
+                "_id": "67a894c8fc6cb74e32855c50",
+                "questionDesc": "which cloud service do you like ?",
+                "options": [
+                    {
+                        "text": "gcp",
+                        "isCorrect": false,
+                        "_id": "67a894c8fc6cb74e32855c51"
+                    },
+                    {
+                        "text": "azure",
+                        "isCorrect": false,
+                        "_id": "67a894c8fc6cb74e32855c52"
+                    },
+                    {
+                        "text": "alibaba",
+                        "isCorrect": false,
+                        "_id": "67a894c8fc6cb74e32855c53"
+                    },
+                    {
+                        "text": "aws",
+                        "isCorrect": true,
+                        "_id": "67a894c8fc6cb74e32855c54"
+                    }
+                ],
+                "quizId": "67a893fefc6cb74e32855c2e",
+                "correctAnswer": "67a894c8fc6cb74e32855c54",
+                "points": 1,
+                "questionType": "MCQ",
+                "explanation": "aws because",
+                "__v": 0
+            }
+        ],
+        "maxAttempt": 1,
+        "status": "Published",
+        "createdAt": "2025-02-09T11:39:42.965Z",
+        "__v": 5,
+        "verifyed": true,
+        "coins": 1,
+        "quizType": "Regular",
+        "attempted": 3
+    },
       {
         "_id":"fertr34",
         "quizType": "Survey",

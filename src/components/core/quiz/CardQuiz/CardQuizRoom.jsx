@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import QuestionForm from '../QuestionForm';
 import toast from 'react-hot-toast';
 import { getSubmitedQuizResp, submitQuizResponce } from '../../../../services/operations/resultApis';
 import { formateTimer } from '../../../../utils/formateTime';
+import { ArrowBack, ArrowBackIos, ArrowBackIosTwoTone, ArrowCircleUp } from '@mui/icons-material';
+import { Link, useNavigate } from 'react-router-dom';
+import { resetTestQuiz } from '../../../../slices/quizzesSlice';
 
 const CardQuizRoom = ({ submitted, setSubmitted }) => {
     const { testQuiz } = useSelector(state => state.quizzes);
     const { token } = useSelector(state => state.auth);
-    
+    console.log("Card Quiz room : ",testQuiz)
+    const navigate = useNavigate();
     let timer = testQuiz?.timeDuration;
     const [currentQuestion, setCurrentQuestion] = useState(testQuiz?.questions[0]);
     const [quesNumber, setQuestionNumber] = useState(1);
     const [yourResponse, setYourResponse] = useState({});
     const [result, setResult] = useState(null);
     const [review,setReview] = useState(false);
+    const dispatch = useDispatch();
     // console.log("Result : ",result)
     // console.log("response : ",yourResponse)
     const handleOptionSelect = (questionId, optionId) => {
@@ -45,6 +50,10 @@ const CardQuizRoom = ({ submitted, setSubmitted }) => {
             setSubmitted(true);
         }
     };
+    const handleBackToMain = ()=>{
+        dispatch(resetTestQuiz());
+        navigate(`/quizzes/${testQuiz?.parentQuiz}`);
+    }
 
     useEffect(() => {
         setCurrentQuestion(testQuiz?.questions[quesNumber - 1]);
@@ -90,7 +99,18 @@ const CardQuizRoom = ({ submitted, setSubmitted }) => {
                 />
             ) : (
                 <div className="mt-10 p-6 bg-gray-100 rounded-md">
-                    <h2 className="text-2xl font-bold mb-4">Quiz Analysis</h2>
+                    <div className="mb-4 flex justify-between items-center">
+                    <h2 className="text-2xl font-bold ">Quiz Analysis</h2>
+                    {
+                        testQuiz?.parentQuiz && 
+                        // <Link to={`/quizzes/${testQuiz?.parentQuiz}`}>
+                            <button onClick={handleBackToMain} className=' bg-slate-200 border rounded-md px-1 text-sm border-black'>
+                                <ArrowBack className=' text-sm'/> 
+                                Back to Main
+                            </button>
+                        // </Link>
+                    }
+                    </div>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
                         <div className="p-4 bg-white rounded-md shadow">
                             <p className="text-xl font-bold">{result?.totalQuestions}</p>

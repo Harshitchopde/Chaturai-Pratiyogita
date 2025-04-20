@@ -66,9 +66,12 @@ const quizziesSlice = createSlice({
         },
         resetQuizzes:(state)=>{
             state.quizzes=[]
+        },
+        resetTestQuiz:(state)=>{
+            state.testQuiz = null
         }
     }   
 })
 
-export const {setAnalyticsQuiz,setAttempted, resetMultiQuiz , setMultiQuiz, resetAnalyticsQuiz, setTestQuiz, setQuizzes,resetQuizzes,deleteStateQuiz, publishQuiz,unPublishQuiz, resetInstructorQuiz,setInstructorQuiz ,setQuery,resetQuery} = quizziesSlice.actions;
+export const {setAnalyticsQuiz,setAttempted,resetTestQuiz, resetMultiQuiz , setMultiQuiz, resetAnalyticsQuiz, setTestQuiz, setQuizzes,resetQuizzes,deleteStateQuiz, publishQuiz,unPublishQuiz, resetInstructorQuiz,setInstructorQuiz ,setQuery,resetQuery} = quizziesSlice.actions;
 export default quizziesSlice.reducer;
