@@ -19,7 +19,7 @@ import { FaArrowLeft } from "react-icons/fa";
   */
 const QuestionForm = ({result,setReview,review,handleOptionSubmition, submitted,question,setQuestionNumber,quesNumber,total,timeLeft,yourResponse,handleOptionSelect}) => {
 
-
+console.log("Questions : ".question)
     const handleNext = (e)=>{
        if(quesNumber===total && !submitted ){
         handleOptionSubmition();

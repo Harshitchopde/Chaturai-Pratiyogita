@@ -6,8 +6,9 @@ import CardQuizRoom from "./CardQuizRoom";
 import dummy_multi_quiz from '../../../../data/dumy-multi-quiz.json'
 import ConformationPopUp from "../../../common/ConformationPopUp";
 
-import { setAttempted, setTestQuiz } from "../../../../slices/quizzesSlice";
+import { setAttempted, setMultiQuiz, setTestQuiz } from "../../../../slices/quizzesSlice";
 import QuizIntroBoard from "./QuizIntroBoard";
+import { QUIZ_TYPE } from "../../../../utils/constants";
 
 const CardQuiz = () => {
   const { quizId } = useParams();
@@ -21,7 +22,7 @@ const CardQuiz = () => {
   const [showAnswer, setShowAnswer] = useState(attempted === 3);
   console.log("Shhow anwer : ",showAnswer)
   console.log("Type : ",testQuiz?.quizType);
- 
+  console.log("Attempted : ",attempted)
   const [conformationModel, setConformationModel] = useState(null);
  
   const [startQuiz, setStartQuiz] = useState(false);
@@ -34,13 +35,18 @@ const CardQuiz = () => {
     const fetchQuizDetail = async () => {
       const result = await getQuizDetails(quizId, token);
       if (result) {
-        dispatch(setTestQuiz(result));
+        if(result?.quizType===QUIZ_TYPE.MULTI){
+            dispatch(setMultiQuiz(result));
+        }else{
+             dispatch(setTestQuiz(result));
+
+        }
         if (result?.attempted) {
           dispatch(setAttempted(result.attempted));
         }
       }
     };
-    dispatch(setAttempted(1));
+    dispatch(setAttempted(dummy_multi_quiz.attempted));
     dispatch(setTestQuiz(dummy_multi_quiz))
     // fetchQuizDetail();
   }, []);

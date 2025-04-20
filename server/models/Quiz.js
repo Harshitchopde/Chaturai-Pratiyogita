@@ -14,7 +14,7 @@ const quizSchema = new Schema({
     quizType:{
         type:String,
         trim:true,
-        enum:["Regular","Survey","Multi"],
+        enum:["Regular","Survey","Multi","Mini"],
         default:"Regular",
     },
     verifyed:{

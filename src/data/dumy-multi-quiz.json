@@ -12,9 +12,12 @@
     "coins": 5,
     "questions": [],
     "maxAttempt": 2,
+    "attempted":2,
     "quizzes": [
       {
+        "_id":"1324132",
         "quizType": "Regular",
+        "quizId": "W1",
         "quizName": "🏛️ The Seven Wonders Challenge: Can You Name Them All?",
         "quizDesc": "Test your knowledge of the ancient and modern Seven Wonders of the World.",
         "numberOfQuestions": 2,
@@ -39,7 +42,9 @@
         ]
       },
       {
+        "_id":"fertr34",
         "quizType": "Survey",
+        "quizId": "W2",
         "quizName": "🌍 Mysterious Places: What’s Real and What’s a Myth?",
         "quizDesc": "Explore some of the world’s most mysterious locations — and tell us what *you* believe!",
         "numberOfQuestions": 2,
@@ -64,6 +69,8 @@
         ]
       },
       {
+        "_id":"rweryw",
+        "quizId": "W3",
         "quizType": "Regular",
         "quizName": "🏝️ Lost Cities & Ancient Civilizations",
         "quizDesc": "Uncover the truth behind legendary cities and forgotten civilizations.",
@@ -90,6 +97,8 @@
       },
       {
         "quizType": "Regular",
+        "_id":"dfhsgfhs",
+        "quizId": "W4",
         "quizName": "🏔️ World’s Greatest Natural Wonders",
         "quizDesc": "From the Grand Canyon to Mount Everest, how well do you know the planet's greatest spectacles?",
         "numberOfQuestions": 2,
@@ -115,6 +124,8 @@
       },
       {
         "quizType": "Regular",
+        "_id":"dfgadagds",
+        
         "quizName": "🔥 Disaster Zones: Earthquakes, Volcanoes & Tsunamis",
         "quizDesc": "Test your knowledge about Earth’s most powerful natural disasters and how they’ve shaped history.",
         "numberOfQuestions": 2,
@@ -140,6 +151,8 @@
       },
       {
         "quizType": "Survey",
+        "quizId": "W6",
+        "_id":"iouigui",
         "quizName": "🏰 Haunted Places Around the World: Would You Visit?",
         "quizDesc": "Some places give people chills… What’s your take? Share your thoughts on the spookiest places on Earth.",
         "numberOfQuestions": 2,

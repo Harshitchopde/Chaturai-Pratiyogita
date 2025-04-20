@@ -1,13 +1,23 @@
 import React from 'react'
 import { QUIZ_DIFFICULTY } from '../../../../utils/constants'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
+import { setTestQuiz } from '../../../../slices/quizzesSlice';
 
 const MiniCard = ({quiz,loading}) => {
-    const attempted = 2;
+    const { attempted } = useSelector(state => state.quizzes);  
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     console.log("Quiz : ",quiz)
     let properties = quiz?.difficulty===QUIZ_DIFFICULTY.EASY?"bg-green-200 text-green-600":
       quiz?.difficulty===QUIZ_DIFFICULTY.MEDIUM?" bg-yellow-200 text-yellow-600":
       quiz?.difficulty===QUIZ_DIFFICULTY.HARD?"bg-red-200 text-red-600":
       "bg-gray-200 text-gray-600";
+      const handleMiniQuiz = ()=>{
+        console.log("Hand : ")
+        dispatch(setTestQuiz(quiz));
+        navigate(`/quizzes/${quiz._id}`)
+      }
   return (
     <div className=' p-3  items-center  flex justify-between border w-full border-gray-200 bg-gray-100 rounded-md '>
         <div className="  flex  items-center gap-2">
@@ -23,7 +33,7 @@ const MiniCard = ({quiz,loading}) => {
         </div>
         {/* take or disable or show answer */}
         <button
-                        
+                        onClick={handleMiniQuiz}
                         className={`${attempted===1 && "  blur-sm cursor-not-allowed"} sm:text-xl text-[0.75rem] leading-4 rounded-md bg-blue-500 max-h-max py-1 px-[2px] sm:px-4 flex  items-center`}
                       >
                         {attempted===3 ? ( 

@@ -17,5 +17,6 @@ export const QUIZ_DIFFICULTY = {
 export const QUIZ_TYPE = {
     MULTI:"Multi",
     REGULAR:"Regular",
-    SURVEY:"Survey"
+    SURVEY:"Survey",
+    MINI:"Mini"
 }
