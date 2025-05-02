@@ -14,8 +14,12 @@ const quizSchema = new Schema({
     quizType:{
         type:String,
         trim:true,
-        enum:["Regular","Survey","Multi"],
+        enum:["Regular","Survey","Multi","Mini"],
         default:"Regular",
+    },
+    parentQuiz:{
+        type:Schema.Types.ObjectId,
+        ref:"Quiz",
     },
     verifyed:{
         type:Boolean,

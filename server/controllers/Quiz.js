@@ -80,6 +80,79 @@ export const createQuiz = async(req,res)=>{
         })
     }
 }
+export const createQuizComplete = async(req,res)=>{
+    try {
+        // get data of quiz
+        const {quizName,
+            quizDesc,
+            numberOfQuestions,
+            timeDuration,
+            tags:_tag,
+            topic,
+            difficulty
+        } = req.body;
+        let { status} = req.body;
+        
+        const tag = JSON.parse(_tag);
+
+        // validate
+        if(!quizName || !quizDesc || !timeDuration){
+            return res.status(400).json({
+                success:false,
+                message:"Some Field missing!"
+            })
+        }
+        // check for instructor
+        const userId = req.user.id;
+        const instructor = await User.findOne({
+            _id:userId,
+            accountType:"Instructor"
+        })
+        instructor.coins+=10;
+        await instructor.save();
+        if(!instructor){
+            return res.status(400).json({
+                success:false,
+                message:"Instructor not Found!"
+            })
+        }
+        // status draft default 
+        if(!status || status==undefined){
+            status = "Draft"
+        }
+        // create quiz
+        const quiz = await Quiz.create({
+            quizName,
+            quizDesc,
+            difficulty,
+            status,
+            timeDuration,
+            instructor:instructor._id,
+            numberOfQuestions,
+            tags:tag,
+            topic
+        })
+        // add Quiz to Instructor
+        await User.findByIdAndUpdate({_id:instructor._id},{
+            $push :{
+                quizzes:quiz._id
+            }
+        })
+
+        // console.log("Data : ",quiz);
+        return res.status(200).json({
+            success:true,
+            message:"SuccessFull Creation",
+            data:quiz
+        })
+    } catch (error) {
+        console.log("Error in createQuiz ",error);
+        return res.status(400).json({
+            success:false,
+            message:error.message
+        })
+    }
+}
 export const updateQuiz = async(req,res)=>{
     // console.log("UPDATE QUIZ")
     try {
