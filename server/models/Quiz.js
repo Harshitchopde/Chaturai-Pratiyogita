@@ -17,6 +17,10 @@ const quizSchema = new Schema({
         enum:["Regular","Survey","Multi","Mini"],
         default:"Regular",
     },
+    parentQuiz:{
+        type:Schema.Types.ObjectId,
+        ref:"Quiz",
+    },
     verifyed:{
         type:Boolean,
         required:true,
