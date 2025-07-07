@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import userRouter from "./routes/User.js"
 import quizRouter from "./routes/Quiz.js"
 import resultRouter from "./routes/Result.js"
+import paymentRouter from "./routes/Payment.js"
 import serverless from "serverless-http";
 const PORT = process.env.PORT || 4000;
 const app = express();
@@ -33,6 +34,7 @@ dbConnect();
 app.use("/api/v1/auth",userRouter);
 app.use("/api/v1/quiz",quizRouter);
 app.use("/api/v1/res",resultRouter)
+app.use("/api/v1/pay",paymentRouter);
 app.get("/",(req,res)=>{
     return res.json({
         message:"Up and Running",
