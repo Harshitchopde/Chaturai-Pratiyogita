@@ -18,6 +18,7 @@ import Setting from './components/core/dashboard/Setting';
 import CardQuiz from './components/core/quiz/CardQuiz';
 import Contact from './pages/Contact';
 import QuizAnalysis from './components/core/dashboard/QuizAnylisis';
+import Rough from './pages/Rough';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
             <Route path='login' element={<Login/>}/>
             <Route path='signUp' element={<SignUp/>}/>
             <Route path='verify-email' element={<VerifyEmail/>}/>
+            <Route path='rough' element={<Rough/>}/>
             <Route path='quizzes'>
                <Route index  element={<Quizzes/>}/>
                <Route path=':quizId' element={<CardQuiz/>}/>
