@@ -54,6 +54,7 @@ const CardQuiz = () => {
       <div className="w-full h-full p-10">
         {startQuiz ? (
           <CardQuizRoom setSubmitted={setShowAnswer} submitted={showAnswer} />
+         
         ) : (
             <QuizIntroBoard showAnswer={showAnswer} setStartQuiz={setStartQuiz} setConformationModel={setConformationModel}
              />

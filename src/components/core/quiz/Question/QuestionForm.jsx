@@ -1,7 +1,8 @@
 import React from 'react'
-import { formateTimer } from '../../../utils/formateTime';
+
 import { FaArrowRight } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
+import { formateTimer } from '../../../../utils/formateTime';
 /*
 {
     "questionDesc": "Which planet is known as the Red Planet?",
