@@ -46,7 +46,7 @@ const CardQuizRoom = ({ submitted, setSubmitted }) => {
 
     const formData = new FormData();
     formData.append("quizId", testQuiz._id);
-    formData.append("timeTaken", timeLeft);
+    formData.append("timeTaken",(timer * 60 - timeLeft));
     Object.entries(yourResponse).forEach(([qid, oid]) =>
       formData.append(`responses[${qid}]`, oid)
     );
