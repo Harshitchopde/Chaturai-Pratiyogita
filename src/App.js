@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { NavBar } from './components/common/NavBar';
-import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { SignUp } from './pages/SignUp';
 import { VerifyEmail } from './pages/VerifyEmail';
@@ -17,6 +16,7 @@ import Instructor from './components/core/dashboard/Instructors/Instructor';
 import Setting from './components/core/dashboard/Setting';
 import CardQuiz from './components/core/quiz/CardQuiz';
 import Contact from './pages/Contact';
+import  {Home} from "./pages/Home"
 import QuizAnalysis from './components/core/dashboard/QuizAnylisis';
 
 
