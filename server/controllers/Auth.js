@@ -192,9 +192,9 @@ export const login = async(req,res)=>{
                 email:existingUser.email
             },
             process.env.JWT_SECRET_KEY,
-            {
-                expiresIn:"24h"
-            }
+            // {
+            //     expiresIn:"24h"  // i remove this because their is no need for this
+            // }
             )
 
         console.log("Coin ",existingUser.coins)
