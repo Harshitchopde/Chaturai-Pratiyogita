@@ -11,20 +11,18 @@ export const VerifyEmail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-
-  const { loading } = useSelector(state => state.auth);
+  
+  const { loading,signUpData } = useSelector(state => state.auth);
   const [otp, setOtp] = useState('');
   const [email, setEmail] = useState('');
 
-  useEffect(() => {
-    // Assuming email is passed via location.state from previous page
-    if (location.state?.email) {
-      setEmail(location.state.email);
-    } else {
-      toast.error("Email not found. Redirecting...");
-      navigate('/login'); // or '/signup'
+  useEffect(()=>{
+    if(!signUpData){
+        toast.error("Sign Up data is Missing")
+        navigate("/signUp")
     }
-  }, [location, navigate]);
+  },[])
+
 
   const handleVerifyAndSubmit = (e) => {
     e.preventDefault();
