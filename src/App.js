@@ -3,7 +3,7 @@ import './App.css';
 import { NavBar } from './components/common/NavBar';
 import { Login } from './pages/Login';
 import { SignUp } from './pages/SignUp';
-import { VerifyEmail } from './pages/VerifyEmail';
+import { VerifyEmail } from './pages/VerifyEmail2';
 import Quizzes from './pages/Quizzes';
 import { PrivateRoute } from './components/core/auth/PrivateRoute';
 import DashBoard from './pages/DashBoard';
@@ -18,6 +18,7 @@ import CardQuiz from './components/core/quiz/CardQuiz';
 import Contact from './pages/Contact';
 import  {Home} from "./pages/Home"
 import QuizAnalysis from './components/core/dashboard/QuizAnylisis';
+import CompletePofile from './pages/CompletePofile';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
             <Route path='login' element={<Login/>}/>
             <Route path='signUp' element={<SignUp/>}/>
             <Route path='verify-email' element={<VerifyEmail/>}/>
+            <Route path='complete-profile' element={<CompletePofile/>}/>
             <Route path='quizzes'>
                <Route index  element={<Quizzes/>}/>
                <Route path=':quizId' element={<CardQuiz/>}/>
