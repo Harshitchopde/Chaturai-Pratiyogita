@@ -45,15 +45,14 @@ export function signUp(
     email,
     password,
     conformPassword,
-    navigate,
-    otp
+    navigate
 ){
     return async(dispatch)=>{
         const toastId = toast.loading("Loading...")
         dispatch(setLoading(true));
         try {
             const response = await apiConnector("POST",SIGN_UP_API,{
-                firstName,lastName,password,conformPassword,email,accountType,otp
+                firstName,lastName,password,conformPassword,email,accountType
             })
             // console.log("API response of signup ",response)
             if(!response.data.success){

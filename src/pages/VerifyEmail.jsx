@@ -56,7 +56,9 @@ export const VerifyEmail = () => {
                             <input {...props}
                             placeholder='-'
                             style={{boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",}}
-                             className=' w-[48px] lg:w-[60px] bg-slate-300 rounded-[0.5rem] p-4 text-center focus:outline-2 focus:outline-yellow-500 aspect-square border-0'
+                             className=' w-[48px] lg:w-[60px] bg-slate-300
+                              rounded-[0.5rem] p-4 text-center focus:outline-2
+                               focus:outline-yellow-500 aspect-square border-0'
                             />
                          )}
                          containerStyle={{
