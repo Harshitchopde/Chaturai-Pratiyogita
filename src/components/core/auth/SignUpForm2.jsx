@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { sendOtp } from "../../../services/operations/authApis";
+import { Oauth, sendOtp } from "../../../services/operations/authApis";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { setSignUpData } from "../../../slices/authSlicer";
+import { signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../../../firebase";
 
 // You will use this when implementing Google OAuth
 // import { signInWithGoogle } from "../../../services/operations/authApis";
@@ -29,11 +31,19 @@ const SignUpForm = () => {
     dispatch(sendOtp(email, navigate));
   };
 
-  const handleGoogleAuth = () => {
-    // Trigger your Google Auth Logic here
-    // save the firstName and lastName
-    // dispatch(signInWithGoogle(navigate));
-    toast.success("Google Auth clicked (implement logic)");
+  const handleGoogleAuth =async () => {
+        try {
+        const result = await signInWithPopup(auth,googleProvider);
+        const user = result.user;
+        console.log("REsult: ",result);
+          // displayName
+    
+          dispatch(Oauth(user.email,user,navigate));
+        } catch (error) {
+          console.error("Error f ",error)
+          throw error;
+        }
+        toast.success("Google Auth clicked (implement logic)");
   };
   const handleChange = (e)=>{
     const {name,value} = e.target;

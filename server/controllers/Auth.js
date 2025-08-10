@@ -190,6 +190,64 @@ export const signUp = async (req,res)=>{
     }
 }
 
+// Oauth 
+export const oAuth = async (req,res)=>{
+    const { email,user} = req.body;
+    console.log("OAuth")
+    if(!email){
+        return res.status(404).json({
+            success: false,
+            message:"Email Not Found!"
+        })
+    }
+
+    const existingUser = await User.findOne({email});
+    if(!existingUser){
+        return res.status(200).json({
+            success:true,
+            message:"User Does Not exist",
+            navigateTo:"complete-profile"
+        })
+    }   
+
+    // login logic return token 
+    const token  = sign({
+        id:existingUser._id,
+        accountType:existingUser.accountType,
+        password:existingUser.password,
+        email: existingUser.email
+    }, process.env.JWT_SECRET_KEY,
+    {
+        expiresIn:"24h"
+    });
+    if(!existingUser.coins){
+        existingUser.coins = 51;
+    }
+    console.log("Coin from Oauth ",existingUser.coins);
+    existingUser.token = token;
+    existingUser.image = user?.photoURL;
+    const name = user?.displayName?.split(" ");
+    // console.log("User name: ",name);
+    if(name?.[0]){
+        existingUser.firstName = name?.[0];
+    }
+    if(name?.[1]){
+        existingUser.lastName = name?.[1];
+    }
+
+    await existingUser.save();
+    const options = {
+        httpOnly:true,
+        expires:new Date(Date.now()+24*60*60*1000)
+    }
+    return res.cookie("access_token",token,options).status(200).json({
+        success:true,
+        message:"Login SuccessFully",
+        navigateTo:"home",
+        user:existingUser,
+        token
+    })
+}
 // login
 export const login = async(req,res)=>{
     try {

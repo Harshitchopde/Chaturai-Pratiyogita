@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../../../services/operations/authApis';
+import { login, Oauth } from '../../../services/operations/authApis';
 import toast from 'react-hot-toast';
+import { signInWithPopup } from 'firebase/auth';
+import { auth, googleProvider } from '../../../firebase';
 
 // You’ll implement Google Auth logic here later
 // import { signInWithGoogle } from '../../../services/operations/authApis';
@@ -28,9 +30,18 @@ export const LoginForm = () => {
     setFormData({ email: "", password: "" });
   };
 
-  const handleGoogleAuth = () => {
-    // Trigger your Google Auth Logic here
-    // dispatch(signInWithGoogle(navigate));
+  const handleGoogleAuth =async () => {
+    try {
+    const result = await signInWithPopup(auth,googleProvider);
+    const user = result.user;
+    console.log("REsult: ",result);
+      // displayName
+
+      dispatch(Oauth(user.email,user,navigate));
+    } catch (error) {
+      console.error("Error f ",error)
+      throw error;
+    }
     toast.success("Google Auth clicked (implement logic)");
   };
 
