@@ -81,7 +81,7 @@ export function Oauth(email,user, navigate) {
       toast.success(response.data.message);
       toast.dismiss(toastId);
       // navigate("/login");
-      console.log("naviator: ", response.data);
+    //   console.log("naviator: ", response.data);
       const navTo = String(response?.data?.navigateTo || "")
         .trim()
         .toLowerCase();

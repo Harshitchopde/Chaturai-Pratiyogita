@@ -34,11 +34,8 @@ const SignUpForm = () => {
   const handleGoogleAuth =async () => {
         try {
         const result = await signInWithPopup(auth,googleProvider);
-        const user = result.user;
-        console.log("REsult: ",result);
-          // displayName
-    
-          dispatch(Oauth(user.email,user,navigate));
+        const user = result.user;    
+        dispatch(Oauth(user.email,user,navigate));
         } catch (error) {
           console.error("Error f ",error)
           throw error;
