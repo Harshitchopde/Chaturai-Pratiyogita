@@ -217,9 +217,10 @@ export const oAuth = async (req,res)=>{
         password:existingUser.password,
         email: existingUser.email
     }, process.env.JWT_SECRET_KEY,
-    {
-        expiresIn:"24h"
-    });
+    // {
+    //     expiresIn:"24h"
+    // }
+);
     if(!existingUser.coins){
         existingUser.coins = 51;
     }
@@ -238,7 +239,7 @@ export const oAuth = async (req,res)=>{
     await existingUser.save();
     const options = {
         httpOnly:true,
-        expires:new Date(Date.now()+24*60*60*1000)
+        // expires:new Date(Date.now()+24*60*60*1000)
     }
     return res.cookie("access_token",token,options).status(200).json({
         success:true,
@@ -295,7 +296,7 @@ export const login = async(req,res)=>{
         // create cookies
         const options = {
             httpOnly:true,
-            expires:new Date(Date.now()+3*24*60*60*1000)
+            // expires:new Date(Date.now()+3*24*60*60*1000)
         }
         return res.cookie("access_token",token,options).status(200).json({
             success:true,
