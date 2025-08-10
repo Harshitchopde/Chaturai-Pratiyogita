@@ -3,6 +3,7 @@ export const BASE_URL = process.env.REACT_APP_BASE_URL
 export const authEndPoints = {
     LOGIN_API:BASE_URL+"/auth/login",
     SIGN_UP_API:BASE_URL+"/auth/signUp",
+    OTP_VERIFY_API:BASE_URL+"/auth/otpVerify",
     SEND_OTP_API:BASE_URL+"/auth/sendOtp",
     REPOR_ISSUE_API:BASE_URL+"/auth/report",
 }

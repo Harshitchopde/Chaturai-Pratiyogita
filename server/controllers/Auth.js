@@ -68,7 +68,55 @@ export const sendOtp = async (req,res)=>{
         })
     }
 }
+// opt verify
+export const otpVerify = async (req,res)=>{
+    try{
+        const { otp,email} = req.body;
+        if(!otp || !email){
+            return res.status(400).json({
+            success: false,
+            message: "Some Parameter are missing"
+            })
+        }
+        const existingUser = await User.findOne({email});
+        if(existingUser){
+            return res.status(401).json({
+                success: false,
+                message: "User aleady exist , try with different name"
+            })
+        }
+        // recent OTP 
+        const recentOtp = await Otp.find({email}).sort({createdAt:-1}).limit(1);
+        if (recentOtp.lenght === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "No OTP found"
+            })
+        }
+        else if (otp !== recentOtp[0].otp) {
+            // console.log("Recent otp : ",recentOTP);
+            
+            return res.status(400).json({
+                success: false,
+                message: "Invaid OTP",
+                otp:otp,
+            })
+        }
 
+        return res.status(200).json({
+            success:true,
+            message: "OTP verified!"
+        })
+
+
+    } catch(error){
+        console.log("Error in otpVerify ",error)
+        return res.status(400).json({
+            success:false,
+            message:error,
+        })
+    }
+}
 // sign Up
 export const signUp = async (req,res)=>{
     try {
@@ -79,11 +127,10 @@ export const signUp = async (req,res)=>{
             conformPassword,
             email,
             contactNumber,
-            accountType,
-            otp
+            accountType
         } = req.body;
        // check 
-       if (!firstName || !lastName || !password || !conformPassword || !email || !otp) {
+       if (!firstName || !lastName || !password || !conformPassword || !email) {
         return res.status(400).json({
             success: false,
             message: "Some Parameter are missing"
@@ -105,25 +152,7 @@ export const signUp = async (req,res)=>{
             })
         }
 
-        // recent OTP 
-        const recentOtp = await Otp.find({email}).sort({createdAt:-1}).limit(1);
-        if (recentOtp.lenght === 0) {
-            return res.status(400).json({
-                success: false,
-                message: "No OTP found"
-            })
-        }
-        else if (otp !== recentOtp[0].otp) {
-            // console.log("Recent otp : ",recentOTP);
-            
-            return res.status(400).json({
-                success: false,
-                message: "Invaid OTP",
-                otp:otp,
-                // recentOtp,
-                // recentOtp:recentOtp[0].otp,
-            })
-        }
+        
         //hash password
         const saltRounds = 10;
         const salt = genSaltSync(saltRounds);

@@ -9,6 +9,7 @@ const {
     SEND_OTP_API,
     SIGN_UP_API,
     LOGIN_API,
+    OTP_VERIFY_API,
     REPOR_ISSUE_API
 } = authEndPoints
 // sendOtp
@@ -38,6 +39,33 @@ export function sendOtp(email,navigate){
         dispatch(setLoading(false));
     }
 }
+// otp verify
+export function otpVerify(
+    otp,
+    email,
+    navigate
+){
+    return async (dispatch)=>{
+        const toastId = toast.loading("Loading...");
+        dispatch(setLoading(true));
+        try {
+            const response = await apiConnector("POST",OTP_VERIFY_API,{
+                otp,email
+            });
+            if(!response.data.success){
+                toast.error(response.data.message);
+                throw new Error(response.data.message);
+            }
+            toast.dismiss(toastId);
+            toast.success(response.data.message);
+            navigate("/complete-profile");
+        } catch (err) {
+            
+        }
+
+    }
+}
+
 export function signUp(
     firstName,
     accountType,

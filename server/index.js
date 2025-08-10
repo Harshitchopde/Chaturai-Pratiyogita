@@ -41,7 +41,7 @@ app.get("/",(req,res)=>{
 })
 
 // export const handler = serverless(app)
-app.listen(PORT,()=>console.log("SErverRunning..."))
+app.listen(PORT,()=>console.log("SErverRunning... at http://localhost:4000/"))
 export const handler = async (event,context)=>{
     context.callbackWaitsForEmptyEventLoop  = false; // Prevents Lambda from closing DB connection
     return serverless(app)(event,context);

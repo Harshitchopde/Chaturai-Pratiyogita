@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login, report, sendOtp, signUp } from "../controllers/Auth.js";
+import { login, otpVerify, report, sendOtp, signUp } from "../controllers/Auth.js";
 import { isInstructor, verifyAuth } from "../middlewares/auth.js";
 
 
@@ -9,4 +9,5 @@ router.post("/login",login);
 router.post("/signUp",signUp);
 router.post("/sendOtp",sendOtp);
 router.post("/report",verifyAuth, report)
+router.post("/otpVerify",otpVerify);
 export default router;
