@@ -68,7 +68,55 @@ export const sendOtp = async (req,res)=>{
         })
     }
 }
+// opt verify
+export const otpVerify = async (req,res)=>{
+    try{
+        const { otp,email} = req.body;
+        if(!otp || !email){
+            return res.status(400).json({
+            success: false,
+            message: "Some Parameter are missing"
+            })
+        }
+        const existingUser = await User.findOne({email});
+        if(existingUser){
+            return res.status(401).json({
+                success: false,
+                message: "User aleady exist , try with different name"
+            })
+        }
+        // recent OTP 
+        const recentOtp = await Otp.find({email}).sort({createdAt:-1}).limit(1);
+        if (recentOtp.lenght === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "No OTP found"
+            })
+        }
+        else if (otp !== recentOtp[0].otp) {
+            // console.log("Recent otp : ",recentOTP);
+            
+            return res.status(400).json({
+                success: false,
+                message: "Invaid OTP",
+                otp:otp,
+            })
+        }
 
+        return res.status(200).json({
+            success:true,
+            message: "OTP verified!"
+        })
+
+
+    } catch(error){
+        console.log("Error in otpVerify ",error)
+        return res.status(400).json({
+            success:false,
+            message:error,
+        })
+    }
+}
 // sign Up
 export const signUp = async (req,res)=>{
     try {
@@ -79,11 +127,10 @@ export const signUp = async (req,res)=>{
             conformPassword,
             email,
             contactNumber,
-            accountType,
-            otp
+            accountType
         } = req.body;
        // check 
-       if (!firstName || !lastName || !password || !conformPassword || !email || !otp) {
+       if (!firstName || !lastName || !password || !conformPassword || !email) {
         return res.status(400).json({
             success: false,
             message: "Some Parameter are missing"
@@ -105,25 +152,7 @@ export const signUp = async (req,res)=>{
             })
         }
 
-        // recent OTP 
-        const recentOtp = await Otp.find({email}).sort({createdAt:-1}).limit(1);
-        if (recentOtp.lenght === 0) {
-            return res.status(400).json({
-                success: false,
-                message: "No OTP found"
-            })
-        }
-        else if (otp !== recentOtp[0].otp) {
-            // console.log("Recent otp : ",recentOTP);
-            
-            return res.status(400).json({
-                success: false,
-                message: "Invaid OTP",
-                otp:otp,
-                // recentOtp,
-                // recentOtp:recentOtp[0].otp,
-            })
-        }
+        
         //hash password
         const saltRounds = 10;
         const salt = genSaltSync(saltRounds);
@@ -161,6 +190,64 @@ export const signUp = async (req,res)=>{
     }
 }
 
+// Oauth 
+export const oAuth = async (req,res)=>{
+    const { email,user} = req.body;
+    console.log("OAuth")
+    if(!email){
+        return res.status(404).json({
+            success: false,
+            message:"Email Not Found!"
+        })
+    }
+
+    const existingUser = await User.findOne({email});
+    if(!existingUser){
+        return res.status(200).json({
+            success:true,
+            message:"User Does Not exist",
+            navigateTo:"complete-profile"
+        })
+    }   
+
+    // login logic return token 
+    const token  = sign({
+        id:existingUser._id,
+        accountType:existingUser.accountType,
+        password:existingUser.password,
+        email: existingUser.email
+    }, process.env.JWT_SECRET_KEY,
+    {
+        expiresIn:"24h"
+    });
+    if(!existingUser.coins){
+        existingUser.coins = 51;
+    }
+    console.log("Coin from Oauth ",existingUser.coins);
+    existingUser.token = token;
+    existingUser.image = user?.photoURL;
+    const name = user?.displayName?.split(" ");
+    // console.log("User name: ",name);
+    if(name?.[0]){
+        existingUser.firstName = name?.[0];
+    }
+    if(name?.[1]){
+        existingUser.lastName = name?.[1];
+    }
+
+    await existingUser.save();
+    const options = {
+        httpOnly:true,
+        expires:new Date(Date.now()+24*60*60*1000)
+    }
+    return res.cookie("access_token",token,options).status(200).json({
+        success:true,
+        message:"Login SuccessFully",
+        navigateTo:"home",
+        user:existingUser,
+        token
+    })
+}
 // login
 export const login = async(req,res)=>{
     try {

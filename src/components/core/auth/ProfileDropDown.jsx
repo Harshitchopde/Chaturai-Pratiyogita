@@ -25,7 +25,7 @@ const ProfileDropDown = () => {
         </div>
         <div className=" flex items-center gap-x-1">
             <img src={user?.image} alt={`profile-${user?.firstName}`} 
-             className=' aspect-square w-[30px] rounded-full object-cover'/>
+             className=' aspect-square w-[30px] h-[30px] rounded-full object-cover'/>
              <AiOutlineCaretDown className=' text-sm text-slate-500'/>
            
         </div>

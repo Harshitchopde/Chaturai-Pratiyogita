@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Tab } from '../../common/Tab'
 import { ACCOUNT_TYPE } from '../../../utils/constants'
-import { LoginForm } from './LoginForm';
-import SignUpForm from './SignUpForm';
+import { LoginForm } from './LoginForm2';
+import SignUpForm from './SignUpForm2';
 import login_img from '../../../assets/images/login_img.png'
 export const Template = ({formType}) => {
     

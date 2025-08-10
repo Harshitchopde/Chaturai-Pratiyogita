@@ -18,9 +18,15 @@ export const authSlice  = createSlice({
         },
         setLoading(state,action){
             state.loading = action.payload
+        },
+        updateSignUpEmail(state,action){
+            if(!state.signUpData){
+                state.signUpData = {}
+            }
+            state.signUpData.email = action.payload
         }
     }
 })
 
-export const {setLoading,setSignUpData,setToken} = authSlice.actions;
+export const {setLoading,setSignUpData,setToken,updateSignUpEmail} = authSlice.actions;
 export default authSlice.reducer;
