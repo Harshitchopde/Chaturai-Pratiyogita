@@ -19,6 +19,7 @@ import Contact from './pages/Contact';
 import  {Home} from "./pages/Home"
 import QuizAnalysis from './components/core/dashboard/QuizAnylisis';
 import CompletePofile from './pages/CompletePofile';
+import QuizStudio from './components/core/quiz-studio';
 
 
 function App() {
@@ -38,6 +39,11 @@ function App() {
                <Route path=':quizId' element={<CardQuiz/>}/>
             </Route>
         </Route>
+        <Route path='/quiz-studio' element={
+          <PrivateRoute>
+              <QuizStudio/>
+          </PrivateRoute>
+        }/>
         <Route path='/contacts' element={
           <PrivateRoute>
             <Contact/>

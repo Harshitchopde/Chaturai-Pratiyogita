@@ -26,6 +26,14 @@ export const sidebarLinks = [
     path: "/dashboard/add-quiz",
     type: ACCOUNT_TYPE.INSTRUCTOR,
     icon: "VscAdd",
+  },
+  {
+    id:5,
+    name: "Quiz Studio",
+    path: "/quiz-studio",
+    icon: "VscLinkExternal",
+    newTab:true,
+    type:ACCOUNT_TYPE.INSTRUCTOR,
   }
   ];
 
