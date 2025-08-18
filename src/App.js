@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import { NavBar } from './components/common/NavBar';
 import { Login } from './pages/Login';
@@ -24,9 +24,11 @@ import QuizStudio from './components/core/quiz-studio';
 
 function App() {
   const {user} = useSelector(state=>state.profile);
+  const location = useLocation()
+  // console.log(location)
   return (
     <div className="App flex flex-col text-xl ">
-      <NavBar/>
+     {location.pathname!=="/quiz-studio" && <NavBar/>}
       <Routes>
         <Route path='/'>
             <Route index element={<Home/>}/>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SidebarLeft from "./SidebarLeft";
 import SidebarRight from "./SidebarRight";
 import EditorPane from "./EditorPane";
+import CreateQuizWizard from "./CreateQuizWizard";
 
 export default function QuizStudio() {
   const [quizzes, setQuizzes] = useState([
@@ -17,7 +18,8 @@ export default function QuizStudio() {
 
       {/* Center Editor */}
       <div className="flex-1 flex flex-col border-x border-gray-800">
-        <EditorPane quiz={selectedQuiz} setQuiz={setSelectedQuiz} />
+        {/* <EditorPane quiz={selectedQuiz} setQuiz={setSelectedQuiz} /> */}
+        <CreateQuizWizard/>
       </div>
 
       {/* Right Sidebar */}
