@@ -83,7 +83,8 @@ const CompleteProfile = () => {
       password,
       confirmPassword: conformPassword,
     };
-
+    console.log("Sign up data: ",signUpData);
+    
     dispatch(setSignUpData(signUpDatas));
     dispatch(signUp(firstName, accountType, lastName, email, password, conformPassword, navigate));
   };
