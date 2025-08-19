@@ -1,5 +1,6 @@
 import { useState } from "react";
-import Editor from "@monaco-editor/react";
+import Editor, { useMonaco } from "@monaco-editor/react";
+import { myDarkTheme } from "../../../../monacoThemes";
 
 const defaultJson = {
   questions: [
@@ -21,13 +22,18 @@ export default function JSONEditor() {
   const [jsonData, setJsonData] = useState(
     JSON.stringify(defaultJson, null, 2)
   );
+  const monaco = useMonaco();
+  if(monaco){
+    monaco.editor.defineTheme("my-custom-theme",myDarkTheme);
+  }
 
   return (
     <div className="h-full">
       <Editor
         height="100%"
         language="json"
-        theme="vs-dark"
+        theme="my-custom-theme"
+        // theme="vs-dark"
         value={jsonData}
         onChange={(val) => setJsonData(val)}
       />

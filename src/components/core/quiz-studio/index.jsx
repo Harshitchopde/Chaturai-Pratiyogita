@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import SidebarLeft from "./SidebarLeft";
-import SidebarRight from "./SidebarRight";
+
 import EditorPane from "./EditorPane";
 import CreateQuizWizard from "./CreateQuizWizard";
 
@@ -22,12 +22,6 @@ export default function QuizStudio() {
         <CreateQuizWizard/>
       </div>
 
-      {/* Right Sidebar */}
-      <SidebarRight
-        selectedQuiz={selectedQuiz}
-        setQuizzes={setQuizzes}
-        quizzes={quizzes}
-      />
     </div>
   );
 }
