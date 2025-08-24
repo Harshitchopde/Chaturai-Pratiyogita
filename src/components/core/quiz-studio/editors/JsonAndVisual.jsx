@@ -18,12 +18,12 @@ const defaultQuiz = {
   ]
 };
 
-const JsonAndVisual = () => {
+const JsonAndVisual = (quizData,setQuizData) => {
   const [jsonData, setJsonData] = useState(JSON.stringify(defaultQuiz, null, 2));
-  const [parsedData, setParsedData] = useState(defaultQuiz);
+  // const [quizData, setQuizData] = useState(defaultQuiz);
 
   const { control, register, watch, reset } = useForm({
-    defaultValues: parsedData
+    defaultValues: quizData
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -36,7 +36,7 @@ const JsonAndVisual = () => {
     setJsonData(val);
     try {
       const parsed = JSON.parse(val);
-      setParsedData(parsed);
+      setQuizData(parsed);
       reset(parsed);
     } catch (e) {
       // ignore invalid JSON

@@ -1,36 +1,29 @@
+import React from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 
-const defaultQuiz = {
-  questions: [
-    {
-      questionDesc: "What is JavaScript?",
-      explanation: "",
-      options: [
-        { text: "Programming Language" },
-        { text: "Fruit" },
-        { text: "Drink" },
-        { text: "Animal" }
-      ],
-      correctAnswer: 0
-    }
-  ]
-};
-
-export default function VisualEditor() {
-  const { control, register } = useForm({ defaultValues: defaultQuiz });
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "questions"
+export default function VisualEditor({ quizData, setQuizData }) {
+  // sync form with outer state
+  const { control, register, watch, reset } = useForm({
+    defaultValues: { questions: quizData.questions || [] },
   });
+
+  React.useEffect(() => {
+    reset({ questions: quizData.questions || [] });
+  }, [quizData.questions, reset]);
+
+  React.useEffect(() => {
+    const sub = watch((value) => {
+      setQuizData((prev) => ({ ...prev, questions: value.questions || [] }));
+    });
+    return () => sub.unsubscribe();
+  }, [watch, setQuizData]);
+
+  const { fields, append, remove } = useFieldArray({ control, name: "questions" });
 
   return (
     <div className="p-4 overflow-y-auto space-y-6 h-full bg-gray-950 text-white">
       {fields.map((field, index) => (
-        <div
-          key={field.id}
-          className="border p-4 rounded bg-gray-900 text-white"
-        >
+        <div key={field.id} className="border p-4 rounded bg-gray-900 text-white">
           <label>Question {index + 1}</label>
           <input
             {...register(`questions.${index}.questionDesc`)}
@@ -63,11 +56,7 @@ export default function VisualEditor() {
               </option>
             ))}
           </select>
-          <button
-            type="button"
-            onClick={() => remove(index)}
-            className="mt-2 text-red-300 underline"
-          >
+          <button type="button" onClick={() => remove(index)} className="mt-2 text-red-300 underline">
             Delete Question
           </button>
         </div>
@@ -80,13 +69,8 @@ export default function VisualEditor() {
           append({
             questionDesc: "",
             explanation: "",
-            options: [
-              { text: "" },
-              { text: "" },
-              { text: "" },
-              { text: "" }
-            ],
-            correctAnswer: 0
+            options: [{ text: "" }, { text: "" }, { text: "" }, { text: "" }],
+            correctAnswer: 0,
           })
         }
       >

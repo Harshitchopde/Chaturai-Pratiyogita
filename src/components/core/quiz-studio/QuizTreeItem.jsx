@@ -16,10 +16,7 @@ export default function QuizTreeItem({ quiz, onSelect }) {
         </span>
       </div>
       {hover && (
-        <button
-          onClick={() => onSelect(quiz)}
-          className="px-2 py-1 text-xs bg-indigo-600 rounded hover:bg-indigo-500"
-        >
+        <button onClick={() => onSelect(quiz)} className="px-2 py-1 text-xs bg-indigo-600 rounded hover:bg-indigo-500">
           Load
         </button>
       )}
