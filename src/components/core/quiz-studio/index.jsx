@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import SidebarLeft from "./SidebarLeft";
-
-import EditorPane from "./EditorPane";
 import CreateQuizWizard from "./CreateQuizWizard";
 
 export default function QuizStudio() {
@@ -9,6 +7,8 @@ export default function QuizStudio() {
     { id: 1, name: "Math Basics", type: "Simple", status: "Draft" },
     { id: 2, name: "Science Mega Pack", type: "Super", status: "Published" }
   ]);
+
+  // api call for all quiz of the user
   const [selectedQuiz, setSelectedQuiz] = useState(null);
 
   return (
