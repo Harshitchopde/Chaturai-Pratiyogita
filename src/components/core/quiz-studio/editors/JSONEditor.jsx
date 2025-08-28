@@ -1,24 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Editor, { useMonaco } from "@monaco-editor/react";
+import { myDarkTheme } from "../../../../monacoThemes";
 
-const myDarkTheme = {
-  base: "vs-dark",
-  inherit: true,
-  rules: [],
-  colors: {
-    "editor.background": "#0b1220",
-  },
-};
 
 export default function JSONEditor({ quizData, setQuizData }) {
-  const [jsonData, setJsonData] = useState(JSON.stringify({ questions: quizData.questions || [] }, null, 2));
+  const [jsonData, setJsonData] = useState(JSON.stringify({ questions: quizData?.questions || [] }, null, 2));
   const monaco = useMonaco();
 
-  useEffect(() => {
-    if (monaco) {
+  if (monaco) {
       monaco.editor.defineTheme("studio-dark", myDarkTheme);
-    }
-  }, [monaco]);
+  }
+
 
   // reflect outer → editor
   useEffect(() => {

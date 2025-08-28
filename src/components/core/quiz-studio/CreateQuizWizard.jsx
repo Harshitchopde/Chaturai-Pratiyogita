@@ -25,7 +25,7 @@ export default function CreateQuizWizard({ onFinish, onCancel, seedQuiz }) {
   );
 
   const [quizData, setQuizData] = useState(emptyQuiz);
-
+  console.log("MAIN QUIZ: ",quizData)
   useEffect(() => {
     if (seedQuiz) {
       // map your existing quiz shape into studio shape if needed
@@ -34,15 +34,14 @@ export default function CreateQuizWizard({ onFinish, onCancel, seedQuiz }) {
       //   ...seedQuiz,
       //   title: seedQuiz.title || seedQuiz.quizName || "",
       //   description: seedQuiz.description || seedQuiz.quizDesc || "",
-      //   difficulty: seedQuiz.difficulty?.toLowerCase?.() || "easy",
+      //   difficulty: seedQuiz.difficulty?.toLowerCase?.() || " easy",
       //   questions: seedQuiz.questions || [],
       // });
     }
   }, [seedQuiz,quizData, emptyQuiz]);
 
   return <div className="h-full bg-gray-950 text-white">
-    {step === 1
-    ?<QuizInfoRender quizData={quizData} setQuizData={setQuizData} onCancel={onCancel} setStep={setStep}/>
-    :<QuestionDetailRender quizData={quizData} setQuizData={setQuizData} setStep={setStep} onFinish={onFinish} />
-     }</div>;
+    {step === 1 && <QuizInfoRender quizData={quizData} setQuizData={setQuizData} onCancel={onCancel} setStep={setStep}/>}
+    {step === 2 && <QuestionDetailRender quizData={quizData} setQuizData={setQuizData} setStep={setStep} onFinish={onFinish} /> }
+     </div>;
 }

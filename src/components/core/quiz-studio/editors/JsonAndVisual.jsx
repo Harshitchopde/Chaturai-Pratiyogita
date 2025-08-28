@@ -2,28 +2,27 @@ import { useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import { useForm, useFieldArray } from "react-hook-form";
 
-const defaultQuiz = {
-  questions: [
-    {
-      questionDesc: "What is JavaScript?",
-      explanation: "",
-      options: [
-        { text: "Programming Language" },
-        { text: "Fruit" },
-        { text: "Drink" },
-        { text: "Animal" }
-      ],
-      correctAnswer: 0
-    }
-  ]
-};
+// const defaultQuiz = {
+//   questions: [
+//     {
+//       questionDesc: "What is JavaScript?",
+//       explanation: "",
+//       options: [
+//         { text: "Programming Language" },
+//         { text: "Fruit" },
+//         { text: "Drink" },
+//         { text: "Animal" }
+//       ],
+//       correctAnswer: 0
+//     }
+//   ]
+// };
 
-const JsonAndVisual = (quizData,setQuizData) => {
-  const [jsonData, setJsonData] = useState(JSON.stringify(defaultQuiz, null, 2));
-  // const [quizData, setQuizData] = useState(defaultQuiz);
+const JsonAndVisual = ({quizData,setQuizData}) => {
 
+  const [jsonData, setJsonData] = useState(JSON.stringify({ questions:quizData.questions || []}, null, 2));
   const { control, register, watch, reset } = useForm({
-    defaultValues: quizData
+    defaultValues: { questions:quizData?.questions || []}
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -34,22 +33,27 @@ const JsonAndVisual = (quizData,setQuizData) => {
   // Handle JSON changes
   const handleJsonChange = (val) => {
     setJsonData(val);
+    // console.log("JSONCHANGE: ",typeof val)
     try {
       const parsed = JSON.parse(val);
+      // console.log("PARSED: ",typeof parsed)
       setQuizData(parsed);
       reset(parsed);
     } catch (e) {
       // ignore invalid JSON
+      console.error("Error in handleJSon change fun: ",e)
     }
   };
 
   // Reflect form → JSON
   useEffect(() => {
+
     const subscription = watch((value) => {
       setJsonData(JSON.stringify(value, null, 2));
+      setQuizData(value);
     });
     return () => subscription.unsubscribe();
-  }, [watch]);
+  }, [watch,setQuizData]);
 
   return (
     <div className="grid grid-cols-2 gap-4 p-4 h-full">

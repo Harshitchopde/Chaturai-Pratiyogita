@@ -5,9 +5,10 @@ import JsonAndVisual from '../editors/JsonAndVisual';
 import AIUploadModal from './AIUploadModal';
 
 const QuestionDetailRender = ({quizData,setQuizData,setStep,onFinish}) => {
-    const [showAIUpload, setShowAIUpload] = useState(false);
+    const [showAIUpload, setShowAIUpload] = useState(null);
     const [mode, setMode] = useState("visual"); // "visual" | "json" | "split"
       const [lastImport, setLastImport] = useState(null);
+    console.log("SHI AI : ",showAIUpload,mode,lastImport)
       const appendQuestions = (incoming) => {
     if (!Array.isArray(incoming)) return;
     const cleaned = incoming
@@ -70,7 +71,7 @@ const QuestionDetailRender = ({quizData,setQuizData,setStep,onFinish}) => {
         <button
           onClick={() => setShowAIUpload(true)}
           className="px-3 py-1 rounded bg-green-600 hover:bg-green-500"
-        >
+        > 
           Generate with AI
         </button>
         <button
@@ -86,13 +87,9 @@ const QuestionDetailRender = ({quizData,setQuizData,setStep,onFinish}) => {
 
       {/* Editor area */}
       <div className="flex-1 overflow-hidden">
-        {mode === "visual" && (
-          <VisualEditor quizData={quizData} setQuizData={setQuizData} />
-        )}
+        {mode === "visual" && (<VisualEditor quizData={quizData} setQuizData={setQuizData} />)}
         {mode === "json" && <JSONEditor quizData={quizData} setQuizData={setQuizData} />}
-        {mode === "split" && (
-          <JsonAndVisual quizData={quizData}  setQuizData={setQuizData}  />
-        )}
+        {mode === "split" && (<JsonAndVisual quizData={quizData}  setQuizData={setQuizData}  />)}
       </div>
 
       {/* Import result strip */}
@@ -134,6 +131,7 @@ const QuestionDetailRender = ({quizData,setQuizData,setStep,onFinish}) => {
       {/* modal */}
       {showAIUpload && (
         <AIUploadModal
+          showAIUpload
           onClose={() => setShowAIUpload(false)}
           onImport={(incomingQuestions) => {
             appendQuestions(incomingQuestions);

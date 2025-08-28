@@ -1,11 +1,12 @@
 import React, { useRef, useState } from "react";
 
-export default function AIUploadModal({ onClose, onImport }) {
-  const [tab, setTab] = useState("ai"); // ai | upload
+export default function AIUploadModal({ showAIUpload,onClose, onImport }) {
+  // const [tab, setTab] = useState("ai"); // ai | upload
+  const [tab, setTab] = useState(showAIUpload); // ai | upload
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
   const fileRef = useRef(null);
-
+  console.log("VLA: ",showAIUpload)
   // normalize to our internal structure (same as CreateQuizWizard.appendQuestions expects)
   const fakeAIGenerator = async (p) => {
     // replace with real API call; return [{questionDesc, explanation, options:[{text,isCorrect?}], correctAnswer}]
