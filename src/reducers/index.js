@@ -11,5 +11,5 @@ export const rootReducer = combineReducers({
     quiz:quizReducers,
     quizzes:quizzesReducers,
     coins:coinsReducers,
-    quizStdio:quizStudioReducers,
+    quizStudio:quizStudioReducers,
 });

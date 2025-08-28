@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import QuizInfoRender from "./quiz-render/QuizInfoRender";
 import QuestionDetailRender from "./quiz-render/QuestionDetailRender";
+import { useSelector } from "react-redux";
 
 
 export default function CreateQuizWizard({ onFinish, onCancel, seedQuiz }) {
@@ -24,7 +25,8 @@ export default function CreateQuizWizard({ onFinish, onCancel, seedQuiz }) {
     []
   );
 
-  const [quizData, setQuizData] = useState(emptyQuiz);
+  // const [quizData, setQuizData] = useState(emptyQuiz);
+  const {quizData} = useSelector((state)=> state.quizStudio)
   console.log("MAIN QUIZ: ",quizData)
   useEffect(() => {
     if (seedQuiz) {
@@ -41,7 +43,7 @@ export default function CreateQuizWizard({ onFinish, onCancel, seedQuiz }) {
   }, [seedQuiz,quizData, emptyQuiz]);
 
   return <div className="h-full bg-gray-950 text-white">
-    {step === 1 && <QuizInfoRender quizData={quizData} setQuizData={setQuizData} onCancel={onCancel} setStep={setStep}/>}
-    {step === 2 && <QuestionDetailRender quizData={quizData} setQuizData={setQuizData} setStep={setStep} onFinish={onFinish} /> }
+    {step === 1 && <QuizInfoRender  onCancel={onCancel} setStep={setStep}/>}
+    {step === 2 && <QuestionDetailRender  setStep={setStep} onFinish={onFinish} /> }
      </div>;
 }

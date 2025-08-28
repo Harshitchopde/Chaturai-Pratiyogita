@@ -1,59 +1,69 @@
 import { useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import { useForm, useFieldArray } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { updateQuizData } from "../../../../slices/quizStudioSlicer";
 
-// const defaultQuiz = {
-//   questions: [
-//     {
-//       questionDesc: "What is JavaScript?",
-//       explanation: "",
-//       options: [
-//         { text: "Programming Language" },
-//         { text: "Fruit" },
-//         { text: "Drink" },
-//         { text: "Animal" }
-//       ],
-//       correctAnswer: 0
-//     }
-//   ]
-// };
+const JsonAndVisual = () => {
+  const dispatch = useDispatch();
+  const quizData = useSelector((state) => state.quizStudio.quizData);
 
-const JsonAndVisual = ({quizData,setQuizData}) => {
+  const [jsonData, setJsonData] = useState(
+    JSON.stringify({ questions: quizData?.questions || [] }, null, 2)
+  );
 
-  const [jsonData, setJsonData] = useState(JSON.stringify({ questions:quizData.questions || []}, null, 2));
+  // react-hook-form setup
   const { control, register, watch, reset } = useForm({
-    defaultValues: { questions:quizData?.questions || []}
+    defaultValues: { questions: quizData?.questions || [] },
   });
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "questions"
+    name: "questions",
   });
 
-  // Handle JSON changes
+  // Handle JSON editor changes
   const handleJsonChange = (val) => {
     setJsonData(val);
-    // console.log("JSONCHANGE: ",typeof val)
     try {
       const parsed = JSON.parse(val);
-      // console.log("PARSED: ",typeof parsed)
-      setQuizData(parsed);
-      reset(parsed);
-    } catch (e) {
+      if (Array.isArray(parsed.questions)) {
+        dispatch(updateQuizData({ field: "questions", value: parsed.questions }));
+        reset(parsed); // sync form with parsed data
+      }
+    } catch {
       // ignore invalid JSON
-      console.error("Error in handleJSon change fun: ",e)
     }
   };
 
-  // Reflect form → JSON
+  // Reflect form → JSON + Redux
   useEffect(() => {
-
     const subscription = watch((value) => {
-      setJsonData(JSON.stringify(value, null, 2));
-      setQuizData(value);
-    });
+    const newJson = JSON.stringify(value, null, 2);
+
+    // update JSON only if different
+    if (jsonData !== newJson) {
+      setJsonData(newJson);
+    }
+
+    // update Redux only if questions actually changed
+    if (JSON.stringify(quizData.questions) !== JSON.stringify(value.questions)) {
+      dispatch(updateQuizData({ field: "questions", value: value.questions }));
+    }
+  });
     return () => subscription.unsubscribe();
-  }, [watch,setQuizData]);
+  }, [watch, dispatch,quizData.questions, jsonData]);
+
+  // Reflect Redux → Form + JSON
+  useEffect(() => {
+     const newJson = JSON.stringify({ questions: quizData.questions || [] }, null, 2);
+
+  if (jsonData !== newJson) {
+    setJsonData(newJson);
+    reset({ questions: quizData.questions || [] });
+  }
+    
+  }, [quizData.questions, reset,jsonData]);
 
   return (
     <div className="grid grid-cols-2 gap-4 p-4 h-full">
@@ -124,8 +134,13 @@ const JsonAndVisual = ({quizData,setQuizData}) => {
             append({
               questionDesc: "",
               explanation: "",
-              options: [{ text: "" }, { text: "" }, { text: "" }, { text: "" }],
-              correctAnswer: 0
+              options: [
+                { text: "" },
+                { text: "" },
+                { text: "" },
+                { text: "" },
+              ],
+              correctAnswer: 0,
             })
           }
         >

@@ -1,22 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { updateQuizData } from "../../../../slices/quizStudioSlicer";
 
-export default function VisualEditor({ quizData, setQuizData }) {
+export default function VisualEditor() {
+  const dispatch = useDispatch();
+  const quizData = useSelector((state) => state.quizStudio.quizData);
   // sync form with outer state
   const { control, register, watch, reset } = useForm({
     defaultValues: { questions: quizData.questions || [] },
   });
 
-  React.useEffect(() => {
+  // reflected outer changes
+  useEffect(() => {
     reset({ questions: quizData.questions || [] });
   }, [quizData.questions, reset]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const sub = watch((value) => {
-      setQuizData((prev) => ({ ...prev, questions: value.questions || [] }));
+      if(JSON.stringify(quizData.questions)!== JSON.stringify(value.questions)){
+        dispatch(updateQuizData({field:"questions", value:value.questions || []}));
+      }
     });
     return () => sub.unsubscribe();
-  }, [watch, setQuizData]);
+  }, [watch, dispatch]);
 
   const { fields, append, remove } = useFieldArray({ control, name: "questions" });
 
