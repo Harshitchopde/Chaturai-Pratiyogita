@@ -8,11 +8,11 @@ import { updateQuestion } from "../../../../slices/quizStudioSlicer";
 
 const QuestionDetailRender = ({ setStep, onFinish }) => {
   const [showAIUpload, setShowAIUpload] = useState(null);
-  const [mode, setMode] = useState("visual"); // "visual" | "json" | "split"
+  const [mode, setMode] = useState("split"); // "visual" | "json" | "split"
   const [lastImport, setLastImport] = useState(null);
   const { quizData} = useSelector((state=> state.quizStudio))
   const dispatch = useDispatch()
-  console.log("SHI AI : ", showAIUpload, mode, lastImport,quizData?.questions);
+  // console.log("SHI AI : ", showAIUpload, mode, lastImport,quizData?.questions);
   const appendQuestions = (incoming) => {
       const cleaned = incoming
       .filter(Boolean)

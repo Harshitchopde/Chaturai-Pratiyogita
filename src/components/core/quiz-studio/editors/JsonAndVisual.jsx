@@ -3,6 +3,7 @@ import Editor from "@monaco-editor/react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { updateQuizData } from "../../../../slices/quizStudioSlicer";
+import { myDarkTheme } from "../../../../monacoThemes";
 
 const JsonAndVisual = () => {
   const dispatch = useDispatch();
@@ -11,12 +12,11 @@ const JsonAndVisual = () => {
   const [jsonData, setJsonData] = useState(
     JSON.stringify({ questions: quizData?.questions || [] }, null, 2)
   );
-
+  
   // react-hook-form setup
   const { control, register, watch, reset } = useForm({
     defaultValues: { questions: quizData?.questions || [] },
   });
-
   const { fields, append, remove } = useFieldArray({
     control,
     name: "questions",
@@ -31,8 +31,10 @@ const JsonAndVisual = () => {
         dispatch(updateQuizData({ field: "questions", value: parsed.questions }));
         reset(parsed); // sync form with parsed data
       }
-    } catch {
+    } catch(e) {
       // ignore invalid JSON
+      console.error("Error in json: ",e)
+
     }
   };
 
@@ -72,9 +74,13 @@ const JsonAndVisual = () => {
         <Editor
           height="100%"
           language="json"
-          theme="vs-dark"
+          theme="studio-dark"
           value={jsonData}
           onChange={handleJsonChange}
+          onMount={(editor,monaco)=>{
+            monaco.editor.defineTheme("studio-dark",myDarkTheme)
+            monaco.editor.setTheme("studio-dark")
+          }}
         />
       </div>
 

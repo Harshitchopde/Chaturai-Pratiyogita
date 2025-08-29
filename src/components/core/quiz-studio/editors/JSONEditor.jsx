@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Editor, { useMonaco } from "@monaco-editor/react";
+import Editor from "@monaco-editor/react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { myDarkTheme } from "../../../../monacoThemes";
@@ -12,16 +12,7 @@ export default function JSONEditor() {
   const [jsonData, setJsonData] = useState(
     JSON.stringify({ questions: quizData?.questions || [] }, null, 2)
   );
-
-  const monaco = useMonaco();
-
-  // define custom theme once monaco is available
-  useEffect(() => {
-    if (monaco) {
-      monaco.editor.defineTheme("studio-dark", myDarkTheme);
-    }
-  }, [monaco]);
-
+ 
   // reflect outer (Redux) → editor
   useEffect(() => {
     const newJson = JSON.stringify({ questions:quizData.questions || []},null,2);
@@ -43,8 +34,9 @@ export default function JSONEditor() {
           })
         );
       }
-    } catch {
+    } catch(err) {
       // ignore invalid JSON until it's valid
+      console.error("Error in  handle change: ",err)
     }
   };
 
@@ -54,8 +46,13 @@ export default function JSONEditor() {
         height="100%"
         language="json"
         theme="studio-dark"
+        // theme="vs-dark"
         value={jsonData}
         onChange={handleChange}
+        onMount={(editor,monaco)=>{
+            monaco.editor.defineTheme("studio-dark",myDarkTheme)
+            monaco.editor.setTheme("studio-dark")
+        }}
       />
     </div>
   );
