@@ -2,24 +2,25 @@ import React, { useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { updateQuizData } from "../../../../slices/quizStudioSlicer";
+import { normalDeepCopy } from "../../../../utils/customDeepCopy";
 
 export default function VisualEditor() {
   const dispatch = useDispatch();
   const quizData = useSelector((state) => state.quizStudio.quizData);
   // sync form with outer state
   const { control, register, watch, reset } = useForm({
-    defaultValues: { questions: quizData.questions || [] },
+    defaultValues: { questions: normalDeepCopy(quizData.questions || []) },
   });
 
   // reflected outer changes
-  useEffect(() => {
-    reset({ questions: quizData.questions || [] });
-  }, [quizData.questions, reset]);
+  // useEffect(() => {
+  //   reset({ questions: normalDeepCopy(quizData.questions || []) });
+  // }, [quizData.questions, reset]);
 
   useEffect(() => {
     const sub = watch((value) => {
       if(JSON.stringify(quizData.questions)!== JSON.stringify(value.questions)){
-        dispatch(updateQuizData({field:"questions", value:value.questions || []}));
+        dispatch(updateQuizData({field:"questions", value:normalDeepCopy(value.questions || [])}));
       }
     });
     return () => sub.unsubscribe();

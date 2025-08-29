@@ -4,82 +4,96 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { updateQuizData } from "../../../../slices/quizStudioSlicer";
 import { myDarkTheme } from "../../../../monacoThemes";
+import { normalDeepCopy } from "../../../../utils/customDeepCopy";
+
+// simple deep clone
+
 
 const JsonAndVisual = () => {
   const dispatch = useDispatch();
   const quizData = useSelector((state) => state.quizStudio.quizData);
 
-  const [jsonData, setJsonData] = useState(
-    JSON.stringify({ questions: quizData?.questions || [] }, null, 2)
-  );
-  
   // react-hook-form setup
   const { control, register, watch, reset } = useForm({
-    defaultValues: { questions: quizData?.questions || [] },
+    defaultValues: {
+      questions: normalDeepCopy(quizData?.questions || []),
+    },
   });
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "questions",
   });
 
-  // Handle JSON editor changes
+  // keep JSON state just for editor
+  const [jsonData, setJsonData] = useState(
+    JSON.stringify({ questions: normalDeepCopy(quizData?.questions || []) }, null, 2)
+  );
+
+  // -------------------------
+  // 1) Handle JSON → Form
+  // -------------------------
   const handleJsonChange = (val) => {
     setJsonData(val);
     try {
       const parsed = JSON.parse(val);
       if (Array.isArray(parsed.questions)) {
-        dispatch(updateQuizData({ field: "questions", value: parsed.questions }));
-        reset(parsed); // sync form with parsed data
-      }
-    } catch(e) {
-      // ignore invalid JSON
-      console.error("Error in json: ",e)
+        // reset form with cloned data
+        reset({ questions: normalDeepCopy(parsed.questions) });
 
+        // push to Redux
+        dispatch(updateQuizData({ field: "questions", value: parsed.questions }));
+      }
+    } catch (e) {
+      console.error("Invalid JSON:", e);
     }
   };
 
-  // Reflect form → JSON + Redux
+  // -------------------------
+  // 2) Form → JSON + Redux
+  // -------------------------
   useEffect(() => {
     const subscription = watch((value) => {
-    const newJson = JSON.stringify(value, null, 2);
+      const newJson = JSON.stringify(value, null, 2);
 
-    // update JSON only if different
+      if (jsonData !== newJson) {
+        setJsonData(newJson);
+      }
+
+      // update Redux when form changes
+      if (JSON.stringify(quizData.questions) !== JSON.stringify(value.questions)) {
+        dispatch(updateQuizData({ field: "questions", value: normalDeepCopy(value.questions) }));
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [watch, dispatch, quizData.questions, jsonData]);
+
+  // -------------------------
+  // 3) Redux → Form (when external change happens)
+  // -------------------------
+  useEffect(() => {
+    const newJson = JSON.stringify({ questions: normalDeepCopy(quizData.questions || []) }, null, 2);
+
     if (jsonData !== newJson) {
       setJsonData(newJson);
+      reset({ questions: normalDeepCopy(quizData.questions || []) });
     }
-
-    // update Redux only if questions actually changed
-    if (JSON.stringify(quizData.questions) !== JSON.stringify(value.questions)) {
-      dispatch(updateQuizData({ field: "questions", value: value.questions }));
-    }
-  });
-    return () => subscription.unsubscribe();
-  }, [watch, dispatch,quizData.questions, jsonData]);
-
-  // Reflect Redux → Form + JSON
-  useEffect(() => {
-     const newJson = JSON.stringify({ questions: quizData.questions || [] }, null, 2);
-
-  if (jsonData !== newJson) {
-    setJsonData(newJson);
-    reset({ questions: quizData.questions || [] });
-  }
-    
-  }, [quizData.questions, reset,jsonData]);
+  }, [quizData.questions, reset, jsonData]);
 
   return (
     <div className="grid grid-cols-2 gap-4 p-4 h-full">
       {/* JSON Editor */}
-      <div className="h-full border rounded">
+      <div className="h-full rounded">
         <Editor
           height="100%"
           language="json"
           theme="studio-dark"
           value={jsonData}
           onChange={handleJsonChange}
-          onMount={(editor,monaco)=>{
-            monaco.editor.defineTheme("studio-dark",myDarkTheme)
-            monaco.editor.setTheme("studio-dark")
+          onMount={(editor, monaco) => {
+            monaco.editor.defineTheme("studio-dark", myDarkTheme);
+            editor.updateOptions({ theme: "studio-dark" });
           }}
         />
       </div>
@@ -89,7 +103,7 @@ const JsonAndVisual = () => {
         {fields.map((field, index) => (
           <div
             key={field.id}
-            className="border p-4 rounded bg-gray-900 text-white"
+            className=" p-4 rounded bg-gray-900 text-white"
           >
             <label>Question {index + 1}</label>
             <input
@@ -113,7 +127,7 @@ const JsonAndVisual = () => {
               ))}
             </div>
             <select
-              {...register(`questions.${index}.correctAnswer`)}
+              {...register(`questions.${index}.correctAnswer`, { valueAsNumber: true })}
               className="w-full p-2 mt-2 text-black"
             >
               <option value="">Select Correct Option</option>
