@@ -62,11 +62,6 @@ export default function QuizStudio() {
           )}
           {selectedCenterTab === "wizard" && (
             <CreateQuizWizard
-              onFinish={(data) => {
-                console.log("Save Quiz (hook to your create/update APIs):", data);
-              }}
-              onCancel={() => setSelectedCenterTab("dashboard")}
-              seedQuiz={selectedQuiz}
             />
           )}
         </div>

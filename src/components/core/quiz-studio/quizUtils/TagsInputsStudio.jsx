@@ -1,37 +1,15 @@
 import { Add } from '@mui/icons-material';
 import React, { useEffect, useState } from 'react'
 import { MdClose } from 'react-icons/md';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setTagChip } from '../../../../slices/quizStudioSlicer';
 
-const TagInput = ({
-    label,
-    name,
-    placeholder,
-    register,
-    errors,
-    setValue,
-    getValues
-}) => {
-   const { quizData, editStudioQuiz } = useSelector((state) => state.quizStudio);
+const TagInputsStudio = () => {
+    const quizData = useSelector(state=>state.quizStudio);
+    // console.log("Tag : ",quizData)
     const [chips,setChips] = useState([]);
     const [chip,setChip] = useState("");
-    useEffect(()=>{
-        if(editStudioQuiz){
-            // console.log("Quiz ",quiz);
-            setChips(quizData?.tags)
-        }
-        register(name,{
-            required:true,
-            validate:(value)=>name.length>0
-         // eslint-disable-next-line react-hooks/exhaustive-deps
-        })
-    },[])
-
-    // add chip to form data
-    useEffect(()=>{
-        setValue(name,chips)
-    },[chips])
- 
+    const dispatch = useDispatch();
     const handleKeyDown = (event)=>{
         // console.log("KEy : ",event.key)
         if(event.key ==="Enter" || event.key==="," || event.type==="click"){
@@ -45,7 +23,7 @@ const TagInput = ({
                 // add to chips array and clear
                 const newChips = [...chips,chipValue];
                 setChips(newChips)
-                // event.target.value.clear()
+                dispatch(setTagChip(newChips))
                 setChip("");
             }
         }
@@ -53,10 +31,12 @@ const TagInput = ({
     const handleRemoveChip = (chipIndex)=>{
         const newChip = chips.filter((_,i)=>i!==chipIndex);
         setChips(newChip);
+        dispatch(setTagChip(newChip))
     }
+
   return (
     <div className=' flex flex-col space-y-2'>
-        <label htmlFor={name} className='  text-white text-sm'>{label}<sup className=' text-pink-800'>*</sup></label>
+        <label htmlFor={"tags"}className=' text-sm'>{"Tags Input"}<sup className=' text-pink-800'>*</sup></label>
         {/* render chips data */}
         <div className=" flex w-full flex-wrap gap-y-2">
             {
@@ -75,23 +55,18 @@ const TagInput = ({
                 ))
             }
            <div className=" relative w-full">
-           <input id={name}
+           <input id='tags'
              type='text'
              value={chip}
              onChange={(e)=>setChip(e.target.value)}
-             placeholder={placeholder}
              onKeyDown={handleKeyDown}
-             className=' form-style w-full text-gray-700'/>
+             className=' form-style text-black w-full'/>
              <button onClick={handleKeyDown} className=' block sm:hidden absolute top-0 right-1'><Add/></button>
            </div>
         </div>
-        {
-            errors[name] && (
-                <span className=' text-sm text-red-500'>Required *</span>
-            )
-        }
+      
     </div>
   )
 }
 
-export default TagInput
+export default TagInputsStudio

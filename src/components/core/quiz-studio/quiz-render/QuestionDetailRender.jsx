@@ -4,14 +4,19 @@ import JSONEditor from "../editors/JSONEditor";
 import JsonAndVisual from "../editors/JsonAndVisual";
 import AIUploadModal from "./AIUploadModal";
 import { useDispatch, useSelector } from "react-redux";
-import { updateQuestion } from "../../../../slices/quizStudioSlicer";
+import { setEditStudioQuiz, updateQuestion } from "../../../../slices/quizStudioSlicer";
+import { isValidateQuestion } from "../../../../utils/validateFunction";
 
-const QuestionDetailRender = ({ setStep, onFinish }) => {
+const QuestionDetailRender = ({ setStep }) => {
   const [showAIUpload, setShowAIUpload] = useState(null);
   const [mode, setMode] = useState("split"); // "visual" | "json" | "split"
   const [lastImport, setLastImport] = useState(null);
   const { quizData} = useSelector((state=> state.quizStudio))
   const dispatch = useDispatch()
+  const handleBackStep = ()=>{
+    dispatch(setEditStudioQuiz(true));
+    setStep(1);
+  }
   // console.log("SHI AI : ", showAIUpload, mode, lastImport,quizData?.questions);
   const appendQuestions = (incoming) => {
       const cleaned = incoming
@@ -49,6 +54,15 @@ const QuestionDetailRender = ({ setStep, onFinish }) => {
     dispatch(updateQuestion(keep));
     setLastImport(null);
   };
+   const handleSubmitQuizWithQuestion = ()=>{
+      console.log("SUBMITED QUIZ: ",quizData)
+      const validate = isValidateQuestion(quizData)
+      if(validate===true){
+          console.log("Validated successfull")
+      }else{
+        console.warn("Problem: ",validate)
+      }
+   }
 
   return (
     <div className="h-full flex flex-col">
@@ -142,13 +156,13 @@ const QuestionDetailRender = ({ setStep, onFinish }) => {
       {/* Nav Buttons */}
       <div className="flex justify-between p-4 border-t border-gray-800">
         <button
-          onClick={() => setStep(1)}
+          onClick={handleBackStep}
           className="px-4 py-2 bg-gray-700 rounded text-white"
         >
           ← Back
         </button>
         <button
-          onClick={() => onFinish(quizData)}
+          onClick={handleSubmitQuizWithQuestion}
           className="px-4 py-2 bg-indigo-600 rounded text-white"
         >
           Save Quiz

@@ -47,6 +47,9 @@ export const createQuiz = async(req,res)=>{
         if(!status || status==undefined){
             status = "Draft"
         }
+        if(!numberOfQuestions){
+            numberOfQuestions = 0;
+        }
         // create quiz
         const quiz = await Quiz.create({
             quizName,
