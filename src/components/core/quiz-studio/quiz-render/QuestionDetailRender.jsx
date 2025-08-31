@@ -1,18 +1,70 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import VisualEditor from "../editors/VisualEditor";
 import JSONEditor from "../editors/JSONEditor";
 import JsonAndVisual from "../editors/JsonAndVisual";
 import AIUploadModal from "./AIUploadModal";
 import { useDispatch, useSelector } from "react-redux";
-import { setEditStudioQuiz, updateQuestion } from "../../../../slices/quizStudioSlicer";
+import { setEditStudioQuiz, updateQuestion, updateQuizData } from "../../../../slices/quizStudioSlicer";
 import { isValidateQuestion } from "../../../../utils/validateFunction";
-
+import { useFieldArray, useForm } from "react-hook-form";
+import { normalDeepCopy } from "../../../../utils/customDeepCopy"
 const QuestionDetailRender = ({ setStep }) => {
   const [showAIUpload, setShowAIUpload] = useState(null);
   const [mode, setMode] = useState("split"); // "visual" | "json" | "split"
   const [lastImport, setLastImport] = useState(null);
   const { quizData} = useSelector((state=> state.quizStudio))
   const dispatch = useDispatch()
+  const { control,register,watch,reset} = useForm({
+    defaultValues: normalDeepCopy(quizData?.questions || []),
+  })
+
+  const { append, remove,fields } = useFieldArray({
+    control,
+    name: "questions",
+  })
+
+  //  jsonData for Editor
+  const [jsonData,setJsonData] = useState(
+    JSON.stringify({questions: normalDeepCopy(quizData?.questions || [])},null,2)
+  )
+    // -------------------------
+  // 1) Handle JSON → Form
+  // -------------------------
+  const handleJsonChange = (val)=>{
+    setJsonData(val);
+    console.log("JSON CHANGE")
+    try {
+      const parsed = JSON.parse(val);
+      if(Array.isArray(parsed.questions)){
+        // reset from with cloned data
+        reset({questions:normalDeepCopy(parsed?.questions || [])})
+      }
+    } catch (error) {
+      console.error("Invalid JSON Data: ",error);
+    }
+  }
+
+  // -------------------------
+  // 2) Handle Form → JSON
+  // -------------------------
+  useEffect(()=>{
+    const sub = watch((value)=>{
+      const newJson = JSON.stringify(value,null,2);
+      if(newJson !== jsonData){
+        // changes made update jsonData
+        setJsonData(newJson);
+      }
+      // update redux when from changes
+      if(JSON.stringify(quizData.questions) !== JSON.stringify(value.questions)){
+         dispatch(updateQuizData({fields:"questions",value: normalDeepCopy(value.questions)}));
+      }
+
+    });
+
+    // unsubscribe it
+    return ()=> sub.unsubscribe();
+
+  },[watch,dispatch,quizData.questions,jsonData])
   const handleBackStep = ()=>{
     dispatch(setEditStudioQuiz(true));
     setStep(1);
@@ -122,15 +174,26 @@ const QuestionDetailRender = ({ setStep }) => {
       {/* Editor area */}
       <div className="flex-1 overflow-hidden">
         {mode === "visual" && (
-          <VisualEditor/>
+          <VisualEditor
+           fields={fields} register={register} remove={remove} append={append} 
+           />
           // <div >visual</div>
         )}
         {mode === "json" && (
-          <JSONEditor/>
+          <JSONEditor
+           jsonData={jsonData} handleJsonChange={handleJsonChange}
+          />
           // <div >json</div>
         )}
         {mode === "split" && (
-          <JsonAndVisual/>
+          <JsonAndVisual 
+          jsonData={jsonData}
+          handleJsonChange={handleJsonChange}
+          fields={fields}
+          register={register}
+          remove={remove}
+          append={append}
+          />
           // <div >split</div>
         )}
       </div>

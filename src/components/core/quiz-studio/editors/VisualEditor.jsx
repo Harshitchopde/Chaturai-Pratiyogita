@@ -4,29 +4,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateQuizData } from "../../../../slices/quizStudioSlicer";
 import { normalDeepCopy } from "../../../../utils/customDeepCopy";
 
-export default function VisualEditor() {
-  const dispatch = useDispatch();
-  const quizData = useSelector((state) => state.quizStudio.quizData);
+export default function VisualEditor({fields,register,remove,append}) {
+  // const dispatch = useDispatch();
+  // const quizData = useSelector((state) => state.quizStudio.quizData);
   // sync form with outer state
-  const { control, register, watch, reset } = useForm({
-    defaultValues: { questions: normalDeepCopy(quizData.questions || []) },
-  });
+  // const { control, register, watch, reset } = useForm({
+  //   defaultValues: { questions: normalDeepCopy(quizData.questions || []) },
+  // });
 
-  // reflected outer changes
+  // reflected outer changes || no need any more
   // useEffect(() => {
   //   reset({ questions: normalDeepCopy(quizData.questions || []) });
   // }, [quizData.questions, reset]);
 
-  useEffect(() => {
-    const sub = watch((value) => {
-      if(JSON.stringify(quizData.questions)!== JSON.stringify(value.questions)){
-        dispatch(updateQuizData({field:"questions", value:normalDeepCopy(value.questions || [])}));
-      }
-    });
-    return () => sub.unsubscribe();
-  }, [watch, dispatch]);
+  // useEffect(() => {
+  //   const sub = watch((value) => {
+  //     if(JSON.stringify(quizData.questions)!== JSON.stringify(value.questions)){
+  //       dispatch(updateQuizData({field:"questions", value:normalDeepCopy(value.questions || [])}));
+  //     }
+  //   });
+  //   return () => sub.unsubscribe();
+  // }, [watch, dispatch]);
 
-  const { fields, append, remove } = useFieldArray({ control, name: "questions" });
+  // const { fields, append, remove } = useFieldArray({ control, name: "questions" });
 
   return (
     <div className="p-4 overflow-y-auto space-y-6 h-full bg-gray-950 text-white">

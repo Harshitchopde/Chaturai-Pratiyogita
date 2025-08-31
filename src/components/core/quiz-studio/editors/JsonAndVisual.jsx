@@ -9,77 +9,77 @@ import { normalDeepCopy } from "../../../../utils/customDeepCopy";
 // simple deep clone
 
 
-const JsonAndVisual = () => {
-  const dispatch = useDispatch();
-  const quizData = useSelector((state) => state.quizStudio.quizData);
+const JsonAndVisual = ({fields, register,remove,append,jsonData,handleJsonChange}) => {
+  // const dispatch = useDispatch();
+  // const quizData = useSelector((state) => state.quizStudio.quizData);
 
   // react-hook-form setup
-  const { control, register, watch, reset } = useForm({
-    defaultValues: {
-      questions: normalDeepCopy(quizData?.questions || []),
-    },
-  });
+  // const { control, register, watch, reset } = useForm({
+  //   defaultValues: {
+  //     questions: normalDeepCopy(quizData?.questions || []),
+  //   },
+  // });
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "questions",
-  });
+  // const { fields, append, remove } = useFieldArray({
+  //   control,
+  //   name: "questions",
+  // });
 
   // keep JSON state just for editor
-  const [jsonData, setJsonData] = useState(
-    JSON.stringify({ questions: normalDeepCopy(quizData?.questions || []) }, null, 2)
-  );
+  // const [jsonData, setJsonData] = useState(
+  //   JSON.stringify({ questions: normalDeepCopy(quizData?.questions || []) }, null, 2)
+  // );
 
   // -------------------------
   // 1) Handle JSON → Form
   // -------------------------
-  const handleJsonChange = (val) => {
-    setJsonData(val);
-    try {
-      const parsed = JSON.parse(val);
-      if (Array.isArray(parsed.questions)) {
-        // reset form with cloned data
-        reset({ questions: normalDeepCopy(parsed.questions) });
+  // const handleJsonChange = (val) => {
+  //   setJsonData(val);
+  //   try {
+  //     const parsed = JSON.parse(val);
+  //     if (Array.isArray(parsed.questions)) {
+  //       // reset form with cloned data
+  //       reset({ questions: normalDeepCopy(parsed.questions) });
 
-        // push to Redux
-        dispatch(updateQuizData({ field: "questions", value: parsed.questions }));
-      }
-    } catch (e) {
-      console.error("Invalid JSON:", e);
-    }
-  };
+  //       // push to Redux
+  //       dispatch(updateQuizData({ field: "questions", value: parsed.questions }));
+  //     }
+  //   } catch (e) {
+  //     console.error("Invalid JSON:", e);
+  //   }
+  // };
 
   // -------------------------
   // 2) Form → JSON + Redux
   // -------------------------
-  useEffect(() => {
-    const subscription = watch((value) => {
-      const newJson = JSON.stringify(value, null, 2);
+  // useEffect(() => {
+  //   const subscription = watch((value) => {
+  //     const newJson = JSON.stringify(value, null, 2);
 
-      if (jsonData !== newJson) {
-        setJsonData(newJson);
-      }
+  //     if (jsonData !== newJson) {
+  //       setJsonData(newJson);
+  //     }
 
-      // update Redux when form changes
-      if (JSON.stringify(quizData.questions) !== JSON.stringify(value.questions)) {
-        dispatch(updateQuizData({ field: "questions", value: normalDeepCopy(value.questions) }));
-      }
-    });
+  //     // update Redux when form changes
+  //     if (JSON.stringify(quizData.questions) !== JSON.stringify(value.questions)) {
+  //       dispatch(updateQuizData({ field: "questions", value: normalDeepCopy(value.questions) }));
+  //     }
+  //   });
 
-    return () => subscription.unsubscribe();
-  }, [watch, dispatch, quizData.questions, jsonData]);
+  //   return () => subscription.unsubscribe();
+  // }, [watch, dispatch, quizData.questions, jsonData]);
 
   // -------------------------
   // 3) Redux → Form (when external change happens)
   // -------------------------
-  useEffect(() => {
-    const newJson = JSON.stringify({ questions: normalDeepCopy(quizData.questions || []) }, null, 2);
+  // useEffect(() => {
+  //   const newJson = JSON.stringify({ questions: normalDeepCopy(quizData.questions || []) }, null, 2);
 
-    if (jsonData !== newJson) {
-      setJsonData(newJson);
-      reset({ questions: normalDeepCopy(quizData.questions || []) });
-    }
-  }, [quizData.questions, reset, jsonData]);
+  //   if (jsonData !== newJson) {
+  //     setJsonData(newJson);
+  //     reset({ questions: normalDeepCopy(quizData.questions || []) });
+  //   }
+  // }, [quizData.questions, reset, jsonData]);
 
   return (
     <div className="grid grid-cols-2 gap-4 p-4 h-full">
