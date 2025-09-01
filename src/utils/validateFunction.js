@@ -12,19 +12,22 @@ export const isValidateJSONQuiz= (quiz)=>{
   return true;
 }
 
-export const isValidateQuestion = (quiz)=>{
+export const isValidateQuestion = (questions)=>{
 
-    if (!Array.isArray(quiz.questions) || quiz.questions.length === 0) return "questions not their";
-
-    for (const q of quiz.questions) {
+    if (!Array.isArray(questions) || questions.length === 0) return "questions not their"+questions;
+    console.log("r", questions)
+    for (const q of questions) {
+        console.log("sing q ",q.questionDesc," ",q.options," ",q.explanation)
         if (!q.questionDesc || typeof q.questionDesc !== "string") return "questionDesc not their";
         if (!Array.isArray(q.options) || q.options.length !== 4) return "options not their 4 or ";
         if (typeof q.correctAnswer !== "number" || q.correctAnswer < 0 || q.correctAnswer >= q.options.length) return `correctAnswer not their ${q.correctAnswer}`;
         if (!q.explanation || typeof q.explanation !== "string") return "explanation not their";
 
         for (const opt of q.options) {
+            console.log("PROB: ",!opt.text," - ",typeof opt.text)
         if (!opt.text || typeof opt.text !== "string") return "options not their";
         }
     }
+    console.log("FINX")
     return true;
 }

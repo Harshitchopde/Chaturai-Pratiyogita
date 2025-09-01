@@ -8,6 +8,8 @@ import { setEditStudioQuiz, updateQuestion, updateQuizData } from "../../../../s
 import { isValidateQuestion } from "../../../../utils/validateFunction";
 import { useFieldArray, useForm } from "react-hook-form";
 import { normalDeepCopy } from "../../../../utils/customDeepCopy"
+import toast from "react-hot-toast";
+import { diffQuestions } from "../../../../utils/sortQuestionsInertUpdateDelete";
 const QuestionDetailRender = ({ setStep }) => {
   const [showAIUpload, setShowAIUpload] = useState(null);
   const [mode, setMode] = useState("split"); // "visual" | "json" | "split"
@@ -55,16 +57,16 @@ const QuestionDetailRender = ({ setStep }) => {
         setJsonData(newJson);
       }
       // update redux when from changes
-      if(JSON.stringify(quizData.questions) !== JSON.stringify(value.questions)){
-         dispatch(updateQuizData({fields:"questions",value: normalDeepCopy(value.questions)}));
-      }
+      // if(JSON.stringify(quizData.questions) !== JSON.stringify(value.questions)){
+      //    dispatch(updateQuizData({fields:"questions",value: normalDeepCopy(value.questions)}));
+      // }
 
     });
 
     // unsubscribe it
     return ()=> sub.unsubscribe();
 
-  },[watch,dispatch,quizData.questions,jsonData])
+  },[watch,quizData.questions,jsonData])
   const handleBackStep = ()=>{
     dispatch(setEditStudioQuiz(true));
     setStep(1);
@@ -90,7 +92,7 @@ const QuestionDetailRender = ({ setStep }) => {
       .filter((q) => q.questionDesc?.trim().length > 0);
 
     // add to questions
-    dispatch(appendQuestions(cleaned));
+    // dispatch(appendQuestions(cleaned));
     setLastImport({count:cleaned.length,sample:cleaned.slice(0,3)})
   };
 
@@ -103,17 +105,23 @@ const QuestionDetailRender = ({ setStep }) => {
       quizData.questions.length - lastImport.count
     );
 
-    dispatch(updateQuestion(keep));
+    // dispatch(updateQuestion(keep));
     setLastImport(null);
   };
    const handleSubmitQuizWithQuestion = ()=>{
       console.log("SUBMITED QUIZ: ",quizData)
-      const validate = isValidateQuestion(quizData)
-      if(validate===true){
-          console.log("Validated successfull")
-      }else{
+      const validate = isValidateQuestion(fields)
+      if(validate!==true){
         console.warn("Problem: ",validate)
+        toast.error("Problem: ",validate)
+        return;
       }
+      // console.log("SAved ",quizData?.questions)
+      // console.log("Curr: ",fields)
+      const {inserts,deletes,updates} = diffQuestions(quizData?.questions,fields)
+      // console.log("Insert: ",inserts);
+      // console.log("Delete: ",deletes);
+      // console.log("Update: ",updates)
    }
 
   return (
