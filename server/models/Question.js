@@ -9,7 +9,8 @@ const questionSchema = new Schema({
         }
     ],
     quizId: { type: Schema.Types.ObjectId, ref: "Quiz" },
-    correctAnswer: { type: Schema.Types.ObjectId }, // Could be removed if using isCorrect flag
+    correctAnswer:{ type:String},
+    correctAnswerId: { type: Schema.Types.ObjectId }, // Could be removed if using isCorrect flag
     points: { type: Number, default: 1 },
     questionType: { type: String, enum: ["MCQ", "truefalse", "multiMCQ"], default: "MCQ" },
     explanation: { type: String }

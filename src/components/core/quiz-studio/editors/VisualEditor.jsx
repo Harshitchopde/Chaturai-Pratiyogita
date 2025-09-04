@@ -78,7 +78,7 @@ export default function VisualEditor({fields,register,remove,append}) {
             questionDesc: "",
             explanation: "",
             options: [{ text: "" }, { text: "" }, { text: "" }, { text: "" }],
-            correctAnswer: 0,
+            correctAnswer: null,
           })
         }
       >

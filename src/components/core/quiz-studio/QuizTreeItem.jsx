@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 
-export default function QuizTreeItem({ quiz, onSelect }) {
+export default function QuizTreeItem({ quiz, onSelect,selectedQuiz }) {
   const [hover, setHover] = useState(false);
 
   return (
     <div
-      className="px-3 py-2 flex justify-between items-center hover:bg-gray-800 cursor-pointer"
+      className={`px-3 py-2 flex justify-between items-center hover:bg-gray-800 cursor-pointer 
+        ${selectedQuiz?._id === quiz?._id ? "bg-indigo-600 text-white" : "hover:bg-gray-800 text-gray-200"}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
       <div onClick={() => onSelect(quiz)} className="flex flex-col">
-        <span className="text-gray-200">{quiz.name}</span>
+        <span className="text-gray-200">{quiz.quizName}</span>
         <span className="text-xs text-gray-500">
-          {quiz.type} • {quiz.status}
+          {quiz.quizType} • {quiz.status}
         </span>
       </div>
       {hover && (

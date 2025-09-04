@@ -1,9 +1,10 @@
 import React from "react";
 import QuizTreeItem from "./QuizTreeItem";
 
-export default function SidebarLeft({ quizzes, onSelect, onCreate }) {
+export default function SidebarLeft({ quizzes,selectedQuiz, onSelect, onCreate }) {
+  console.log("INSTRUCTOR QUIZS: ",quizzes)
   return (
-    <div className="w-64 bg-gray-950 border-r border-gray-800 flex flex-col">
+    <div className="w-64 bg-gray-950 border-r  border-gray-800 flex flex-col">
       <div className="px-4 py-3 border-b border-gray-800 text-lg font-semibold text-gray-200">
         My Quizzes
       </div>
@@ -14,11 +15,11 @@ export default function SidebarLeft({ quizzes, onSelect, onCreate }) {
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto">
-        {quizzes.length === 0 ? (
+      <div className="flex-1 overflow-y-scroll custom-scroll ">
+        {quizzes?.length === 0 ? (
           <p className="text-gray-500 px-4">No quizzes yet</p>
         ) : (
-          quizzes.map((quiz) => <QuizTreeItem key={quiz.id} quiz={quiz} onSelect={onSelect} />)
+          quizzes?.map((quiz) => <QuizTreeItem key={quiz?.id} selectedQuiz={selectedQuiz} quiz={quiz} onSelect={onSelect} />)
         )}
       </div>
     </div>

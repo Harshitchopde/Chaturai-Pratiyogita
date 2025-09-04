@@ -7,6 +7,7 @@ const initialState={
         questions:[],
         tags:[],
     },
+    quizzesData:[],
     loading:false,
     editStudioQuiz:false,
 }
@@ -17,6 +18,9 @@ const quizStudioSlice = createSlice({
     reducers:{
         setQuizData(state,action){
             state.quizData = action.payload
+        },
+        setQuizzesData(state,action){
+            state.quizzesData = action.payload
         },
         updateQuizData(state,action){
             const {field,value} = action.payload;
@@ -44,5 +48,5 @@ const quizStudioSlice = createSlice({
     }
 })
 
-export const {setEditStudioQuiz, setQuizData,updateQuestion,setTagChip,updateQuizData,appendQuestions,resetQuizData } = quizStudioSlice.actions;
+export const {setEditStudioQuiz,setQuizzesData, setQuizData,updateQuestion,setTagChip,updateQuizData,appendQuestions,resetQuizData } = quizStudioSlice.actions;
 export default quizStudioSlice.reducer

@@ -31,7 +31,7 @@ export const questionEndPoints = {
 }
 
 export const quizStudioEndPoints = {
-    CREATE_QUIZ_WITH_QUESTIONS:BASE_URL+"/quiz-studio/createQuizWithQuestions",
+    CREATE_QUESTIONS_API:BASE_URL+"/quiz-studio/questionsCreate",
 }
 export const resultEndPoints = {
     SUBMIT_RESPONCE_API:BASE_URL+"/res/submitQuiz",

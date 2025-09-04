@@ -1,23 +1,54 @@
+// Use a dedicated deep comparison function for only relevant fields
+function areQuestionsEqual(q1, q2) {
+  if (
+    q1.questionDesc !== q2.questionDesc ||
+    q1.questionType !== q2.questionType ||
+    q1.points !== q2.points ||
+    String(q1.correctAnswer) !== String(q2.correctAnswer) ||  
+    String(q1.correctAnswerId) !== String(q2.correctAnswerId) ||
+    q1.explanation !== q2.explanation
+  ) {
+    return false;
+  }
+  if (q1.options.length !== q2.options.length) return false;
+  for (let i = 0; i < q1.options.length; ++i) {
+    const o1 = q1.options[i], o2 = q2.options[i];
+    if (
+      o1.text !== o2.text ||
+      Boolean(o1.isCorrect) !== Boolean(o2.isCorrect) ||
+      String(o1._id || '') !== String(o2._id || '')
+    ) {
+      return false;
+    }
+  }
+  return true;
+}
+
 export function diffQuestions(savedQuestions, currentQuestions) {
   const updates = [];
   const inserts = [];
   const deletes = [];
 
-  const savedMap = new Map(savedQuestions.map(q => [q._id, q]));
+  // Build map for quick lookup
+  const savedMap = new Map(savedQuestions.map(q => [String(q._id), q]));
 
-  // check current vs saved
+  // Determine inserts and updates
   for (const q of currentQuestions) {
     if (!q._id || q.isNew) {
       inserts.push(q);
-    } else if (JSON.stringify(savedMap.get(q._id)) !== JSON.stringify(q)) {
-      updates.push(q);
+    } else {
+      // Always use String for key comparison (robust to objectId types)
+      const saved = savedMap.get(String(q._id));
+      if (!saved || !areQuestionsEqual(saved, q)) {
+        updates.push(q);
+      }
     }
   }
 
-  // check deleted
-  const currentIds = new Set(currentQuestions.map(q => q._id));
+  // Determine deletes
+  const currentIds = new Set(currentQuestions.map(q => String(q._id)));
   for (const q of savedQuestions) {
-    if (!currentIds.has(q._id)) {
+    if (!currentIds.has(String(q._id))) {
       deletes.push(q);
     }
   }

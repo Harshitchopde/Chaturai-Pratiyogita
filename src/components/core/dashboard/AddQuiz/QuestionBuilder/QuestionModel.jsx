@@ -62,6 +62,7 @@ export const QuestionModel = ({
       ...option,
       isCorrect:i===index, //Ensure only one option is correct
     }))
+    setValue("correctAnswer",index)
     setOptions(newOptions);
     setValue(`options`,newOptions)
   }
@@ -157,13 +158,17 @@ export const QuestionModel = ({
     }
     // console.log("Optin : ",options)
     const currValues = getValues();
+    console.log("Curr val: ",currValues);
+    console.log("Model: ",modelData)
     const formData = new FormData();
     formData.append("quizId",modelData);
+    formData.append("correctAnswer",data?.correctAnswer);
     formData.append("questionDesc",data.questionDesc)
     formData.append("points",data.points)
     formData.append("explanation",data.explanation)
     formData.append("options",JSON.stringify(options));
     setLoading(true);
+    console.log("Send DAta: ",formData)
     const res = await createQuestion(formData,token);
     
     if(res){

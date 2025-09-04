@@ -1,28 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SidebarLeft from "./SidebarLeft";
 import CreateQuizWizard from "./CreateQuizWizard";
 import StudioDashboard from "./StudioDashboard";
 import QuestionBank from "./QuestionBank";
 import QuizTemplates from "./QuizTemplates";
+import { useDispatch, useSelector } from "react-redux";
+import { getInstructorQuiz } from "../../../services/operations/quiz.Apis";
+import { setQuizData } from "../../../slices/quizStudioSlicer";
 
 export default function QuizStudio() {
-  const [quizzes, setQuizzes] = useState([
-    { id: 1, name: "Math Basics", type: "Simple", status: "Draft" },
-    { id: 2, name: "Science Mega Pack", type: "Super", status: "Published" },
-    { id: 3, name: "Basics", type: "Simple", status: "Draft" },
-    { id: 4, name: "Mega Pack", type: "Super", status: "Published" },
-  ]);
+  // const [quizzes, setQuizzes] = useState([
+  //   { id: 1, name: "Math Basics", type: "Simple", status: "Draft" },
+  //   { id: 2, name: "Science Mega Pack", type: "Super", status: "Published" },
+  //   { id: 3, name: "Basics", type: "Simple", status: "Draft" },
+  //   { id: 4, name: "Mega Pack", type: "Super", status: "Published" },
+  // ]);
 
   const [selectedCenterTab, setSelectedCenterTab] = useState("wizard"); // dashboard | bank | templates | wizard
   const [selectedQuiz, setSelectedQuiz] = useState(null);
   const handleCreate = () => {
-    setSelectedCenterTab("wizard");
     setSelectedQuiz(null);
+    setSelectedCenterTab("wizard");
   };
-  console.log("Selected Quiz: ",selectedQuiz?.id)
+  const handleSelect = (quiz) =>{
+    setSelectedQuiz(quiz);
+    setSelectedCenterTab("wizard");
+  }
+  const {token} = useSelector((state)=>state.auth);
+  const { instructorQuiz } = useSelector(state=> state.quizzes);
+  const dispatch = useDispatch();
+  // fetch the all instructor quizs
+  useEffect(()=>{
+    const fetchInstructorQuiz = async()=>{
+        dispatch(getInstructorQuiz(token));
+    }
+
+    if(!instructorQuiz ){
+      console.log("Call Instructor")
+        fetchInstructorQuiz()
+    }
+    
+  },[])
+  // console.log("Selected Quiz: ",selectedQuiz)
   return (
     <div className="flex h-screen bg-black text-gray-200">
-      <SidebarLeft quizzes={quizzes} onSelect={setSelectedQuiz} onCreate={handleCreate} />
+      <SidebarLeft quizzes={instructorQuiz} selectedQuiz={selectedQuiz} onSelect={handleSelect} onCreate={handleCreate} />
 
       <div className="flex-1 flex flex-col border-x border-gray-800">
         {/* studio top nav */}
@@ -43,7 +65,7 @@ export default function QuizStudio() {
         {/* center pane */}
         <div className="flex-1 min-h-0">
           {selectedCenterTab === "dashboard" && (
-            <StudioDashboard quizzes={quizzes} onCreate={handleCreate} />
+            <StudioDashboard quizzes={instructorQuiz} onCreate={handleCreate} />
           )}
           {selectedCenterTab === "bank" && (
             <QuestionBank
@@ -61,7 +83,7 @@ export default function QuizStudio() {
             />
           )}
           {selectedCenterTab === "wizard" && (
-            <CreateQuizWizard
+            <CreateQuizWizard selectedQuiz={selectedQuiz}
             />
           )}
         </div>

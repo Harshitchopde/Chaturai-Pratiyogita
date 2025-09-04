@@ -1,29 +1,48 @@
 import React, { useEffect, useMemo, useState } from "react";
 import QuizInfoRender from "./quiz-render/QuizInfoRender";
 import QuestionDetailRender from "./quiz-render/QuestionDetailRender";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getQuizDetails } from "../../../services/operations/quiz.Apis";
+import { setEditStudioQuiz, setQuizData } from "../../../slices/quizStudioSlicer";
 
+// const emptyQuiz = useMemo(
+//   () => ({
+//     title: "",
+//     description: "",
+//     tags: [],
+//     difficulty: "easy",
+//     questions: [],
+//     // optional parity with your existing schema fields:
+//     numberOfQuestions: undefined,
+//     timeDuration: undefined,
+//     topic: "",
+//   }),
+//   []
+// );
 
-export default function CreateQuizWizard() {
+export default function CreateQuizWizard({selectedQuiz}) {
   const [step, setStep] = useState(1);
  
 
 
-
-  // const emptyQuiz = useMemo(
-  //   () => ({
-  //     title: "",
-  //     description: "",
-  //     tags: [],
-  //     difficulty: "easy",
-  //     questions: [],
-  //     // optional parity with your existing schema fields:
-  //     numberOfQuestions: undefined,
-  //     timeDuration: undefined,
-  //     topic: "",
-  //   }),
-  //   []
-  // );
+  const { token} = useSelector(state=> state.auth);
+  const dispatch = useDispatch();
+  // if quiz is selectedQuiz then set them fetch their imformation and set them
+  useEffect(()=>{
+    const fetchQuizDetails = async()=>{
+       const quizId = selectedQuiz._id;
+        const result = await getQuizDetails(quizId,token);
+        if(result){
+          console.log("Fetch quiz details");
+          console.log("res:4 ",result)
+          dispatch(setQuizData(result))
+          dispatch(setEditStudioQuiz(true))
+        }
+    }
+    if(selectedQuiz && selectedQuiz?._id){
+        fetchQuizDetails();
+    }
+  },[selectedQuiz])
 
   // const [quizData, setQuizData] = useState(emptyQuiz);
   const {quizData} = useSelector((state)=> state.quizStudio)

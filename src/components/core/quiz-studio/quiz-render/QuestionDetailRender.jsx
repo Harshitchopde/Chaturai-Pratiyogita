@@ -4,21 +4,24 @@ import JSONEditor from "../editors/JSONEditor";
 import JsonAndVisual from "../editors/JsonAndVisual";
 import AIUploadModal from "./AIUploadModal";
 import { useDispatch, useSelector } from "react-redux";
-import { setEditStudioQuiz, updateQuestion, updateQuizData } from "../../../../slices/quizStudioSlicer";
+import { setEditStudioQuiz, setQuizData, updateQuestion, updateQuizData } from "../../../../slices/quizStudioSlicer";
 import { isValidateQuestion } from "../../../../utils/validateFunction";
 import { useFieldArray, useForm } from "react-hook-form";
 import { normalDeepCopy } from "../../../../utils/customDeepCopy"
 import toast from "react-hot-toast";
 import { diffQuestions } from "../../../../utils/sortQuestionsInertUpdateDelete";
+import { createQuestions } from "../../../../services/operations/quizStudioApis";
 const QuestionDetailRender = ({ setStep }) => {
   const [showAIUpload, setShowAIUpload] = useState(null);
   const [mode, setMode] = useState("split"); // "visual" | "json" | "split"
   const [lastImport, setLastImport] = useState(null);
   const { quizData} = useSelector((state=> state.quizStudio))
+  const { token} = useSelector((state)=> state.auth);
   const dispatch = useDispatch()
-  const { control,register,watch,reset} = useForm({
+  const { control,register,watch,reset, getValues, formState} = useForm({
     defaultValues: normalDeepCopy(quizData?.questions || []),
   })
+  const { isDirty } = formState;
 
   const { append, remove,fields } = useFieldArray({
     control,
@@ -29,6 +32,9 @@ const QuestionDetailRender = ({ setStep }) => {
   const [jsonData,setJsonData] = useState(
     JSON.stringify({questions: normalDeepCopy(quizData?.questions || [])},null,2)
   )
+    useEffect(()=>{
+      reset({questions: normalDeepCopy(quizData?.questions || [])})
+    },[quizData,reset])
     // -------------------------
   // 1) Handle JSON → Form
   // -------------------------
@@ -67,7 +73,16 @@ const QuestionDetailRender = ({ setStep }) => {
     return ()=> sub.unsubscribe();
 
   },[watch,quizData.questions,jsonData])
+  
   const handleBackStep = ()=>{
+    console.log("change ",isDirty)
+    if(isDirty){
+      const confirmLeave = window.confirm("You have unsaved changes. Are you sure you want to go back and lose them?")
+      if(!confirmLeave){
+        // do nothing if user cancel it
+        return;
+      }
+    }
     dispatch(setEditStudioQuiz(true));
     setStep(1);
   }
@@ -108,20 +123,37 @@ const QuestionDetailRender = ({ setStep }) => {
     // dispatch(updateQuestion(keep));
     setLastImport(null);
   };
-   const handleSubmitQuizWithQuestion = ()=>{
-      console.log("SUBMITED QUIZ: ",quizData)
-      const validate = isValidateQuestion(fields)
+   const handleSubmitQuizWithQuestion = async()=>{
+      const values = getValues();
+      console.log("GetValues: ",values)
+      const validate = isValidateQuestion(values?.questions)
       if(validate!==true){
         console.warn("Problem: ",validate)
-        toast.error("Problem: ",validate)
+        toast.error("Problem: "+validate)
         return;
       }
       // console.log("SAved ",quizData?.questions)
       // console.log("Curr: ",fields)
-      const {inserts,deletes,updates} = diffQuestions(quizData?.questions,fields)
-      // console.log("Insert: ",inserts);
-      // console.log("Delete: ",deletes);
-      // console.log("Update: ",updates)
+      console.log("server: ",quizData?.questions)
+      console.log("Updates: ",values?.questions)
+      const {inserts,deletes,updates} = diffQuestions(quizData?.questions,values?.questions)
+      console.log("Insert: ",inserts);
+      console.log("Delete: ",deletes);
+      console.log("Update: ",updates);
+      const data = {
+        quizId:quizData?._id,
+        inserts,
+        deletes,
+        updates
+      }
+      console.log("Message: ",data)
+      const res = await createQuestions(data,token)
+      console.log("REsult of questions: ",res)
+      if(res){
+         dispatch(setQuizData(res))
+      }
+
+      
    }
 
   return (

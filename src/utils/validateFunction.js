@@ -17,10 +17,10 @@ export const isValidateQuestion = (questions)=>{
     if (!Array.isArray(questions) || questions.length === 0) return "questions not their"+questions;
     console.log("r", questions)
     for (const q of questions) {
-        console.log("sing q ",q.questionDesc," ",q.options," ",q.explanation)
-        if (!q.questionDesc || typeof q.questionDesc !== "string") return "questionDesc not their";
+        console.log("sing q ",q.questionDesc," ",q.options," ",q.explanation," ",q.correctAnswer)
+        if(!q.questionDesc || typeof q.questionDesc !=="string") return "Question desc: "+q.questionDesc;
         if (!Array.isArray(q.options) || q.options.length !== 4) return "options not their 4 or ";
-        if (typeof q.correctAnswer !== "number" || q.correctAnswer < 0 || q.correctAnswer >= q.options.length) return `correctAnswer not their ${q.correctAnswer}`;
+        if ( Number.isNaN(q.correctAnswer) ||typeof q.correctAnswer !== "number" || q.correctAnswer < 0 || q.correctAnswer >= q.options.length) return `correctAnswer not their ${q.correctAnswer}`;
         if (!q.explanation || typeof q.explanation !== "string") return "explanation not their";
 
         for (const opt of q.options) {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { createQuiz, updateQuiz } from "../../../../services/operations/quiz.Apis";
@@ -8,19 +8,21 @@ import { isValidateJSONQuiz } from "../../../../utils/validateFunction";
 import TagInputsStudio from "../quizUtils/TagsInputsStudio";
 import {  setQuizData } from "../../../../slices/quizStudioSlicer";
 import TagInput from "../../dashboard/AddQuiz/CreateQuiz/TagInput";
+import { normalDeepCopy } from "../../../../utils/customDeepCopy";
 
 const QuizInfoRender = ({ setStep }) => {
   const { quizData, editStudioQuiz } = useSelector((state) => state.quizStudio);
   const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-
+  
   // ⚡ react-hook-form with defaults from quizData
   const {
     register,
     getValues,
     setValue,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -35,6 +37,19 @@ const QuizInfoRender = ({ setStep }) => {
     },
   });
 
+  useEffect(()=>{
+    console.log("Update quiz: quizInfo render: ",quizData);
+    reset({
+      quizName: quizData?.quizName || "",
+      quizDesc: quizData?.quizDesc || "",
+      numberOfQuestions: quizData?.numberOfQuestions || "",
+      timeDuration: quizData?.timeDuration || "",
+      tags: quizData?.tags || [],
+      topic: quizData?.topic || "",
+      difficulty: quizData?.difficulty || "Any",
+      questions: quizData?.questions || [],
+    })
+  },[quizData,reset])
   // 🔍 check if form values differ from quizData
   const checkUpdated = () => {
     if (!quizData) return false;

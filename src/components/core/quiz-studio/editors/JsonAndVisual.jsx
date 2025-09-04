@@ -160,7 +160,7 @@ const JsonAndVisual = ({fields, register,remove,append,jsonData,handleJsonChange
                 { text: "" },
                 { text: "" },
               ],
-              correctAnswer: 0,
+              correctAnswer: null,
             })
           }
         >
