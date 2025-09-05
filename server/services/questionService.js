@@ -4,8 +4,8 @@ import Quiz from "../models/Quiz.js";
 
 export const createQuestion = async(data)=> {
     const { quizId, questionDesc, options: _options, correctAnswer, points, explanation } = data.body;
-    console.log("Details : ",quizId)
-    console.log("CREATE QUES: ",data)
+    // console.log("Details : ",quizId)
+    // console.log("CREATE QUES: ",data)
     let { questionType } = data.body;
     const quiz = await Quiz.findById(quizId);
     if (!quiz) throw new Error(`Could not find Quiz ${quizId}`);
@@ -25,7 +25,13 @@ export const createQuestion = async(data)=> {
       explanation,
     });
 
-    const correctOption = question.options.find((o) => o.isCorrect);
+    // console.log("Options print :",JSON.stringify(question.options,null,2))
+    // const correctOption = question.options.find((o) => o.isCorrect);
+    question.options.forEach((option,i)=>{
+      option.isCorrect = (correctAnswer === i);
+    });
+    const correctOption = question.options.find((o)=> o.isCorrect);
+    console.log("Correct options",correctOption)
     if (correctOption) {
       question.correctAnswerId = correctOption._id;
     }

@@ -84,7 +84,7 @@ export const questionsCreate = async (req, res) => {
         //   .populate("questions")
     //   .populate("instructor")
     //   .exec();
-    console.log("Updated quiz: ",updatedQuiz)
+    // console.log("Updated quiz: ",updatedQuiz)
     return res.status(200).json({
       success: true,
       message: "Processed question operations",
