@@ -55,8 +55,9 @@ export const questionsCreate = async (req, res) => {
     // DELETE
     deleteResults = deletes.length
       ? await Promise.all(
-          deletes.map(async (delId) => {
+          deletes.map(async (question) => {
             try {
+              const delId = question._id;
               const result = await deleteQuestion({ body: { questionId: delId } });
               return { success:  result };
             } catch (error) {

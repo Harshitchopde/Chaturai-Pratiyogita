@@ -48,10 +48,12 @@ export const createQuestion = async(data)=> {
 
 export const updateQuestion = async(data)=> {
 
-    const { questionId, ...other } = data;
+    const { _id:questionId, ...other } = data.body;
+    // console.log("questionid: ",questionId)
+    // console.log("data: ",data)
     const question = await Question.findById(questionId);
     if (!question) throw new Error("Question not found!");
-
+    
     for (const key of Object.keys(other)) {
       if (key === "options") {
         question[key] = typeof other[key] === "string" ? JSON.parse(other[key]) : other[key];
@@ -59,28 +61,23 @@ export const updateQuestion = async(data)=> {
         question[key] = other[key];
       }
     }
-
+    
+    // console.log("Question: ",question);
     await question.save();
-
-    // const updatedQuiz = await Quiz.findById(question.quizId)
-    //   .populate("questions")
-    //   .populate("instructor")
-    //   .exec();
 
     return true;
   }
 export const deleteQuestion = async(questionId)=> {
-    const question = await Question.findById(questionId);
-    if (!question) throw new Error("Question not found!");
-
+  const ques_id = questionId.body.questionId
+  console.log("ID: ",ques_id)
+    const question = await Question.findById(ques_id);
+    if (!question) throw  new Error("Question not found!");
+    console.log("Delete: ",question)
     await Quiz.findByIdAndUpdate(
       question.quizId,
       { $pull: { questions: question._id } },
-    //   { new: true }
     )
-    //   .populate("questions")
-    //   .populate("instructor")
-    //   .exec();
+ 
 
     await Question.findByIdAndDelete(question._id);
 

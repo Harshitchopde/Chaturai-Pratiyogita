@@ -33,6 +33,7 @@ const QuestionDetailRender = ({ setStep }) => {
     JSON.stringify({questions: normalDeepCopy(quizData?.questions || [])},null,2)
   )
     useEffect(()=>{
+      console.log("Changes in quizData")
       reset({questions: normalDeepCopy(quizData?.questions || [])})
     },[quizData,reset])
     // -------------------------
@@ -132,23 +133,23 @@ const QuestionDetailRender = ({ setStep }) => {
         toast.error("Problem: "+validate)
         return;
       }
-      // console.log("SAved ",quizData?.questions)
-      // console.log("Curr: ",fields)
-      console.log("server: ",quizData?.questions)
-      console.log("Updates: ",values?.questions)
+
+      // console.log("server: ",quizData?.questions)
+      // console.log("Updates: ",values?.questions)
       const {inserts,deletes,updates} = diffQuestions(quizData?.questions,values?.questions)
       console.log("Insert: ",inserts);
       console.log("Delete: ",deletes);
       console.log("Update: ",updates);
       const data = {
         quizId:quizData?._id,
+
         inserts,
         deletes,
         updates
       }
-      console.log("Message: ",data)
+      // console.log("Message: ",data)
       const res = await createQuestions(data,token)
-      console.log("REsult of questions: ",res)
+      // console.log("REsult of questions: ",res)
       if(res){
          dispatch(setQuizData(res))
       }
