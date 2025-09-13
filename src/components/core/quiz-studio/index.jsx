@@ -5,7 +5,7 @@ import StudioDashboard from "./StudioDashboard";
 import QuestionBank from "./QuestionBank";
 import QuizTemplates from "./QuizTemplates";
 import { useDispatch, useSelector } from "react-redux";
-import { getInstructorQuiz } from "../../../services/operations/quiz.Apis";
+import { getInstructorQuiz } from "../../../services/operations/quizApis";
 import { setQuizData } from "../../../slices/quizStudioSlicer";
 
 export default function QuizStudio() {

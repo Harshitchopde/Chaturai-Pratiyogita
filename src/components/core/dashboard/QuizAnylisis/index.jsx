@@ -3,7 +3,7 @@ import { Check, Clipboard, Pencil } from 'lucide-react';
 import  { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom'
-import { instructorAnalysis, sendQuizMail } from '../../../../services/operations/quiz.Apis';
+import { instructorAnalysis, sendQuizMail } from '../../../../services/operations/quizApis';
 import { setAnalyticsQuiz } from '../../../../slices/quizzesSlice';
 import { QUIZ_STATUS } from '../../../../utils/constants';
 import ConformationPopUp from '../../../common/ConformationPopUp';

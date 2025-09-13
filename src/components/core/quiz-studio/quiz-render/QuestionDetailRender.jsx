@@ -1,95 +1,146 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import VisualEditor from "../editors/VisualEditor";
 import JSONEditor from "../editors/JSONEditor";
 import JsonAndVisual from "../editors/JsonAndVisual";
 import AIUploadModal from "./AIUploadModal";
 import { useDispatch, useSelector } from "react-redux";
-import { setEditStudioQuiz, setQuizData, updateQuestion, updateQuizData } from "../../../../slices/quizStudioSlicer";
+import {
+  setEditStudioQuiz,
+  setQuizData,
+  updateQuestion,
+  updateQuizData,
+} from "../../../../slices/quizStudioSlicer";
 import { isValidateQuestion } from "../../../../utils/validateFunction";
 import { useFieldArray, useForm } from "react-hook-form";
-import { normalDeepCopy } from "../../../../utils/customDeepCopy"
+import { normalDeepCopy } from "../../../../utils/customDeepCopy";
 import toast from "react-hot-toast";
 import { diffQuestions } from "../../../../utils/sortQuestionsInertUpdateDelete";
 import { createQuestions } from "../../../../services/operations/quizStudioApis";
+import { isEqual } from "lodash";
+
 const QuestionDetailRender = ({ setStep }) => {
   const [showAIUpload, setShowAIUpload] = useState(null);
   const [mode, setMode] = useState("split"); // "visual" | "json" | "split"
   const [lastImport, setLastImport] = useState(null);
-  const { quizData} = useSelector((state=> state.quizStudio))
-  const { token} = useSelector((state)=> state.auth);
-  const dispatch = useDispatch()
-  const { control,register,watch,reset, getValues, formState} = useForm({
-    defaultValues: normalDeepCopy(quizData?.questions || []),
-  })
+
+  const { quizData } = useSelector((state) => state.quizStudio);
+  const { token } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  // ✅ Memoize normalized questions to prevent reference changes
+  const normalizedQuestions = useMemo(
+    () => normalDeepCopy(quizData?.questions || []),
+    [quizData]
+  );
+
+  const { control, register, watch, reset, getValues, formState } = useForm({
+    defaultValues: { questions: normalizedQuestions },
+  });
   const { isDirty } = formState;
 
-  const { append, remove,fields } = useFieldArray({
+  const { append, remove, fields } = useFieldArray({
     control,
     name: "questions",
-  })
+  });
 
-  //  jsonData for Editor
-  const [jsonData,setJsonData] = useState(
-    JSON.stringify({questions: normalDeepCopy(quizData?.questions || [])},null,2)
-  )
-    useEffect(()=>{
-      console.log("Changes in quizData")
-      reset({questions: normalDeepCopy(quizData?.questions || [])})
-    },[quizData,reset])
-    // -------------------------
+  // ✅ Keep JSON editor in sync
+  const [jsonData, setJsonData] = useState(
+    JSON.stringify({ questions: normalizedQuestions }, null, 2)
+  );
+
+  // ✅ Reset only when quizData changes
+  useEffect(() => {
+    if (quizData) {
+      reset({ questions: normalizedQuestions });
+    }
+  }, [normalizedQuestions, reset, quizData]);
+
+  // -------------------------
   // 1) Handle JSON → Form
   // -------------------------
-  const handleJsonChange = (val)=>{
+  const handleJsonChange = (val) => {
     setJsonData(val);
-    console.log("JSON CHANGE")
     try {
       const parsed = JSON.parse(val);
-      if(Array.isArray(parsed.questions)){
-        // reset from with cloned data
-        reset({questions:normalDeepCopy(parsed?.questions || [])})
+      if (Array.isArray(parsed.questions)) {
+        reset(
+          { questions: normalDeepCopy(parsed.questions) },
+          { keepDirty: false }
+        );
       }
     } catch (error) {
-      console.error("Invalid JSON Data: ",error);
+      console.error("Invalid JSON Data: ", error);
     }
-  }
+  };
 
   // -------------------------
   // 2) Handle Form → JSON
   // -------------------------
-  useEffect(()=>{
-    const sub = watch((value)=>{
-      const newJson = JSON.stringify(value,null,2);
-      if(newJson !== jsonData){
-        // changes made update jsonData
+  useEffect(() => {
+    const sub = watch((value) => {
+      const newJson = JSON.stringify(value, null, 2);
+      if (newJson !== jsonData) {
         setJsonData(newJson);
       }
-      // update redux when from changes
-      // if(JSON.stringify(quizData.questions) !== JSON.stringify(value.questions)){
-      //    dispatch(updateQuizData({fields:"questions",value: normalDeepCopy(value.questions)}));
-      // }
-
     });
 
-    // unsubscribe it
-    return ()=> sub.unsubscribe();
+    return () => sub.unsubscribe();
+  }, [watch, jsonData]);
 
-  },[watch,quizData.questions,jsonData])
-  
-  const handleBackStep = ()=>{
-    console.log("change ",isDirty)
-    if(isDirty){
-      const confirmLeave = window.confirm("You have unsaved changes. Are you sure you want to go back and lose them?")
-      if(!confirmLeave){
-        // do nothing if user cancel it
-        return;
-      }
+  // -------------------------
+  // Navigation Handlers
+  // -------------------------
+  const handleBackStep = () => {
+    console.log("BACK: ",)
+    if (isUpdated){
+      const confirmLeave = window.confirm(
+        "You have unsaved changes. Are you sure you want to go back and lose them?"
+      );
+      if (!confirmLeave) return;
     }
     dispatch(setEditStudioQuiz(true));
     setStep(1);
-  }
-  // console.log("SHI AI : ", showAIUpload, mode, lastImport,quizData?.questions);
+  };
+
+  const handleNext = () => {
+    if (isDirty) {
+      toast.error("Unsaved Changes!");
+      return;
+    }
+    setStep(3);
+  };
+
+  const handleSubmitQuizWithQuestion = async () => {
+    const values = getValues();
+    const validate = isValidateQuestion(values?.questions);
+    if (validate !== true) {
+      toast.error("Problem: " + validate);
+      return;
+    }
+
+    const { inserts, deletes, updates } = diffQuestions(
+      quizData?.questions,
+      values?.questions
+    );
+
+    const data = {
+      quizId: quizData?._id,
+      inserts,
+      deletes,
+      updates,
+    };
+
+    const res = await createQuestions(data, token);
+    if (res) {
+      dispatch(setQuizData(res));
+    }
+  };
+
+  // -------------------------
+  // Import / Undo Import
+  // -------------------------
   const appendQuestions = (incoming) => {
-      const cleaned = incoming
+    const cleaned = incoming
       .filter(Boolean)
       .map((q) => ({
         questionDesc: q.questionDesc ?? q.text ?? "",
@@ -107,55 +158,18 @@ const QuestionDetailRender = ({ setStep }) => {
       }))
       .filter((q) => q.questionDesc?.trim().length > 0);
 
-    // add to questions
-    // dispatch(appendQuestions(cleaned));
-    setLastImport({count:cleaned.length,sample:cleaned.slice(0,3)})
+    setLastImport({ count: cleaned.length, sample: cleaned.slice(0, 3) });
   };
 
-   // 🔹 Handles undo of last import
   const undoLastImport = () => {
     if (!lastImport) return;
-
     const keep = quizData.questions?.slice(
       0,
       quizData.questions.length - lastImport.count
     );
-
     // dispatch(updateQuestion(keep));
     setLastImport(null);
   };
-   const handleSubmitQuizWithQuestion = async()=>{
-      const values = getValues();
-      console.log("GetValues: ",values)
-      const validate = isValidateQuestion(values?.questions)
-      if(validate!==true){
-        console.warn("Problem: ",validate)
-        toast.error("Problem: "+validate)
-        return;
-      }
-
-      // console.log("server: ",quizData?.questions)
-      // console.log("Updates: ",values?.questions)
-      const {inserts,deletes,updates} = diffQuestions(quizData?.questions,values?.questions)
-      console.log("Insert: ",inserts);
-      console.log("Delete: ",deletes);
-      console.log("Update: ",updates);
-      const data = {
-        quizId:quizData?._id,
-
-        inserts,
-        deletes,
-        updates
-      }
-      // console.log("Message: ",data)
-      const res = await createQuestions(data,token)
-      // console.log("REsult of questions: ",res)
-      if(res){
-         dispatch(setQuizData(res))
-      }
-
-      
-   }
 
   return (
     <div className="h-full flex flex-col">
@@ -163,36 +177,22 @@ const QuestionDetailRender = ({ setStep }) => {
       <div className="flex flex-wrap gap-2 justify-between items-center p-4 border-b border-gray-800 bg-gray-900">
         <h2 className="text-lg font-semibold text-white">Add Questions</h2>
 
-        {/* Tabs Visual | Json | VisualAndJson */}
         <div className="flex gap-2">
-          <button
-            onClick={() => setMode("visual")}
-            className={`px-3 py-1 rounded ${
-              mode === "visual" ? "bg-indigo-600" : "bg-gray-700"
-            }`}
-          >
-            Visual
-          </button>
-          <button
-            onClick={() => setMode("json")}
-            className={`px-3 py-1 rounded ${
-              mode === "json" ? "bg-indigo-600" : "bg-gray-700"
-            }`}
-          >
-            JSON
-          </button>
-          <button
-            onClick={() => setMode("split")}
-            className={`px-3 py-1 rounded ${
-              mode === "split" ? "bg-indigo-600" : "bg-gray-700"
-            }`}
-          >
-            Split
-          </button>
+          {["visual", "json", "split"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setMode(tab)}
+              className={`px-3 py-1 rounded ${
+                mode === tab ? "bg-indigo-600" : "bg-gray-700"
+              }`}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Secondary action bar (Upload + AI) */}
+      {/* Secondary action bar */}
       <div className="flex items-center gap-2 p-3 border-b border-gray-800 bg-gray-950">
         <button
           onClick={() => setShowAIUpload(true)}
@@ -216,26 +216,24 @@ const QuestionDetailRender = ({ setStep }) => {
       <div className="flex-1 overflow-hidden">
         {mode === "visual" && (
           <VisualEditor
-           fields={fields} register={register} remove={remove} append={append} 
-           />
-          // <div >visual</div>
+            fields={fields}
+            register={register}
+            remove={remove}
+            append={append}
+          />
         )}
         {mode === "json" && (
-          <JSONEditor
-           jsonData={jsonData} handleJsonChange={handleJsonChange}
-          />
-          // <div >json</div>
+          <JSONEditor jsonData={jsonData} handleJsonChange={handleJsonChange} />
         )}
         {mode === "split" && (
-          <JsonAndVisual 
-          jsonData={jsonData}
-          handleJsonChange={handleJsonChange}
-          fields={fields}
-          register={register}
-          remove={remove}
-          append={append}
+          <JsonAndVisual
+            jsonData={jsonData}
+            handleJsonChange={handleJsonChange}
+            fields={fields}
+            register={register}
+            remove={remove}
+            append={append}
           />
-          // <div >split</div>
         )}
       </div>
 
@@ -247,10 +245,7 @@ const QuestionDetailRender = ({ setStep }) => {
               Imported <b>{lastImport.count}</b> question
               {lastImport.count !== 1 ? "s" : ""}.
             </span>
-            <button
-              className="text-red-300 underline"
-              onClick={undoLastImport}
-            >
+            <button className="text-red-300 underline" onClick={undoLastImport}>
               Undo import
             </button>
           </div>
@@ -265,15 +260,23 @@ const QuestionDetailRender = ({ setStep }) => {
         >
           ← Back
         </button>
-        <button
-          onClick={handleSubmitQuizWithQuestion}
-          className="px-4 py-2 bg-indigo-600 rounded text-white"
-        >
-          Save Quiz
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={handleSubmitQuizWithQuestion}
+            className="px-4 py-2 bg-indigo-600 rounded text-white"
+          >
+            Save Quiz
+          </button>
+          <button
+            onClick={handleNext}
+            className="px-4 py-2 bg-indigo-600 rounded text-white"
+          >
+            Next →
+          </button>
+        </div>
       </div>
 
-      {/* modal */}
+      {/* Modal */}
       {showAIUpload && (
         <AIUploadModal
           showAIUpload

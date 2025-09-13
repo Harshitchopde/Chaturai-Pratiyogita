@@ -4,10 +4,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useOnClickOutside } from '../../../hooks/useOnClickOutside';
 import { AiOutlineCaretDown } from 'react-icons/ai';
 import { VscDashboard, VscSignOut } from 'react-icons/vsc';
-import { logOut } from '../../../services/operations/authApis';
+// import { logOut } from '../../../apis/operations/authApis';
 import { Coins } from 'lucide-react';
 import { PiCoin, PiCoinVertical } from "react-icons/pi";
 import { BsCoin } from "react-icons/bs";
+import { logOut } from '../../../services/operations/authApis';
 const ProfileDropDown = () => {
     const {user} = useSelector(state=>state.profile);
     const dispatch = useDispatch();

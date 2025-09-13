@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Oauth, sendOtp } from "../../../services/operations/authApis";
+// import { Oauth, sendOtp } from "../../../apis/operations/authApis";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { setSignUpData } from "../../../slices/authSlicer";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../../../firebase";
+import { Oauth, sendOtp } from "../../../services/operations/authApis";
 
 // You will use this when implementing Google OAuth
 // import { signInWithGoogle } from "../../../services/operations/authApis";

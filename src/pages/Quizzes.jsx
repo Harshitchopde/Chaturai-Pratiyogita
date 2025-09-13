@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { setQuizzes } from "../slices/quizzesSlice";
-import { getAllQuiz } from "../services/operations/quiz.Apis";
+import { getAllQuiz } from "../services/operations/quizApis";
 import { filterQuizzes } from "../utils/searchUtils";
 import SingleCard from "../components/core/quiz/CardQuiz/cards/SingleCard";
 import { motion } from "framer-motion";

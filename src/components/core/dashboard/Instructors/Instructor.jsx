@@ -27,7 +27,7 @@ import PublishIcon from "@mui/icons-material/Publish";
 import UnpublishedIcon from "@mui/icons-material/Unpublished";
 import toast from "react-hot-toast";
 import ConformationPopUp from "../../../common/ConformationPopUp";
-import { deleteQuiz, getInstructorQuiz, updateOnlyQuiz } from "../../../../services/operations/quiz.Apis";
+import { deleteQuiz, getInstructorQuiz, updateOnlyQuiz } from "../../../../services/operations/quizApis";
 import { QUIZ_STATUS } from "../../../../utils/constants";
 import { publishQuiz, unPublishQuiz } from "../../../../slices/quizzesSlice";
 import { Link } from "react-router-dom";

@@ -2,8 +2,9 @@ import React, { useEffect, useMemo, useState } from "react";
 import QuizInfoRender from "./quiz-render/QuizInfoRender";
 import QuestionDetailRender from "./quiz-render/QuestionDetailRender";
 import { useDispatch, useSelector } from "react-redux";
-import { getQuizDetails } from "../../../services/operations/quiz.Apis";
+import { getQuizDetails } from "../../../services/operations/quizApis";
 import { setEditStudioQuiz, setQuizData } from "../../../slices/quizStudioSlicer";
+import QuizPulish from "./quiz-render/QuizPulish";
 
 // const emptyQuiz = useMemo(
 //   () => ({
@@ -52,5 +53,6 @@ export default function CreateQuizWizard({selectedQuiz}) {
   return <div className="h-full bg-gray-950 text-white">
     {step === 1 && <QuizInfoRender   setStep={setStep}/>}
     {step === 2 && <QuestionDetailRender  setStep={setStep} /> }
+    {step === 3 && <QuizPulish setStep={setStep}/>}
      </div>;
 }

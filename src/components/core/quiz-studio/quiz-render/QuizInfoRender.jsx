@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { createQuiz, updateQuiz } from "../../../../services/operations/quiz.Apis";
+import { createQuiz, updateQuiz } from "../../../../services/operations/quizApis";
 import { earnCoins } from "../../../../slices/coinSlicer";
 import toast from "react-hot-toast";
-import { isValidateJSONQuiz } from "../../../../utils/validateFunction";
-import TagInputsStudio from "../quizUtils/TagsInputsStudio";
+
 import {  setQuizData } from "../../../../slices/quizStudioSlicer";
 import TagInput from "../../dashboard/AddQuiz/CreateQuiz/TagInput";
-import { normalDeepCopy } from "../../../../utils/customDeepCopy";
+// import { normalDeepCopy } from "../../../../utils/customDeepCopy";
 
 const QuizInfoRender = ({ setStep }) => {
   const { quizData, editStudioQuiz } = useSelector((state) => state.quizStudio);

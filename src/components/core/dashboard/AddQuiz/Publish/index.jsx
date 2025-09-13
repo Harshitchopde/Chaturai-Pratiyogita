@@ -3,9 +3,10 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { QUIZ_STATUS } from '../../../../../utils/constants';
-import { updateQuiz } from '../../../../../services/operations/quiz.Apis';
+// import { updateQuiz } from '../../../../../apis/operations/quiz.Apis';
 import { resetQuizDetails, setEditQuiz, setStep } from '../../../../../slices/quizSlicer';
 import IconBtn from '../../../../common/IconBtn';
+import { updateQuiz } from '../../../../../services/operations/quizApis';
 
 const Publish = () => {
   const dispatch = useDispatch();

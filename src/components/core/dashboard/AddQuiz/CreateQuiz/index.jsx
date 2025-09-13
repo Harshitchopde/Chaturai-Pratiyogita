@@ -6,8 +6,9 @@ import { setQuiz, setStep } from '../../../../../slices/quizSlicer';
 import IconBtn from '../../../../common/IconBtn';
 import { MdNavigateNext } from 'react-icons/md';
 import toast from 'react-hot-toast';
-import { createQuiz, updateQuiz } from '../../../../../services/operations/quiz.Apis';
+// import { createQuiz, updateQuiz } from '../../../../../apis/operations/quiz.Apis';
 import { earnCoins } from '../../../../../slices/coinSlicer';
+import { updateQuiz ,createQuiz} from '../../../../../services/operations/quizApis';
 
 const CreateQuiz = () => {
     const { step, quiz ,editQuiz} = useSelector(state=> state.quiz);
@@ -86,7 +87,9 @@ const CreateQuiz = () => {
 
             setLoading(true);
             // const result = await 
+            // const result = await updateQuiz(formData,token);
             const result = await updateQuiz(formData,token);
+
             // editQuiz call 
             setLoading(false);
 
