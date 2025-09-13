@@ -24,32 +24,41 @@ function areQuestionsEqual(q1, q2) {
   return true;
 }
 
+function diffObjects(base, current) {
+  const diff = { _id: current._id }; // always include id
+  for (const key of Object.keys(current)) {
+    if (key === "_id") continue;
+    if (JSON.stringify(base[key]) !== JSON.stringify(current[key])) {
+      diff[key] = current[key];
+    }
+  }
+  return diff;
+}
+
 export function diffQuestions(savedQuestions, currentQuestions) {
   const updates = [];
   const inserts = [];
   const deletes = [];
 
-  // Build map for quick lookup
   const savedMap = new Map(savedQuestions.map(q => [String(q._id), q]));
 
-  // Determine inserts and updates
   for (const q of currentQuestions) {
     if (!q._id || q.isNew) {
       inserts.push(q);
     } else {
-      // Always use String for key comparison (robust to objectId types)
       const saved = savedMap.get(String(q._id));
-      if (!saved || !areQuestionsEqual(saved, q)) {
-        updates.push(q);
+      if (!saved) {
+        updates.push({ _id: q._id, ...q }); // fallback
+      } else if (!areQuestionsEqual(saved, q)) {
+        updates.push(diffObjects(saved, q)); // only changed fields
       }
     }
   }
 
-  // Determine deletes
-  const currentIds = new Set(currentQuestions.map(q => String(q._id)));
+  const currentIds = new Set(currentQuestions.map(q => String(q._id || "")));
   for (const q of savedQuestions) {
     if (!currentIds.has(String(q._id))) {
-      deletes.push(q);
+      deletes.push({ _id: q._id }); // only send id
     }
   }
 

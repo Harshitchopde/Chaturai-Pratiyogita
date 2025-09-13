@@ -36,7 +36,7 @@ const QuestionDetailRender = ({ setStep }) => {
   const { control, register, watch, reset, getValues, formState } = useForm({
     defaultValues: { questions: normalizedQuestions },
   });
-  const { isDirty } = formState;
+  
 
   const { append, remove, fields } = useFieldArray({
     control,
@@ -92,7 +92,14 @@ const QuestionDetailRender = ({ setStep }) => {
   // -------------------------
   const handleBackStep = () => {
     console.log("BACK: ",)
-    if (isUpdated){
+  const values = getValues();
+  const { inserts, updates, deletes } = diffQuestions(
+    quizData?.questions,
+    values?.questions
+  );
+  const hasChanges = inserts.length > 0 || updates.length > 0 || deletes.length > 0;
+  console.log("back: ",inserts,updates,deletes)
+    if (hasChanges){
       const confirmLeave = window.confirm(
         "You have unsaved changes. Are you sure you want to go back and lose them?"
       );
@@ -103,7 +110,14 @@ const QuestionDetailRender = ({ setStep }) => {
   };
 
   const handleNext = () => {
-    if (isDirty) {
+     const values = getValues();
+  const { inserts, updates, deletes } = diffQuestions(
+    quizData?.questions,
+    values?.questions
+  );
+  const hasChanges = inserts.length > 0 || updates.length > 0 || deletes.length > 0;
+  console.log("next: ",inserts,updates,deletes)
+    if (hasChanges) {
       toast.error("Unsaved Changes!");
       return;
     }
@@ -123,12 +137,19 @@ const QuestionDetailRender = ({ setStep }) => {
       values?.questions
     );
 
+const hasChanges = inserts.length > 0 || updates.length > 0 || deletes.length > 0;
+
     const data = {
       quizId: quizData?._id,
       inserts,
       deletes,
       updates,
     };
+    console.log("data sub: ",data);
+    if(!hasChanges){
+      toast.error("No Changes!");
+      return;
+    }
 
     const res = await createQuestions(data, token);
     if (res) {
