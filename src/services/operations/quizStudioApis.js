@@ -1,5 +1,5 @@
-import { data } from "autoprefixer";
-import { quizEndPoints, quizStudioEndPoints } from "../apis";
+
+import {  quizStudioEndPoints } from "../apis";
 import toast from "react-hot-toast";
 import { apiConnector } from "../apiconnectors";
 
