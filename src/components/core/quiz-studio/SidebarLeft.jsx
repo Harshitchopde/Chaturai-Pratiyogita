@@ -1,7 +1,7 @@
 import React from "react";
 import QuizTreeItem from "./QuizTreeItem";
 
-export default function SidebarLeft({ quizzes,selectedQuiz, onSelect, onCreate }) {
+export default function SidebarLeft({ quizzes,selectedQuiz,onCreate, onSelect }) {
   console.log("INSTRUCTOR QUIZS: ",quizzes)
   return (
     <div className="w-64 bg-gray-950 border-r  border-gray-800 flex flex-col">

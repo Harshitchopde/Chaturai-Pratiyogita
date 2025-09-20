@@ -1,3 +1,4 @@
+import { response } from "express";
 import mongoose, { model, Schema } from "mongoose";
 const quizResultSchema = new Schema({
     quizId: { type: Schema.Types.ObjectId, ref: "Quiz", required: true },
@@ -8,7 +9,11 @@ const quizResultSchema = new Schema({
     totalScore: Number,
     timeTaken: Number,
     total: Number,
-    responses: [{ questionId: Schema.Types.ObjectId, selectedOption: Schema.Types.ObjectId }],
+     responses: {
+    type: Map,
+    of: Schema.Types.ObjectId   // each value is an ObjectId (selectedOption)
+  },
+    // responses: [{ questionId: Schema.Types.ObjectId, selectedOption: Schema.Types.ObjectId }],
     createdAt: { type: Date, default: Date.now }
 });
 

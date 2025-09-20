@@ -43,6 +43,7 @@ const Quizzes = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
+      
      
     >
       <div className="p-4 sm:p-8 min-h-screen bg-gray-50">

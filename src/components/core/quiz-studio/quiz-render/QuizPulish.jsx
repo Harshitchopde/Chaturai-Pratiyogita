@@ -5,13 +5,15 @@ import { setQuizData } from "../../../../slices/quizStudioSlicer";
 import toast from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { updateQuiz } from "../../../../services/operations/quizApis";
+import { QUIZ_STATUS } from "../../../../utils/constants";
 
 const QuizPublish = ({ setStep }) => {
   const { quizData } = useSelector((state) => state.quizStudio);
   const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
-  const [status, setStatus] = useState(quizData?.status || "draft");
+  console.log("QUIZ PUB: ",quizData)
+  const [status, setStatus] = useState(quizData?.status || QUIZ_STATUS.DRAFT);
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(null);
 
@@ -20,14 +22,17 @@ const QuizPublish = ({ setStep }) => {
   const handleSave = async (newStatus) => {
     try {
       setLoading(true);
-      const payload = { quizId: quizData?._id, status: newStatus };
-      // const res = await createQuizStatusUpdate(payload, token);
-      const res = false; // mock
+      const formData = new FormData();
+      formData.append("quizId",quizData?._id);
+      formData.append("status",newStatus);
+      const res = await updateQuiz(formData,token)
+      // const res = false; // mock
       if (res) {
         dispatch(setQuizData(res));
-        setStatus(newStatus);
+        setStatus(res.status)
+        // setStatus(newreStatus);
         toast.success(
-          newStatus === "published"
+          newStatus === QUIZ_STATUS.PUBLISHED
             ? "Quiz Published Successfully!"
             : "Quiz Saved as Draft"
         );
@@ -49,7 +54,7 @@ const QuizPublish = ({ setStep }) => {
           <div className="">Current status</div>
           <span
             className={`px-3 py-1 rounded text-sm ${
-              status === "published" ? "bg-green-600" : "bg-yellow-600"
+              status === QUIZ_STATUS.PUBLISHED ? "bg-green-600" : "bg-yellow-600"
             }`}
           >
             {status.toUpperCase()}
@@ -169,14 +174,14 @@ const QuizPublish = ({ setStep }) => {
         <div className="flex gap-3">
             <button
               disabled={loading}
-              onClick={() => handleSave("draft")}
+              onClick={() => handleSave(QUIZ_STATUS.DRAFT)}
               className="px-3 py-1 bg-yellow-600 hover:bg-yellow-500 rounded text-white disabled:opacity-50"
             >
               Save as Draft
             </button>
             <button
               disabled={loading}
-              onClick={() => handleSave("published")}
+              onClick={() => handleSave(QUIZ_STATUS.PUBLISHED)}
               className="px-3 py-1 bg-green-600 hover:bg-green-500 rounded text-white disabled:opacity-50"
             >
               Publish Now

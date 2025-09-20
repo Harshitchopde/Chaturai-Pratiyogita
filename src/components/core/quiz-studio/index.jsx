@@ -6,7 +6,7 @@ import QuestionBank from "./QuestionBank";
 import QuizTemplates from "./QuizTemplates";
 import { useDispatch, useSelector } from "react-redux";
 import { getInstructorQuiz } from "../../../services/operations/quizApis";
-import { setQuizData } from "../../../slices/quizStudioSlicer";
+import { resetQuizData, setQuizData } from "../../../slices/quizStudioSlicer";
 
 export default function QuizStudio() {
   // const [quizzes, setQuizzes] = useState([
@@ -20,6 +20,7 @@ export default function QuizStudio() {
   const [selectedQuiz, setSelectedQuiz] = useState(null);
   const handleCreate = () => {
     setSelectedQuiz(null);
+    dispatch(resetQuizData());
     setSelectedCenterTab("wizard");
   };
   const handleSelect = (quiz) =>{

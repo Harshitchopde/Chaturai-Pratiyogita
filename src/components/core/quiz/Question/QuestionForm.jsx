@@ -79,6 +79,7 @@ const QuestionForm = ({
   {question?.options?.map((option, i) => {
     const isSelected = yourResponse[question?._id] === option._id;
     const isCorrect = option?.isCorrect;
+    // console.log("RES: ",yourResponse[])
     const userSelected = result?.responses?.[question?._id] === option._id;
     console.log("ID: ",i," ISEL: ",isSelected," ISCOR: ",isCorrect," US: ",userSelected)
     let borderColor = "border-gray-300";
@@ -91,7 +92,7 @@ const QuestionForm = ({
         borderColor = "border-green-600";
         bgColor = "bg-green-100";
         textColor = "text-green-800";
-      } else if (userSelected && !isCorrect) {
+      } else if (isSelected && !isCorrect) {
         console.log("op: rr")
         borderColor = "border-red-600";
         bgColor = "bg-red-100";
@@ -120,7 +121,7 @@ const QuestionForm = ({
           value={option.text}
           checked={isSelected || userSelected}
           readOnly
-          className={`${!submitted?"accent-blue-600":isCorrect && userSelected ?"accent-green-600":userSelected && "accent-red-600"} w-4 h-4 mr-4`}
+          className={`${!submitted?"accent-blue-600":isCorrect && isSelected ?"accent-green-600":isSelected && "accent-red-600"} w-4 h-4 mr-4`}
         />
         <span className="text-sm sm:text-base">{option.text}</span>
       </div>

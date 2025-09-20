@@ -5,11 +5,12 @@ const initialState={
         quizName:"",
         quizDesc:"",
         questions:[],
+        editStudioQuiz:false,
         tags:[],
     },
     quizzesData:[],
     loading:false,
-    editStudioQuiz:false,
+    
 }
 
 const quizStudioSlice = createSlice({
@@ -39,7 +40,7 @@ const quizStudioSlice = createSlice({
             state.quizData.tags = action.payload
         },
         setEditStudioQuiz(state,action){
-            state.editStudioQuiz = action.payload
+            state.quizData.editStudioQuiz = action.payload
         },
         resetQuizData(state){
             state.quizData = initialState.quizData;
