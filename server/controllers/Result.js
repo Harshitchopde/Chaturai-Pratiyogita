@@ -6,6 +6,7 @@ export const submitQuiz = async(req,res)=>{
     const { responses,quizId,timeTaken} = req.body;
     const userId = req.user.id; 
     const formatedResp = {...responses};
+    console.log("Sub Quiz: ",formatedResp)
     try {
         
         if(!responses || !quizId){
@@ -22,7 +23,7 @@ export const submitQuiz = async(req,res)=>{
             })
         }
         const resu = await QuizResult.findOne({quizId,userId});
-        if(resu){
+        if(false){
             return res.status(400).json({
                 success:false,
                 message:"Already Attempted!"
@@ -33,16 +34,18 @@ export const submitQuiz = async(req,res)=>{
         let wrongAnswers = 0;
         let total = 0;
         let totalScore = 0;
-        // console.log("Question : ",quiz)
+        // console.log("Question : ",quiz.questions)
         for(let question of quiz.questions){
             const userAnswer = responses[question._id];
             total+=question.points;
+            // console.log("Urser ans: ",userAnswer)
             if(!userAnswer){
                 // skip the unanswer question
                 continue;
 
             }
-            if(question.correctAnswer.toString()===userAnswer){
+            // console.log("Comp: ",question.correctAnswer)
+            if(question.correctAnswerId.toString()===userAnswer){
                 // right answer
                 correctAnswers++;
                 totalScore+=question.points;
@@ -61,7 +64,8 @@ export const submitQuiz = async(req,res)=>{
             wrongAnswers,
             responses:formatedResp,
         })
-        // console.log("REsult store : ",result)
+
+        console.log("REsult store : ",result)
         return res.status(201).json({
             success:true,
             message:"Submited Successfully!b",

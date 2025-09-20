@@ -7,9 +7,16 @@ export const createQuestion  = async(req,res)=>{
         const {quizId,questionDesc,options:_options,
             correctAnswer,points,explanation
         } = req.body;
+        // console.log("REQ: ",req.body);
         let {questionType} = req.body;
         const quiz = await Quiz.findById(quizId);
-        const option = JSON.parse(_options);
+        // const option = JSON.parse(_options);
+        let option;
+        if(typeof _options === 'string'){
+            option = JSON.parse(_options);
+        }else{
+            option = _options;
+        }
         if(!quiz){
             return res.status(400).json({
                 success:false,
@@ -38,7 +45,7 @@ export const createQuestion  = async(req,res)=>{
         });
         // find correct options 
         const correctId = question.options.find(option=>option.isCorrect);
-        question.correctAnswer = correctId._id;
+        question.correctAnswerId = correctId._id;
         // console.log("options ",correctId)
         await question.save();
         // add question to quiz 

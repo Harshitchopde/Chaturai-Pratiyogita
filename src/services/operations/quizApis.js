@@ -217,5 +217,6 @@ export const getInstructorQuiz = (token)=>{
         }
         toast.dismiss(toastId);
         dispatch(setInstructorQuiz(result));
+        // return result;
     }
 }

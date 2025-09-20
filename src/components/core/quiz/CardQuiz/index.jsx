@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getQuizDetails } from "../../../../services/operations/quiz.Apis";
+import { getQuizDetails } from "../../../../services/operations/quizApis";
 import CardQuizRoom from "./CardQuizRoom";
 
 import ConformationPopUp from "../../../common/ConformationPopUp";

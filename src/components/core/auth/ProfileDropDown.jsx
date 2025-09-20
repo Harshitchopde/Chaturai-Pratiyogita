@@ -1,57 +1,86 @@
 import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom';
-import { useOnClickOutside } from '../../../hooks/useOnClickOutside';
-import { AiOutlineCaretDown } from 'react-icons/ai';
-import { VscDashboard, VscSignOut } from 'react-icons/vsc';
-import { logOut } from '../../../services/operations/authApis';
-import { Coins } from 'lucide-react';
-import { PiCoin, PiCoinVertical } from "react-icons/pi";
-import { BsCoin } from "react-icons/bs";
+import { Link, useNavigate } from 'react-router-dom'
+import { useOnClickOutside } from '../../../hooks/useOnClickOutside'
+import { AiOutlineCaretDown } from 'react-icons/ai'
+import { VscDashboard, VscQuestion, VscSignOut } from 'react-icons/vsc'
+import { PiCoinVertical } from "react-icons/pi"
+import { logOut } from '../../../services/operations/authApis'
+
 const ProfileDropDown = () => {
-    const {user} = useSelector(state=>state.profile);
-    const dispatch = useDispatch();
-    const [open,setOpen] = useState(false);
-    const navigate = useNavigate();
-    const ref = useRef(null);
-    const {coins} = useSelector(state=>state.coins);
-    useOnClickOutside(ref,()=>setOpen(false));
-    if(!user) return null;
+  const { user } = useSelector(state => state.profile)
+  const { coins } = useSelector(state => state.coins)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [open, setOpen] = useState(false)
+  const ref = useRef(null)
+  useOnClickOutside(ref, () => setOpen(false))
+
+  if (!user) return null
+
   return (
-    <button className=' relative flex items-center gap-x-2' onClick={()=>setOpen(true)}>
-        <div className="flex  items-center  rounded-md bg-slate-100">
-                <p className=' text-sm'>+{coins}</p>
-                <PiCoinVertical className=' text-xl text-orange-300'/>
+    <div className="relative" ref={ref}>
+      {/* Trigger button */}
+      <button
+        className="flex items-center gap-2 px-2 py-1 rounded-md hover:bg-slate-100 transition"
+        onClick={() => setOpen(!open)}
+      >
+        {/* Coins */}
+        <div className="flex items-center gap-1 bg-slate-100 rounded-md px-2 py-1">
+          <p className="text-sm font-medium text-slate-700">+{coins}</p>
+          <PiCoinVertical className="text-xl text-yellow-500" />
         </div>
-        <div className=" flex items-center gap-x-1">
-            <img src={user?.image} alt={`profile-${user?.firstName}`} 
-             className=' aspect-square w-[30px] h-[30px] rounded-full object-cover'/>
-             <AiOutlineCaretDown className=' text-sm text-slate-500'/>
-           
+
+        {/* Avatar + caret */}
+        <div className="flex items-center gap-1">
+          <img
+            src={user?.image}
+            alt={`profile-${user?.firstName}`}
+            className="w-8 h-8 rounded-full object-cover border border-slate-200"
+          />
+          <AiOutlineCaretDown
+            className={`text-slate-500 transition-transform ${open ? "rotate-180" : ""}`}
+          />
         </div>
-        {
-            open && (
-                <div onClick={(e)=>e.stopPropagation()}
-                 className=" absolute top-[118%]  -left-10 z-[1000] divide-y-[1px] divide-red-900 overflow-hidden rounded-md border-slate-500"
-                 ref={ref} >
-                    <Link to="/dashboard/profile" onClick={()=>setOpen(false)}>
-                        <div className=" flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-slate-600 hover:text-slate-400 hover:bg-slate-300 bg-slate-500">
-                            <VscDashboard className=' text-lg'/>
-                            DashBoard
-                        </div>
-                    </Link>
-                    <div onClick={()=>{
-                        dispatch(logOut(navigate))
-                        setOpen(false)
-                    }}
-                     className=" flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-slate-600 hover:text-slate-400 hover:bg-slate-300 bg-slate-500">
-                        <VscSignOut className=' text-lg'/>
-                        LogOut
-                    </div>
-                 </div>
-            )
-        }
-    </button>
+      </button>
+
+      {/* Dropdown menu */}
+      {open && (
+        <div
+          className="absolute right-0 mt-2 w-48 rounded-xl bg-white shadow-lg border border-slate-200 overflow-hidden z-50"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <Link
+            to="/dashboard/profile"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2 px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition"
+          >
+            <VscDashboard className="text-lg" />
+            Dashboard
+          </Link>
+
+          <Link
+            to="/quiz-studio"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2 px-4 py-2 text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition"
+          >
+            <VscQuestion className="text-lg" />
+            Quiz Studio
+          </Link>
+
+          <button
+            onClick={() => {
+              dispatch(logOut(navigate))
+              setOpen(false)
+            }}
+            className="flex w-full items-center gap-2 px-4 py-2 text-slate-600 hover:bg-red-50 hover:text-red-600 transition"
+          >
+            <VscSignOut className="text-lg" />
+            Log Out
+          </button>
+        </div>
+      )}
+    </div>
   )
 }
 

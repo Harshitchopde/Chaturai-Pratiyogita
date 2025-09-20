@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login, Oauth } from '../../../services/operations/authApis';
+// import { login, Oauth } from '../../../apis/operations/authApis';
 import toast from 'react-hot-toast';
 import { signInWithPopup } from 'firebase/auth';
 import { auth, googleProvider } from '../../../firebase';
+import { login, Oauth } from '../../../services/operations/authApis';
 
 // You’ll implement Google Auth logic here later
 // import { signInWithGoogle } from '../../../services/operations/authApis';

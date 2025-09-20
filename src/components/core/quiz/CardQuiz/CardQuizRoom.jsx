@@ -159,7 +159,9 @@ const CardQuizRoom = ({ submitted, setSubmitted }) => {
           <div className="mt-4 grid grid-cols-6 gap-2">
             {testQuiz?.questions.map((q, idx) => {
               const isCorrect =
-                result?.responses?.[q._id] === q.correctAnswer;
+                result?.responses?.[q._id] === q.correctAnswerId;
+                console.log("RES, ", result?.responses?.[q._id])
+                console.log("RE SHOW : ",isCorrect+" - ",q.correctAnswerId)
               const notAttempted = result?.responses?.[q._id] == null;
               let btnColor = "bg-gray-400";
 

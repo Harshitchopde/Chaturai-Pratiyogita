@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { setQuizzes } from "../slices/quizzesSlice";
-import { getAllQuiz } from "../services/operations/quiz.Apis";
+import { getAllQuiz } from "../services/operations/quizApis";
 import { filterQuizzes } from "../utils/searchUtils";
 import SingleCard from "../components/core/quiz/CardQuiz/cards/SingleCard";
 import { motion } from "framer-motion";
@@ -43,6 +43,7 @@ const Quizzes = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
+      
      
     >
       <div className="p-4 sm:p-8 min-h-screen bg-gray-50">

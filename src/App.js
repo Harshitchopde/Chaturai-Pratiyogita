@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import { NavBar } from './components/common/NavBar';
 import { Login } from './pages/Login';
@@ -19,13 +19,16 @@ import Contact from './pages/Contact';
 import  {Home} from "./pages/Home"
 import QuizAnalysis from './components/core/dashboard/QuizAnylisis';
 import CompletePofile from './pages/CompletePofile';
+import QuizStudio from './components/core/quiz-studio';
 
 
 function App() {
   const {user} = useSelector(state=>state.profile);
+  const location = useLocation()
+  // console.log(location)
   return (
     <div className="App flex flex-col text-xl ">
-      <NavBar/>
+     {location.pathname!=="/quiz-studio" && <NavBar/>}
       <Routes>
         <Route path='/'>
             <Route index element={<Home/>}/>
@@ -38,6 +41,11 @@ function App() {
                <Route path=':quizId' element={<CardQuiz/>}/>
             </Route>
         </Route>
+        <Route path='/quiz-studio' element={
+          <PrivateRoute>
+              <QuizStudio/>
+          </PrivateRoute>
+        }/>
         <Route path='/contacts' element={
           <PrivateRoute>
             <Contact/>
